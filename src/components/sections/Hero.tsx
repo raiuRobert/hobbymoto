@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import { type Locale } from "@/lib/i18n";
+import { contactInfo } from "@/lib/data";
 
 interface HeroProps {
   locale: Locale;
@@ -14,27 +16,25 @@ export default function Hero({ locale }: HeroProps) {
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950">
-      {/* Background — abstract dark gradient + grid */}
+      {/* Real background image */}
       <div className="absolute inset-0">
-        {/* Gradient orbs */}
-        <div className="absolute top-1/4 left-1/4 w-[600px] h-[600px] bg-red-900/20 rounded-full blur-[120px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-[400px] h-[400px] bg-red-800/10 rounded-full blur-[100px]" />
-        {/* Grid overlay */}
-        <div
-          className="absolute inset-0 opacity-[0.04]"
-          style={{
-            backgroundImage:
-              "linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px)",
-            backgroundSize: "80px 80px",
-          }}
+        <Image
+          src="/hero-bg.jpg"
+          alt="HobbyMoto showroom"
+          fill
+          className="object-cover object-center opacity-30"
+          priority
         />
+        {/* Dark gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/80 to-zinc-950/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60" />
       </div>
 
-      {/* Red accent line */}
+      {/* Red accent line top */}
       <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600 to-transparent" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-32">
-        <div className="max-w-4xl">
+        <div className="max-w-3xl">
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -65,7 +65,7 @@ export default function Hero({ locale }: HeroProps) {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-zinc-400 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10"
+            className="text-zinc-300 text-lg sm:text-xl max-w-2xl leading-relaxed mb-10"
           >
             {t("subtitle")}
           </motion.p>
@@ -85,11 +85,11 @@ export default function Hero({ locale }: HeroProps) {
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </Link>
             <a
-              href="tel:+40000000000"
-              className="inline-flex items-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all duration-200"
+              href={`tel:${contactInfo.phone1}`}
+              className="inline-flex items-center gap-2 border border-zinc-600 hover:border-white text-zinc-300 hover:text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all duration-200"
             >
               <Phone className="w-4 h-4" />
-              {t("ctaSecondary")}
+              {contactInfo.phone1}
             </a>
           </motion.div>
 
@@ -98,16 +98,16 @@ export default function Hero({ locale }: HeroProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="mt-20 flex flex-wrap gap-10"
+            className="mt-20 flex flex-wrap gap-10 border-t border-zinc-800/60 pt-10"
           >
             {[
-              { value: "500+", label: "Clienți mulțumiți" },
+              { value: "1999", label: "Înființat" },
               { value: "6", label: "Mărci premium" },
-              { value: "15+", label: "Ani experiență" },
+              { value: "200m²", label: "Showroom" },
             ].map((stat) => (
               <div key={stat.label}>
                 <div className="text-4xl font-black text-white">{stat.value}</div>
-                <div className="text-zinc-500 text-sm mt-1 uppercase tracking-widest text-xs">
+                <div className="text-zinc-500 text-xs mt-1 uppercase tracking-widest">
                   {stat.label}
                 </div>
               </div>
