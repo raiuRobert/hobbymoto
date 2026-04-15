@@ -1,0 +1,89 @@
+{
+  "nav": {
+    "home": "Acasă",
+    "about": "Despre noi",
+    "usedBikes": "Motociclete rulate",
+    "newBikes": "Motociclete noi",
+    "hotel": "Moto Hotel",
+    "rental": "Închirieri",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Dealer oficial · Ducati · Indian · Benelli",
+    "title": "Pasiunea pentru",
+    "titleAccent": "Motociclete",
+    "subtitle": "Descoperă cea mai bună selecție de motociclete noi și rulate din România. Experți cu experiență, servicii premium, prețuri corecte.",
+    "cta": "Explorează inventarul",
+    "ctaSecondary": "Contactează-ne"
+  },
+  "brands": {
+    "title": "Mărci pe care le reprezentăm",
+    "subtitle": "Parteneri oficiali ai celor mai respectate mărci din industrie"
+  },
+  "featured": {
+    "title": "Motociclete recente",
+    "subtitle": "Selecție curentă de modele noi și rulate disponibile",
+    "viewAll": "Vezi toate",
+    "new": "NOU",
+    "used": "RULAT",
+    "km": "km",
+    "year": "An",
+    "price": "Preț",
+    "details": "Vezi detalii",
+    "contact": "Solicită ofertă"
+  },
+  "services": {
+    "title": "Tot ce ai nevoie",
+    "subtitle": "De la achiziție la aventură — suntem alături de tine la fiecare pas",
+    "dealerTitle": "Dealer motociclete",
+    "dealerDesc": "Motociclete noi și rulate de la mărci premium. Consultanță personalizată și finanțare.",
+    "hotelTitle": "Moto Hotel",
+    "hotelDesc": "Cazare și parcare securizată pentru motocicliști. Locul perfect pentru popas în Ardeal.",
+    "rentalTitle": "Închirieri",
+    "rentalDesc": "Închiriază o motocicletă premium pentru zi, weekend sau o aventură mai lungă."
+  },
+  "testimonials": {
+    "title": "Ce spun clienții noștri",
+    "subtitle": "Peste 500 de clienți mulțumiți în toată România"
+  },
+  "cta": {
+    "title": "Gata să-ți găsești motocicleta perfectă?",
+    "subtitle": "Vizitează-ne sau trimite-ne un mesaj. Răspundem în mai puțin de 24 de ore.",
+    "button": "Contactează-ne acum",
+    "phone": "Sună acum"
+  },
+  "footer": {
+    "tagline": "Pasiune pentru motociclete din 2010.",
+    "links": "Link-uri rapide",
+    "contact": "Contact",
+    "hours": "Program",
+    "hoursVal": "Lun–Vin: 09:00–18:00\nSâm: 10:00–15:00",
+    "rights": "Toate drepturile rezervate."
+  },
+  "contact": {
+    "title": "Contactează-ne",
+    "subtitle": "Suntem aici să te ajutăm. Trimite-ne un mesaj sau sună direct.",
+    "name": "Nume complet",
+    "email": "Email",
+    "phone": "Telefon",
+    "subject": "Subiect",
+    "message": "Mesaj",
+    "send": "Trimite mesajul",
+    "success": "Mesaj trimis! Te contactăm în curând.",
+    "address": "Adresă",
+    "addressVal": "România"
+  },
+  "bikes": {
+    "title": "Motociclete rulate",
+    "newTitle": "Motociclete noi",
+    "filterAll": "Toate",
+    "filterBrand": "Marcă",
+    "filterPrice": "Preț",
+    "filterYear": "An",
+    "sortBy": "Sortează",
+    "sortNewest": "Cele mai noi",
+    "sortPriceLow": "Preț crescător",
+    "sortPriceHigh": "Preț descrescător",
+    "noResults": "Niciun rezultat găsit."
+  }
+}

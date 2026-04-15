@@ -1,0 +1,89 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About us",
+    "usedBikes": "Used motorcycles",
+    "newBikes": "New motorcycles",
+    "hotel": "Moto Hotel",
+    "rental": "Rentals",
+    "contact": "Contact"
+  },
+  "hero": {
+    "badge": "Official Dealer · Ducati · Indian · Benelli",
+    "title": "The passion for",
+    "titleAccent": "Motorcycles",
+    "subtitle": "Discover the finest selection of new and used motorcycles in Romania. Experienced experts, premium service, fair prices.",
+    "cta": "Explore inventory",
+    "ctaSecondary": "Contact us"
+  },
+  "brands": {
+    "title": "Brands we represent",
+    "subtitle": "Official partners of the most respected brands in the industry"
+  },
+  "featured": {
+    "title": "Recent motorcycles",
+    "subtitle": "Current selection of new and used models available",
+    "viewAll": "View all",
+    "new": "NEW",
+    "used": "USED",
+    "km": "km",
+    "year": "Year",
+    "price": "Price",
+    "details": "View details",
+    "contact": "Request offer"
+  },
+  "services": {
+    "title": "Everything you need",
+    "subtitle": "From purchase to adventure — we're with you every step of the way",
+    "dealerTitle": "Motorcycle dealer",
+    "dealerDesc": "New and used motorcycles from premium brands. Personalized consulting and financing.",
+    "hotelTitle": "Moto Hotel",
+    "hotelDesc": "Accommodation and secure parking for motorcyclists. The perfect stop in Transylvania.",
+    "rentalTitle": "Rentals",
+    "rentalDesc": "Rent a premium motorcycle for a day, weekend, or a longer adventure."
+  },
+  "testimonials": {
+    "title": "What our clients say",
+    "subtitle": "Over 500 satisfied customers across Romania"
+  },
+  "cta": {
+    "title": "Ready to find your perfect motorcycle?",
+    "subtitle": "Visit us or send a message. We reply in less than 24 hours.",
+    "button": "Contact us now",
+    "phone": "Call now"
+  },
+  "footer": {
+    "tagline": "Passion for motorcycles since 2010.",
+    "links": "Quick links",
+    "contact": "Contact",
+    "hours": "Hours",
+    "hoursVal": "Mon–Fri: 09:00–18:00\nSat: 10:00–15:00",
+    "rights": "All rights reserved."
+  },
+  "contact": {
+    "title": "Contact us",
+    "subtitle": "We're here to help. Send us a message or call directly.",
+    "name": "Full name",
+    "email": "Email",
+    "phone": "Phone",
+    "subject": "Subject",
+    "message": "Message",
+    "send": "Send message",
+    "success": "Message sent! We'll be in touch soon.",
+    "address": "Address",
+    "addressVal": "Romania"
+  },
+  "bikes": {
+    "title": "Used motorcycles",
+    "newTitle": "New motorcycles",
+    "filterAll": "All",
+    "filterBrand": "Brand",
+    "filterPrice": "Price",
+    "filterYear": "Year",
+    "sortBy": "Sort by",
+    "sortNewest": "Newest first",
+    "sortPriceLow": "Price: low to high",
+    "sortPriceHigh": "Price: high to low",
+    "noResults": "No results found."
+  }
+}
