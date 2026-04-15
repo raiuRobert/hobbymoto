@@ -75,20 +75,21 @@ export default function Navbar({ locale }: NavbarProps) {
         <ul className="hidden lg:flex items-center gap-1">
           {navLinks.map((link) =>
             link.children ? (
-              <li key={link.label} className="relative">
+              <li
+                key={link.label}
+                className="relative"
+                onMouseEnter={() => setBikesOpen(true)}
+                onMouseLeave={() => setBikesOpen(false)}
+              >
                 <button
                   className="flex items-center gap-1 px-3 py-2 text-zinc-300 hover:text-white text-sm font-medium transition-colors"
-                  onMouseEnter={() => setBikesOpen(true)}
-                  onMouseLeave={() => setBikesOpen(false)}
                 >
                   {link.label}
                   <ChevronDown className={cn("w-3 h-3 transition-transform duration-200", bikesOpen && "rotate-180")} />
                 </button>
                 <ul
-                  onMouseEnter={() => setBikesOpen(true)}
-                  onMouseLeave={() => setBikesOpen(false)}
                   className={cn(
-                    "absolute top-full left-0 mt-1 w-44 bg-zinc-900 border border-zinc-800 rounded-sm shadow-xl transition-all duration-200",
+                    "absolute top-full left-0 w-44 bg-zinc-900 border border-zinc-800 rounded-sm shadow-xl transition-all duration-200",
                     bikesOpen
                       ? "opacity-100 translate-y-0 pointer-events-auto"
                       : "opacity-0 -translate-y-2 pointer-events-none"
