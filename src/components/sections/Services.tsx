@@ -1,35 +1,37 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
-import { ShoppingCart, Hotel, Key, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { type Locale } from "@/lib/i18n";
 
-interface ServicesProps {
-  locale: Locale;
-}
+interface ServicesProps { locale: Locale; }
 
 const services = [
   {
-    icon: ShoppingCart,
     titleKey: "dealerTitle" as const,
     descKey: "dealerDesc" as const,
     href: (locale: string) => `/${locale}/motociclete-noi/ducati`,
-    gradient: "from-red-900/30 to-transparent",
+    image: "/bikes/ducati-panigale-v4s.jpg",
+    accentColor: "from-red-900/70",
+    label: "Dealer Autorizat",
   },
   {
-    icon: Hotel,
     titleKey: "hotelTitle" as const,
     descKey: "hotelDesc" as const,
     href: (locale: string) => `/${locale}/moto-hotel`,
-    gradient: "from-zinc-700/30 to-transparent",
+    image: "/hotel/room1.jpg",
+    accentColor: "from-zinc-900/80",
+    label: "Moto Hotel",
   },
   {
-    icon: Key,
     titleKey: "rentalTitle" as const,
     descKey: "rentalDesc" as const,
     href: (locale: string) => `/${locale}/inchirieri`,
-    gradient: "from-orange-900/20 to-transparent",
+    image: "/bikes/ducati-scrambler.jpg",
+    accentColor: "from-orange-950/70",
+    label: "Închirieri",
   },
 ];
 
@@ -37,60 +39,67 @@ export default function Services({ locale }: ServicesProps) {
   const t = useTranslations("services");
 
   return (
-    <section className="bg-zinc-950 py-24 px-4 sm:px-6 lg:px-8">
+    <section className="bg-zinc-950 py-28 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-14">
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">
-            Services
-          </p>
-          <h2 className="text-3xl sm:text-4xl font-black text-white">
-            {t("title")}
-          </h2>
-          <p className="text-zinc-500 mt-3 max-w-xl mx-auto">{t("subtitle")}</p>
-        </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Services</p>
+          <h2 className="text-3xl sm:text-4xl font-black text-white">{t("title")}</h2>
+          <p className="text-zinc-500 mt-3 max-w-xl mx-auto text-sm">{t("subtitle")}</p>
+        </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {services.map((service, i) => {
-            const Icon = service.icon;
-            return (
-              <motion.div
-                key={service.titleKey}
-                initial={{ opacity: 0, y: 40 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: i * 0.15 }}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          {services.map((service, i) => (
+            <motion.div
+              key={service.titleKey}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+            >
+              <Link
+                href={service.href(locale)}
+                className="group relative flex flex-col h-72 sm:h-80 rounded-sm overflow-hidden border border-zinc-800 hover:border-red-600/50 transition-all duration-400 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-black/60"
               >
-                <Link
-                  href={service.href(locale)}
-                  className="group relative flex flex-col h-full bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm p-8 overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl hover:shadow-red-900/10"
-                >
-                  {/* Gradient bg */}
-                  <div
-                    className={`absolute inset-0 bg-gradient-to-br ${service.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-300`}
-                  />
+                {/* Background image */}
+                <Image
+                  src={service.image}
+                  alt={t(service.titleKey)}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                />
 
-                  <div className="relative">
-                    {/* Icon */}
-                    <div className="w-12 h-12 bg-zinc-800 group-hover:bg-red-600/20 border border-zinc-700 group-hover:border-red-600/40 rounded flex items-center justify-center mb-6 transition-all duration-300">
-                      <Icon className="w-5 h-5 text-red-500" />
-                    </div>
+                {/* Base dark overlay */}
+                <div className={`absolute inset-0 bg-gradient-to-t ${service.accentColor} to-transparent opacity-90`} />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/95 via-zinc-950/50 to-transparent" />
 
-                    <h3 className="text-white font-black text-xl mb-3">
-                      {t(service.titleKey)}
-                    </h3>
-                    <p className="text-zinc-500 text-sm leading-relaxed mb-8 flex-grow">
-                      {t(service.descKey)}
-                    </p>
+                {/* Shimmer border on hover */}
+                <div className="absolute inset-0 border border-red-600/0 group-hover:border-red-600/30 rounded-sm transition-all duration-500" />
 
-                    <div className="flex items-center gap-2 text-red-500 group-hover:text-red-400 text-sm font-semibold uppercase tracking-wide">
-                      <span>Află mai mult</span>
-                      <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-                    </div>
+                {/* Content */}
+                <div className="absolute bottom-0 left-0 right-0 p-7">
+                  <span className="inline-block text-[10px] font-black uppercase tracking-widest text-red-400 mb-3 bg-red-950/50 border border-red-800/40 px-2.5 py-1 rounded-full">
+                    {service.label}
+                  </span>
+                  <h3 className="text-white font-black text-2xl mb-2 leading-tight">
+                    {t(service.titleKey)}
+                  </h3>
+                  <p className="text-zinc-400 text-sm leading-relaxed mb-5 line-clamp-2">
+                    {t(service.descKey)}
+                  </p>
+                  <div className="flex items-center gap-2 text-red-400 group-hover:text-red-300 text-sm font-bold uppercase tracking-widest transition-colors">
+                    <span>Află mai mult</span>
+                    <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
                   </div>
-                </Link>
-              </motion.div>
-            );
-          })}
+                </div>
+              </Link>
+            </motion.div>
+          ))}
         </div>
       </div>
     </section>

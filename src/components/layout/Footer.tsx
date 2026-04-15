@@ -1,6 +1,7 @@
 import Link from "next/link";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin, Clock, Instagram, Facebook } from "lucide-react";
 import { type Locale } from "@/lib/i18n";
 import { contactInfo } from "@/lib/data";
 
@@ -11,30 +12,32 @@ export default function Footer({ locale }: FooterProps) {
   const tNav = useTranslations("nav");
 
   return (
-    <footer className="bg-zinc-950 border-t border-zinc-800/60">
+    <footer className="bg-zinc-950 border-t border-zinc-800/60 relative">
+      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
           {/* Brand */}
           <div className="md:col-span-1">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-red-600 rounded-sm flex items-center justify-center">
-                <span className="text-white font-black text-sm">HM</span>
-              </div>
-              <span className="text-white font-black text-lg tracking-tight">
-                Hobby<span className="text-red-500">Moto</span>
-              </span>
-            </div>
-            <p className="text-zinc-500 text-sm leading-relaxed mb-2">{t("tagline")}</p>
+            <Link href={`/${locale}`} className="inline-block mb-5">
+              <Image
+                src="/logo.png"
+                alt="HobbyMoto"
+                width={130}
+                height={44}
+                className="h-10 w-auto object-contain brightness-0 invert opacity-90 hover:opacity-100 transition-opacity"
+              />
+            </Link>
+            <p className="text-zinc-500 text-sm leading-relaxed mb-1">{t("tagline")}</p>
             <p className="text-zinc-600 text-xs mb-6">{contactInfo.companyName}</p>
             <div className="flex gap-3">
               <a href={contactInfo.instagram} target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 bg-zinc-800 hover:bg-red-600 rounded flex items-center justify-center transition-colors text-zinc-400 hover:text-white text-xs font-black">
-                IG
+                className="w-10 h-10 bg-zinc-800/80 hover:bg-gradient-to-br hover:from-pink-600 hover:to-purple-600 border border-zinc-700/60 hover:border-transparent rounded-lg flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white group">
+                <Instagram className="w-4 h-4" />
               </a>
               <a href={contactInfo.facebook} target="_blank" rel="noopener noreferrer"
-                className="w-9 h-9 bg-zinc-800 hover:bg-red-600 rounded flex items-center justify-center transition-colors text-zinc-400 hover:text-white text-xs font-black">
-                FB
+                className="w-10 h-10 bg-zinc-800/80 hover:bg-blue-600 border border-zinc-700/60 hover:border-transparent rounded-lg flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white group">
+                <Facebook className="w-4 h-4" />
               </a>
             </div>
           </div>
