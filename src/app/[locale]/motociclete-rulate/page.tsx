@@ -84,8 +84,11 @@ export default function MotocicleteSH() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.05 }}
-                className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/10"
               >
+                <Link
+                  href={`/${locale}/motociclete-rulate/${bike.id}`}
+                  className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-900/10"
+                >
                 {/* Image */}
                 <div className="relative h-52 bg-zinc-800 overflow-hidden">
                   <Image
@@ -134,6 +137,7 @@ export default function MotocicleteSH() {
                     </div>
                     <a
                       href={`tel:${contactInfo.phone1}`}
+                      onClick={(e) => e.stopPropagation()}
                       className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-sm uppercase tracking-wide transition-colors"
                     >
                       <Phone className="w-3 h-3" />
@@ -141,6 +145,7 @@ export default function MotocicleteSH() {
                     </a>
                   </div>
                 </div>
+                </Link>
               </motion.div>
             ))}
           </div>
