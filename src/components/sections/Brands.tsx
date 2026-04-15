@@ -11,9 +11,9 @@ export default function Brands() {
 
   return (
     <section className="relative bg-zinc-900/40 border-y border-zinc-800/50 py-16 overflow-hidden">
-      {/* Fade edges */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
+      {/* Fade edges — same width both sides for symmetry */}
+      <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-zinc-950 to-transparent z-10 pointer-events-none" />
+      <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-zinc-950 to-transparent z-10 pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 text-center">
         <motion.div
@@ -28,9 +28,9 @@ export default function Brands() {
         </motion.div>
       </div>
 
-      {/* Infinite marquee track */}
+      {/* Infinite marquee track — px-32 keeps first item clear of fade edges */}
       <div className="flex overflow-hidden">
-        <div className="flex animate-marquee gap-12 items-center whitespace-nowrap">
+        <div className="flex animate-marquee gap-12 items-center whitespace-nowrap px-6">
           {doubled.map((brand, i) => (
             <div
               key={`${brand.name}-${i}`}

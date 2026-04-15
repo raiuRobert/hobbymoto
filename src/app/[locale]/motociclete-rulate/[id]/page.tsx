@@ -195,13 +195,13 @@ export default function BikeDetailPage() {
               {/* Price card */}
               <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-6 mb-6">
                 {bike.price > 0 ? (
-                  <div className="flex items-end gap-2">
+                  <div className="flex items-baseline gap-2">
                     <span className="text-5xl font-black text-white leading-none">
                       {bike.price.toLocaleString("de-DE")}
                     </span>
-                    <span className="text-3xl font-black text-red-500 mb-0.5">€</span>
+                    <span className="text-5xl font-black text-red-500 leading-none">€</span>
                     {bike.type === "used" && (
-                      <span className="text-zinc-500 text-sm mb-1 ml-1">+ TVA</span>
+                      <span className="text-zinc-500 text-sm ml-1">+ TVA</span>
                     )}
                   </div>
                 ) : (
@@ -251,10 +251,12 @@ export default function BikeDetailPage() {
                 ].map((spec) => {
                   const Icon = spec.icon;
                   return (
-                    <div key={spec.label} className="flex items-start gap-3 p-3.5 bg-zinc-900 border border-zinc-800/80 rounded-sm">
-                      <Icon className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
+                    <div key={spec.label} className="flex items-center gap-3 p-3.5 bg-zinc-900 border border-zinc-800/80 rounded-sm">
+                      <div className="flex-shrink-0 w-9 h-9 rounded bg-zinc-800 border border-zinc-700/60 flex items-center justify-center">
+                        <Icon className="w-5 h-5 text-red-500" />
+                      </div>
                       <div className="min-w-0">
-                        <p className="text-zinc-600 text-[10px] uppercase tracking-wider">{spec.label}</p>
+                        <p className="text-zinc-500 text-[10px] uppercase tracking-wider">{spec.label}</p>
                         <p className="text-white font-bold text-sm truncate">{spec.value}</p>
                       </div>
                     </div>
@@ -266,28 +268,33 @@ export default function BikeDetailPage() {
         </div>
 
         {/* Description + Extras — full width below */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-8 border-t border-zinc-800/60 pt-10">
+        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 border-t border-zinc-800/60 pt-10">
           {/* Description */}
-          <div>
-            <h2 className="text-white font-black text-lg uppercase tracking-widest mb-4 flex items-center gap-2">
-              <span className="w-1 h-5 bg-red-600 rounded-full" />
+          <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-sm p-7 relative overflow-hidden">
+            {/* Accent corner */}
+            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 via-red-600/40 to-transparent rounded-l-sm" />
+            <h2 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
+              <span className="text-red-500 text-lg">&#9632;</span>
               Descriere
             </h2>
-            <p className="text-zinc-400 leading-relaxed">{bike.description}</p>
+            <p className="text-zinc-300 leading-relaxed text-[15px]">{bike.description}</p>
           </div>
 
           {/* Extras */}
           {bike.extras && bike.extras.length > 0 && (
-            <div>
-              <h2 className="text-white font-black text-lg uppercase tracking-widest mb-4 flex items-center gap-2">
-                <span className="w-1 h-5 bg-red-600 rounded-full" />
+            <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-sm p-7 relative overflow-hidden">
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 via-red-600/40 to-transparent rounded-l-sm" />
+              <h2 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
+                <span className="text-red-500 text-lg">&#9632;</span>
                 Dotări & accesorii
               </h2>
-              <ul className="space-y-2.5">
+              <ul className="space-y-2">
                 {bike.extras.map((extra) => (
-                  <li key={extra} className="flex items-start gap-2.5">
-                    <CheckCircle className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />
-                    <span className="text-zinc-300 text-sm">{extra}</span>
+                  <li key={extra} className="flex items-start gap-3 group">
+                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-600/15 border border-red-600/30 flex items-center justify-center mt-0.5">
+                      <CheckCircle className="w-3 h-3 text-red-400" />
+                    </span>
+                    <span className="text-zinc-300 text-sm leading-relaxed group-hover:text-white transition-colors">{extra}</span>
                   </li>
                 ))}
               </ul>

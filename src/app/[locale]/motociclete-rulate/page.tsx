@@ -205,6 +205,8 @@ export default function MotocicleteSH() {
                         src={bike.image}
                         alt={`${bike.brand} ${bike.model}`}
                         fill
+                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        quality={90}
                         className="object-cover group-hover:scale-107 transition-transform duration-600 ease-out"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />

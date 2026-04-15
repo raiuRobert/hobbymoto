@@ -21,7 +21,7 @@ const services = [
     titleKey: "hotelTitle" as const,
     descKey: "hotelDesc" as const,
     href: (locale: string) => `/${locale}/moto-hotel`,
-    image: "/hotel/room1.jpg",
+    image: "/about/mag1.jpg",
     accentColor: "from-zinc-900/80",
     label: "Moto Hotel",
   },
