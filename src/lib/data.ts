@@ -381,7 +381,7 @@ export const brands = [
   { name: "Benelli",   slug: "benelli",   logo: "/brands/benelli.svg" },
   { name: "Italjet",   slug: "italjet",   logo: "/brands/italjet.svg" },
   { name: "Malaguti",  slug: "malaguti",  logo: "/brands/malaguti.svg" },
-  { name: "Lambretta", slug: "lambretta", logo: "/brands/lambretta.svg" },
+  { name: "Lambretta", slug: "lambretta", logo: "/brands/lambretta.png" },
 ];
 
 export const testimonials = [

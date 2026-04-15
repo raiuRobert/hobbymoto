@@ -135,14 +135,13 @@ export default function MotocicleteSH() {
                         <p className="text-zinc-400 text-sm">Preț la cerere</p>
                       )}
                     </div>
-                    <a
-                      href={`tel:${contactInfo.phone1}`}
-                      onClick={(e) => e.stopPropagation()}
+                    <button
+                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); window.location.href = `tel:${contactInfo.phone1}`; }}
                       className="flex items-center gap-1.5 bg-red-600 hover:bg-red-500 text-white text-xs font-bold px-4 py-2.5 rounded-sm uppercase tracking-wide transition-colors"
                     >
                       <Phone className="w-3 h-3" />
                       Sună acum
-                    </a>
+                    </button>
                   </div>
                 </div>
                 </Link>
