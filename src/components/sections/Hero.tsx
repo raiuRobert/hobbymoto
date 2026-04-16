@@ -56,7 +56,7 @@ export default function Hero({ locale }: HeroProps) {
           transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
           className="relative w-full h-full"
         >
-          <Image src="/bikes/mtsv4.jpg" alt="" fill className="object-cover object-right" priority />
+          <Image src="/hero-bike-4k.jpg" alt="" fill className="object-cover object-center" priority />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/60 to-transparent" />
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/30 via-transparent to-zinc-950/60" />
         </motion.div>
