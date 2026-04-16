@@ -51,16 +51,6 @@ export default function Hero({ locale }: HeroProps) {
       {/* Overall dimmer so image doesn't overpower */}
       <div className="absolute inset-0 bg-zinc-950/30" />
 
-      {/* Decorative floating badge — top right */}
-      <motion.div
-        className="hidden xl:flex absolute right-[12%] top-[22%] items-center gap-2 bg-zinc-900/70 backdrop-blur-md border border-zinc-700/60 rounded-full px-4 py-2 animate-float"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 0.6, delay: 1.4 }}
-      >
-        <span className="w-2 h-2 rounded-full bg-green-400" />
-        <span className="text-xs font-semibold text-zinc-300 tracking-wide">Stoc disponibil</span>
-      </motion.div>
 
       {/* Top red accent */}
       <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-transparent via-red-600 to-transparent shadow-[0_0_24px_3px_rgba(220,38,38,0.55)]" />
