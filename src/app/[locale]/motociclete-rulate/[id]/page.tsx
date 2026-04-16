@@ -328,7 +328,7 @@ export default function BikeDetailPage() {
                   <Link href={`/${locale}/motociclete-rulate/${sb.id}`}
                     className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-950/20">
                     <div className="relative h-44 bg-zinc-800 overflow-hidden">
-                      <Image src={sb.image} alt={`${sb.brand} ${sb.model}`} fill className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      <Image src={sb.gallery[0] ?? sb.image} alt={`${sb.brand} ${sb.model}`} fill sizes="(max-width: 1024px) 50vw, 33vw" quality={90} className="object-cover group-hover:scale-105 transition-transform duration-500" />
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent" />
                     </div>
                     <div className="p-4">

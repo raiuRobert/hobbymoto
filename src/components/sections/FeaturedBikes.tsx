@@ -60,7 +60,7 @@ export default function FeaturedBikes({ locale }: FeaturedBikesProps) {
                 {/* Image */}
                 <div className="relative h-52 bg-zinc-800 overflow-hidden flex-shrink-0">
                   <Image
-                    src={bike.image}
+                    src={bike.gallery[0] ?? bike.image}
                     alt={`${bike.brand} ${bike.model}`}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"

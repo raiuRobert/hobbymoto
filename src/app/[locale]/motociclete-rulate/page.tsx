@@ -202,7 +202,7 @@ export default function MotocicleteSH() {
                     {/* Image */}
                     <div className="relative h-56 bg-zinc-800 overflow-hidden">
                       <Image
-                        src={bike.image}
+                        src={bike.gallery[0] ?? bike.image}
                         alt={`${bike.brand} ${bike.model}`}
                         fill
                         sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
