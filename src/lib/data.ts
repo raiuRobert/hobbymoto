@@ -436,7 +436,7 @@ export const rentalBikes = [
     year: 2015,
     km: 71800,
     engine: "800cc",
-    image: "/bikes/bmw-f800r.jpg",
+    image: "/bikes/bmw-f800gt-hq.jpg",
     available: true,
   },
   {
@@ -446,7 +446,7 @@ export const rentalBikes = [
     year: 2010,
     km: 36000,
     engine: "800cc",
-    image: "/bikes/bmw-f800r.jpg",
+    image: "/bikes/bmw-f800r-hq.jpg",
     available: true,
   },
 ];
