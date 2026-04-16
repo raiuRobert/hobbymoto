@@ -1,126 +1,146 @@
+"use client";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import { teamMembers } from "@/lib/data";
+
+const fadeUp = (delay = 0) => ({
+  initial: { opacity: 0, y: 24 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true },
+  transition: { duration: 0.55, delay, ease: "easeOut" as const },
+});
+
+const stats = [
+  { value: "1999",     label: "Activi din" },
+  { value: "200m²",   label: "Showroom" },
+  { value: "6",       label: "Mărci premium" },
+  { value: "12 luni", label: "Garanție rulate" },
+];
+
+const services = [
+  { title: "Buy-back",             desc: "Cumpărăm înapoi motocicletele vândute de noi la prețuri corecte, fără stres." },
+  { title: "Garanție 12 luni",     desc: "Toate motocicletele rulate beneficiază de garanție de minim 12 luni." },
+  { title: "Înmatriculare gratuită", desc: "Ne ocupăm de înmatricularea gratuită a oricărei motociclete cumpărate." },
+  { title: "Transport național",   desc: "Livrăm motociclete oriunde în România, inclus în prețul de vânzare." },
+  { title: "Surse din Germania",   desc: "Motocicletele rulate sunt selecționate direct din Germania — calitate verificată." },
+  { title: "Service specializat",  desc: "Echipă de tehnicieni certificați pentru întreținere și reparații." },
+];
 
 export default function DespreNoi() {
   return (
-    <div className="min-h-screen bg-zinc-950 pt-24">
+    <div className="min-h-screen bg-zinc-950">
 
       {/* Hero */}
-      <section className="relative py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/about/mag1.jpg" alt="HobbyMoto showroom" fill className="object-cover opacity-15" />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/60 to-zinc-950" />
+          <Image src="/about/mag1.jpg" alt="HobbyMoto showroom" fill className="object-cover opacity-20" priority />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-950/60 to-zinc-950" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 to-transparent" />
         </div>
-        <div className="relative max-w-4xl mx-auto text-center">
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3">Despre noi</p>
-          <h1 className="text-5xl sm:text-6xl font-black text-white mb-6">
-            Pasiunea noastră pentru<br /><span className="text-red-500">motociclete</span>
-          </h1>
-          <p className="text-zinc-400 text-xl leading-relaxed max-w-2xl mx-auto">
-            Din 1999, suntem primul dealer de motociclete noi din Constanța. O afacere de familie construită
-            pe pasiune, onestitate și servicii de calitate.
-          </p>
+        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
+
+        <div className="relative max-w-5xl mx-auto">
+          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Despre noi</p>
+            <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-6">
+              Pasiunea noastră<br />pentru <span className="text-red-500">motociclete</span>
+            </h1>
+            <p className="text-zinc-300 text-xl leading-relaxed max-w-2xl">
+              Din 1999, primul dealer de motociclete noi din Constanța. O afacere de familie
+              construită pe pasiune, onestitate și servicii de calitate.
+            </p>
+          </motion.div>
         </div>
       </section>
 
       {/* Story */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-          <div>
+          <motion.div {...fadeUp(0)}>
             <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3">Povestea noastră</p>
-            <h2 className="text-4xl font-black text-white mb-6">
-              Primii în Constanța <br />la motociclete noi
+            <h2 className="text-4xl font-black text-white mb-6 leading-tight">
+              Primii în Constanța<br />la motociclete noi
             </h2>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
               <p>
-                Afacerea de familie HobbyMoto a fost fondată în 1992 și preluată în 1999. Am fost
-                <strong className="text-white"> primii din Constanța care am vândut motociclete noi</strong>, în 1998,
-                iar apoi am extins natural spre cele rulate.
+                Afacerea de familie HobbyMoto a fost fondată în <strong className="text-white">1992</strong> și preluată de actuala generație în 1999. Am fost <strong className="text-white">primii din Constanța care am vândut motociclete noi</strong>, în 1998, deschizând drumul spre o piață complet nouă în regiune.
               </p>
               <p>
-                De-a lungul anilor am implementat sisteme de <strong className="text-white">buy-back</strong>, am oferit
-                <strong className="text-white"> garanție de 12 luni</strong> pe motocicletele rulate și servicii de
-                <strong className="text-white"> înmatriculare gratuită</strong> pentru fiecare moto cumpărat.
+                De-a lungul anilor am implementat sisteme de <strong className="text-white">buy-back</strong>, am introdus <strong className="text-white">garanția de 12 luni</strong> pe motocicletele rulate și servicii de <strong className="text-white">înmatriculare gratuită</strong> — standarde care astăzi sunt norma în industrie.
               </p>
               <p>
-                Astăzi operăm un showroom de <strong className="text-white">200+ m²</strong> în Constanța, reprezentând
-                mărci premium precum Ducati, Indian, Benelli, Italjet, Malaguti și Lambretta.
+                Astăzi operăm cel mai mare showroom de motociclete din Constanța — <strong className="text-white">peste 200 m²</strong> — reprezentând mărci premium: Ducati, Indian, Benelli, Italjet, Malaguti și Lambretta.
               </p>
             </div>
-          </div>
-          <div className="grid grid-cols-2 gap-4">
-            {["/about/mag1.jpg","/about/mag2.jpg","/about/mag3.jpg","/about/mag4.jpg"].map((src, i) => (
+          </motion.div>
+
+          <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
+            <div className="relative col-span-2 aspect-video rounded-sm overflow-hidden bg-zinc-800">
+              <Image src="/about/mag2.jpg" alt="HobbyMoto showroom" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            </div>
+            {["/about/mag3.jpg", "/about/mag4.jpg"].map((src, i) => (
               <div key={i} className="relative aspect-square rounded-sm overflow-hidden bg-zinc-800">
-                <Image src={src} alt={`HobbyMoto showroom ${i+1}`} fill className="object-cover" />
+                <Image src={src} alt={`HobbyMoto ${i + 3}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Stats */}
-      <section className="py-16 px-4 bg-zinc-900/40 border-y border-zinc-800/60">
+      <section className="py-16 px-4 bg-zinc-900/40 border-y border-zinc-800/50">
         <div className="max-w-5xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-8 text-center">
-          {[
-            { value: "1999", label: "Activi din" },
-            { value: "200m²", label: "Showroom" },
-            { value: "6", label: "Mărci premium" },
-            { value: "12 luni", label: "Garanție rulate" },
-          ].map((s) => (
-            <div key={s.label}>
-              <div className="text-4xl font-black text-red-500 mb-2">{s.value}</div>
-              <div className="text-zinc-400 text-sm uppercase tracking-widest">{s.label}</div>
-            </div>
+          {stats.map((s, i) => (
+            <motion.div key={s.label} {...fadeUp(i * 0.08)}>
+              <div className="text-4xl sm:text-5xl font-black text-red-500 mb-2">{s.value}</div>
+              <div className="text-zinc-400 text-xs uppercase tracking-widest">{s.label}</div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Services highlights */}
+      {/* Services */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3 text-center">Ce oferim</p>
-          <h2 className="text-4xl font-black text-white text-center mb-12">Servicii complete pentru motocicliști</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {[
-              { title: "Buy-back", desc: "Cumpărăm înapoi motocicletele vândute de noi la prețuri corecte, fără stres." },
-              { title: "Garanție 12 luni", desc: "Toate motocicletele rulate beneficiază de garanție de minim 12 luni." },
-              { title: "Înmatriculare gratuită", desc: "Ne ocupăm de înmatricularea gratuită a oricărei motociclete cumpărate." },
-              { title: "Transport național", desc: "Livrăm motociclete gratuit oriunde în România." },
-              { title: "Finanțare", desc: "Soluții de finanțare adaptate fiecărui client." },
-              { title: "Service specializat", desc: "Echipă de tehnicieni certificați pentru întreținere și reparații." },
-            ].map((item) => (
-              <div key={item.title} className="flex gap-4 p-6 bg-zinc-900 border border-zinc-800 rounded-sm">
-                <div className="w-2 h-2 rounded-full bg-red-500 mt-2 flex-shrink-0" />
-                <div>
-                  <h3 className="text-white font-bold mb-1">{item.title}</h3>
-                  <p className="text-zinc-500 text-sm">{item.desc}</p>
-                </div>
-              </div>
+          <motion.div {...fadeUp(0)} className="text-center mb-14">
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Ce oferim</p>
+            <h2 className="text-4xl font-black text-white">Servicii complete pentru motocicliști</h2>
+          </motion.div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {services.map((item, i) => (
+              <motion.div key={item.title} {...fadeUp(i * 0.07)}
+                className="group flex flex-col gap-3 p-6 bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm transition-all hover:-translate-y-1">
+                <div className="w-2 h-2 rounded-full bg-red-500 group-hover:scale-125 transition-transform" />
+                <h3 className="text-white font-black">{item.title}</h3>
+                <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
 
       {/* Team */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30">
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-t border-zinc-800/50">
         <div className="max-w-5xl mx-auto">
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3 text-center">Echipa</p>
-          <h2 className="text-4xl font-black text-white text-center mb-12">Oamenii din spatele HobbyMoto</h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6">
-            {teamMembers.map((member) => (
-              <div key={member.name} className="text-center">
-                <div className="relative w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700">
+          <motion.div {...fadeUp(0)} className="text-center mb-14">
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Echipa</p>
+            <h2 className="text-4xl font-black text-white">Oamenii din spatele HobbyMoto</h2>
+          </motion.div>
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
+            {teamMembers.map((member, i) => (
+              <motion.div key={member.name} {...fadeUp(i * 0.06)} className="group text-center">
+                <div className="relative w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 group-hover:border-red-600/50 transition-colors">
                   {member.image ? (
                     <Image src={member.image} alt={member.name} fill className="object-cover" />
                   ) : (
-                    <div className="w-full h-full flex items-center justify-center text-2xl font-black text-zinc-500">
+                    <div className="w-full h-full flex items-center justify-center text-xl font-black text-zinc-500 group-hover:text-zinc-300 transition-colors">
                       {member.initials}
                     </div>
                   )}
                 </div>
-                <h3 className="text-white font-bold text-sm">{member.name}</h3>
-                <p className="text-red-500 text-xs uppercase tracking-widest mt-1">{member.role}</p>
-              </div>
+                <h3 className="text-white font-bold text-sm leading-tight">{member.name}</h3>
+                <p className="text-red-500 text-[10px] uppercase tracking-widest mt-1">{member.role}</p>
+              </motion.div>
             ))}
           </div>
         </div>
