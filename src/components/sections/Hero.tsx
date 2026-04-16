@@ -39,7 +39,7 @@ export default function Hero({ locale }: HeroProps) {
             src="/hero-bike-4k.jpg"
             alt="Ducati Panigale V4 racetrack"
             fill
-            className="object-cover object-center"
+            className="object-cover object-center scale-x-[-1]"
             priority
           />
         </motion.div>
