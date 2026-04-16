@@ -113,7 +113,6 @@ export default function DespreNoi() {
                 className="object-cover hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent" />
-              <p className="absolute bottom-3 left-3 text-white text-xs font-bold">Familia Dragomir</p>
             </div>
             {/* Two smaller */}
             <div className="relative aspect-square rounded-sm overflow-hidden bg-zinc-800">

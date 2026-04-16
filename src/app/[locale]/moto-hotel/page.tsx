@@ -104,8 +104,6 @@ export default function MotoHotel() {
                 quality={90}
                 className="object-cover hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/50 to-transparent" />
-              <p className="absolute bottom-3 left-3 text-white text-xs font-bold">Spațiul nostru de depozitare</p>
             </div>
             {/* Second photo */}
             <div className="relative w-full aspect-video rounded-sm overflow-hidden bg-zinc-800">
