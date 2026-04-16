@@ -420,12 +420,12 @@ export const testimonials = [
 ];
 
 export const teamMembers = [
-  { name: "Dragomir Aurel",     role: "Fondator",          image: null,              initials: "DA" },
-  { name: "Dragomir Alexandru", role: "Co-fondator",       image: null,              initials: "DA" },
-  { name: "Dragomir Antoniu",   role: "Co-fondator",       image: null,              initials: "DA" },
-  { name: "Bosneagu Claudia",   role: "Sales Manager",     image: "/about/team3.jpg", initials: "BC" },
-  { name: "Ștefănuț Ionuț",    role: "Service Manager",   image: null,              initials: "SI" },
-  { name: "Nazzal Issam",       role: "Tehnician Service", image: null,              initials: "NI" },
+  { name: "Dragomir Aurel",     role: "Fondator",          image: null,                      initials: "DA" },
+  { name: "Dragomir Alexandru", role: "Co-fondator",       image: "/about/pepe ducati2.jpg",  initials: "AL" },
+  { name: "Dragomir Antoniu",   role: "Co-fondator",       image: "/about/toni ducati2.jpg",  initials: "AN" },
+  { name: "Bosneagu Claudia",   role: "Sales Manager",     image: "/about/claudia.jpg",       initials: "BC" },
+  { name: "Ștefănuț Ionuț",    role: "Service Manager",   image: null,                      initials: "SI" },
+  { name: "Nazzal Issam",       role: "Tehnician Service", image: null,                      initials: "NI" },
 ];
 
 export const rentalBikes = [

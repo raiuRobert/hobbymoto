@@ -1,7 +1,11 @@
 "use client";
 import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { teamMembers } from "@/lib/data";
+import { Phone } from "lucide-react";
+import { teamMembers, contactInfo } from "@/lib/data";
+import { type Locale } from "@/lib/i18n";
 
 const fadeUp = (delay = 0) => ({
   initial: { opacity: 0, y: 24 },
@@ -18,23 +22,40 @@ const stats = [
 ];
 
 const services = [
-  { title: "Buy-back",             desc: "Cumpărăm înapoi motocicletele vândute de noi la prețuri corecte, fără stres." },
-  { title: "Garanție 12 luni",     desc: "Toate motocicletele rulate beneficiază de garanție de minim 12 luni." },
+  { title: "Buy-back",               desc: "Cumpărăm înapoi motocicletele vândute de noi la prețuri corecte, fără stres." },
+  { title: "Garanție 12 luni",       desc: "Toate motocicletele rulate beneficiază de garanție de minim 12 luni." },
   { title: "Înmatriculare gratuită", desc: "Ne ocupăm de înmatricularea gratuită a oricărei motociclete cumpărate." },
-  { title: "Transport național",   desc: "Livrăm motociclete oriunde în România, inclus în prețul de vânzare." },
-  { title: "Surse din Germania",   desc: "Motocicletele rulate sunt selecționate direct din Germania — calitate verificată." },
-  { title: "Service specializat",  desc: "Echipă de tehnicieni certificați pentru întreținere și reparații." },
+  { title: "Transport național",     desc: "Livrăm motociclete oriunde în România, inclus în prețul de vânzare." },
+  { title: "Surse din Germania",     desc: "Motocicletele rulate sunt selecționate direct din Germania — calitate verificată." },
+  { title: "Service specializat",    desc: "Echipă de tehnicieni certificați pentru întreținere și reparații." },
+];
+
+const communityPhotos = [
+  { src: "/about/ducati-event.jpg",   caption: "Ducati Open Day — Constanța" },
+  { src: "/about/kids-event.jpg",     caption: "Tineri pasionați în showroom" },
+  { src: "/about/showroom-event.jpg", caption: "Lansare model nou" },
 ];
 
 export default function DespreNoi() {
+  const params = useParams();
+  const locale = (params.locale as Locale) ?? "ro";
+
   return (
     <div className="min-h-screen bg-zinc-950">
 
       {/* Hero */}
-      <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <section className="relative pt-24 pb-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/about/mag1.jpg" alt="HobbyMoto showroom" fill className="object-cover opacity-20" priority />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/70 via-zinc-950/60 to-zinc-950" />
+          <Image
+            src="/about/storefront.jpg"
+            alt="HobbyMoto Constanța"
+            fill
+            className="object-cover object-center opacity-30"
+            sizes="100vw"
+            quality={85}
+            priority
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-zinc-950/50 to-zinc-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 to-transparent" />
         </div>
         <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
@@ -43,17 +64,18 @@ export default function DespreNoi() {
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
             <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Despre noi</p>
             <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-6">
-              Pasiunea noastră<br />pentru <span className="text-red-500">motociclete</span>
+              O afacere de familie<br />
+              <span className="text-red-500">cu suflet de motociclist</span>
             </h1>
             <p className="text-zinc-300 text-xl leading-relaxed max-w-2xl">
-              Din 1999, primul dealer de motociclete noi din Constanța. O afacere de familie
-              construită pe pasiune, onestitate și servicii de calitate.
+              Din 1999, primul dealer de motociclete noi din Constanța — construiți pe pasiune,
+              nu pe cifre.
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Story */}
+      {/* Story + photos */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div {...fadeUp(0)}>
@@ -63,26 +85,57 @@ export default function DespreNoi() {
             </h2>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
               <p>
-                Afacerea de familie HobbyMoto a fost fondată în <strong className="text-white">1992</strong> și preluată de actuala generație în 1999. Am fost <strong className="text-white">primii din Constanța care am vândut motociclete noi</strong>, în 1998, deschizând drumul spre o piață complet nouă în regiune.
+                HobbyMoto a fost fondată în <strong className="text-white">1992</strong> și preluată
+                de familia Dragomir în 1999. Am fost <strong className="text-white">primii din Constanța
+                care am vândut motociclete noi</strong>, în 1998, deschizând o piață complet nouă în regiune.
               </p>
               <p>
-                De-a lungul anilor am implementat sisteme de <strong className="text-white">buy-back</strong>, am introdus <strong className="text-white">garanția de 12 luni</strong> pe motocicletele rulate și servicii de <strong className="text-white">înmatriculare gratuită</strong> — standarde care astăzi sunt norma în industrie.
+                De-a lungul anilor am introdus servicii care astăzi sunt standard în industrie: sistemul
+                de <strong className="text-white">buy-back</strong>, <strong className="text-white">garanția de
+                12 luni</strong> pe rulate și <strong className="text-white">înmatricularea gratuită</strong>.
               </p>
               <p>
-                Astăzi operăm cel mai mare showroom de motociclete din Constanța — <strong className="text-white">peste 200 m²</strong> — reprezentând mărci premium: Ducati, Indian, Benelli, Italjet, Malaguti și Lambretta.
+                Astăzi reprezentăm mărci premium — Ducati, Indian, Benelli, Italjet, Malaguti, Lambretta —
+                în cel mai mare showroom de motociclete din Constanța: <strong className="text-white">peste 200 m²</strong>.
               </p>
             </div>
           </motion.div>
 
           <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
-            <div className="relative col-span-2 aspect-video rounded-sm overflow-hidden bg-zinc-800">
-              <Image src="/about/mag2.jpg" alt="HobbyMoto showroom" fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            {/* Main wide photo */}
+            <div className="col-span-2 relative aspect-video rounded-sm overflow-hidden bg-zinc-800">
+              <Image
+                src="/about/selfie-italjet.jpg"
+                alt="Familia Dragomir cu motocicletele Italjet"
+                fill
+                sizes="(max-width: 1024px) 100vw, 50vw"
+                quality={90}
+                className="object-cover hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/60 to-transparent" />
+              <p className="absolute bottom-3 left-3 text-white text-xs font-bold">Familia Dragomir</p>
             </div>
-            {["/about/mag3.jpg", "/about/mag4.jpg"].map((src, i) => (
-              <div key={i} className="relative aspect-square rounded-sm overflow-hidden bg-zinc-800">
-                <Image src={src} alt={`HobbyMoto ${i + 3}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
-              </div>
-            ))}
+            {/* Two smaller */}
+            <div className="relative aspect-square rounded-sm overflow-hidden bg-zinc-800">
+              <Image
+                src="/about/storefront.jpg"
+                alt="Showroom HobbyMoto"
+                fill
+                sizes="25vw"
+                quality={90}
+                className="object-cover hover:scale-105 transition-transform duration-500"
+              />
+            </div>
+            <div className="relative aspect-square rounded-sm overflow-hidden bg-zinc-800">
+              <Image
+                src="/about/ducati-event.jpg"
+                alt="Ducati event HobbyMoto"
+                fill
+                sizes="25vw"
+                quality={90}
+                className="object-cover object-top hover:scale-105 transition-transform duration-500"
+              />
+            </div>
           </motion.div>
         </div>
       </section>
@@ -96,6 +149,96 @@ export default function DespreNoi() {
               <div className="text-zinc-400 text-xs uppercase tracking-widest">{s.label}</div>
             </motion.div>
           ))}
+        </div>
+      </section>
+
+      {/* Team */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeUp(0)} className="text-center mb-16">
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Echipa</p>
+            <h2 className="text-4xl font-black text-white mb-3">Oamenii din spatele HobbyMoto</h2>
+            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
+              O echipă de pasionați care trăiesc ce vând — fiecare are propriul moto și cunoaște fiecare detaliu al produselor pe care le reprezintă.
+            </p>
+          </motion.div>
+
+          {/* Big team photo */}
+          <motion.div {...fadeUp(0.05)} className="relative w-full aspect-video sm:aspect-[21/8] rounded-sm overflow-hidden bg-zinc-800 mb-12">
+            <Image
+              src="/about/team-ducati.jpg"
+              alt="Echipa HobbyMoto"
+              fill
+              sizes="100vw"
+              quality={90}
+              className="object-cover object-top"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+            <div className="absolute bottom-5 left-6">
+              <p className="text-white font-black text-lg">Echipa HobbyMoto</p>
+              <p className="text-zinc-400 text-sm">Familia Dragomir & colegii</p>
+            </div>
+          </motion.div>
+
+          {/* Individual cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+            {teamMembers.map((member, i) => (
+              <motion.div key={member.name} {...fadeUp(i * 0.06)} className="group text-center">
+                <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 group-hover:border-red-600/60 transition-all duration-300 group-hover:scale-105">
+                  {member.image ? (
+                    <Image
+                      src={member.image}
+                      alt={member.name}
+                      fill
+                      sizes="96px"
+                      quality={85}
+                      className="object-cover object-top"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center text-xl font-black text-zinc-500 group-hover:text-zinc-300 transition-colors">
+                      {member.initials}
+                    </div>
+                  )}
+                </div>
+                <h3 className="text-white font-bold text-sm leading-tight">{member.name}</h3>
+                <p className="text-red-500 text-[10px] uppercase tracking-widest mt-1">{member.role}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Community gallery */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-t border-zinc-800/50">
+        <div className="max-w-6xl mx-auto">
+          <motion.div {...fadeUp(0)} className="mb-12">
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Comunitate</p>
+            <h2 className="text-4xl font-black text-white leading-tight">
+              Mai mult decât un dealer —<br />
+              <span className="text-zinc-400">o comunitate de motocicliști</span>
+            </h2>
+          </motion.div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {communityPhotos.map(({ src, caption }, i) => (
+              <motion.div
+                key={src}
+                {...fadeUp(i * 0.1)}
+                className="group relative overflow-hidden rounded-sm bg-zinc-800 aspect-[4/3]"
+              >
+                <Image
+                  src={src}
+                  alt={caption}
+                  fill
+                  sizes="(max-width: 640px) 100vw, 33vw"
+                  quality={90}
+                  className="object-cover object-top group-hover:scale-105 transition-transform duration-600"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
+                <p className="absolute bottom-3 left-4 text-white text-xs font-bold">{caption}</p>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -119,30 +262,29 @@ export default function DespreNoi() {
         </div>
       </section>
 
-      {/* Team */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-t border-zinc-800/50">
-        <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Echipa</p>
-            <h2 className="text-4xl font-black text-white">Oamenii din spatele HobbyMoto</h2>
+      {/* CTA */}
+      <section className="py-16 px-4 sm:px-6 lg:px-8">
+        <div className="max-w-4xl mx-auto">
+          <motion.div {...fadeUp(0)}
+            className="relative bg-zinc-900 border border-zinc-800 rounded-sm p-10 text-center overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent pointer-events-none" />
+            <div className="relative">
+              <p className="text-zinc-400 text-sm mb-2">Vrei să ne cunoști?</p>
+              <h3 className="text-white font-black text-2xl sm:text-3xl mb-6">
+                Vino la showroom — suntem mereu bucuroși să povestim despre moto.
+              </h3>
+              <div className="flex flex-wrap justify-center gap-4">
+                <a href={`tel:${contactInfo.phone1}`}
+                  className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/30">
+                  <Phone className="w-4 h-4" /> {contactInfo.phone1}
+                </a>
+                <Link href={`/${locale}/contact`}
+                  className="inline-flex items-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5">
+                  Trimite mesaj
+                </Link>
+              </div>
+            </div>
           </motion.div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-            {teamMembers.map((member, i) => (
-              <motion.div key={member.name} {...fadeUp(i * 0.06)} className="group text-center">
-                <div className="relative w-20 h-20 mx-auto mb-3 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 group-hover:border-red-600/50 transition-colors">
-                  {member.image ? (
-                    <Image src={member.image} alt={member.name} fill className="object-cover" />
-                  ) : (
-                    <div className="w-full h-full flex items-center justify-center text-xl font-black text-zinc-500 group-hover:text-zinc-300 transition-colors">
-                      {member.initials}
-                    </div>
-                  )}
-                </div>
-                <h3 className="text-white font-bold text-sm leading-tight">{member.name}</h3>
-                <p className="text-red-500 text-[10px] uppercase tracking-widest mt-1">{member.role}</p>
-              </motion.div>
-            ))}
-          </div>
         </div>
       </section>
 
