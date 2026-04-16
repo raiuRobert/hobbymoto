@@ -163,14 +163,14 @@ export default function DespreNoi() {
           </motion.div>
 
           {/* Big team photo */}
-          <motion.div {...fadeUp(0.05)} className="relative w-full aspect-[4/3] sm:aspect-[16/9] rounded-sm overflow-hidden bg-zinc-800 mb-12">
+          <motion.div {...fadeUp(0.05)} className="relative w-full aspect-[3/2] sm:aspect-[2/1] rounded-sm overflow-hidden bg-zinc-800 mb-12">
             <Image
               src="/about/team-ducati.jpg"
               alt="Echipa HobbyMoto"
               fill
               sizes="100vw"
               quality={90}
-              className="object-cover object-center"
+              className="object-cover object-top"
             />
           </motion.div>
 
