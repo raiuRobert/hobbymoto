@@ -172,11 +172,6 @@ export default function DespreNoi() {
               quality={90}
               className="object-cover object-top"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
-            <div className="absolute bottom-5 left-6">
-              <p className="text-white font-black text-lg">Echipa HobbyMoto</p>
-              <p className="text-zinc-400 text-sm">Familia Dragomir & colegii</p>
-            </div>
           </motion.div>
 
           {/* Individual cards */}
