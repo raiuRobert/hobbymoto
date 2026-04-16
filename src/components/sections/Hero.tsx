@@ -27,6 +27,7 @@ export default function Hero({ locale }: HeroProps) {
     <section ref={ref} className="relative min-h-screen flex items-center justify-center overflow-hidden bg-zinc-950 noise-overlay">
 
       {/* Parallax background */}
+      {/* Full-screen background — racetrack bike */}
       <motion.div className="absolute inset-0" style={{ y: bgY }}>
         <motion.div
           className="absolute inset-0"
@@ -35,32 +36,20 @@ export default function Hero({ locale }: HeroProps) {
           transition={{ duration: 22, ease: "linear", repeat: Infinity, repeatType: "reverse" }}
         >
           <Image
-            src="/hero-bg.jpg"
-            alt="HobbyMoto showroom"
+            src="/hero-bike-4k.jpg"
+            alt="Ducati Panigale V4 racetrack"
             fill
-            className="object-cover object-center opacity-50"
+            className="object-cover object-center"
             priority
           />
         </motion.div>
       </motion.div>
 
-      {/* Layered gradients */}
-      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/75 to-zinc-950/20" />
-      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60" />
-
-      {/* Right motorcycle image */}
-      <div className="hidden lg:block absolute right-0 top-0 bottom-0 w-[58%] pointer-events-none">
-        <motion.div
-          initial={{ opacity: 0, x: 60, filter: "blur(20px)" }}
-          animate={{ opacity: 1, x: 0, filter: "blur(0px)" }}
-          transition={{ duration: 1.6, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
-          className="relative w-full h-full"
-        >
-          <Image src="/hero-bike-4k.jpg" alt="" fill className="object-cover object-center" priority />
-          <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/60 to-transparent" />
-          <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/30 via-transparent to-zinc-950/60" />
-        </motion.div>
-      </div>
+      {/* Overlays — heavy left dark for text legibility, lighter on right */}
+      <div className="absolute inset-0 bg-gradient-to-r from-zinc-950 via-zinc-950/70 to-zinc-950/25" />
+      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/50" />
+      {/* Overall dimmer so image doesn't overpower */}
+      <div className="absolute inset-0 bg-zinc-950/30" />
 
       {/* Decorative floating badge — top right */}
       <motion.div
