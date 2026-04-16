@@ -31,9 +31,9 @@ const services = [
 ];
 
 const communityPhotos = [
-  { src: "/about/ducati-event.jpg",   caption: "Ducati Open Day — Constanța" },
-  { src: "/about/kids-event.jpg",     caption: "Tineri pasionați în showroom" },
-  { src: "/about/showroom-event.jpg", caption: "Lansare model nou" },
+  { src: "/about/ducati-event.jpg",   caption: "Ducati Open Day — Constanța", pos: "object-bottom" },
+  { src: "/about/kids-event.jpg",     caption: "Tineri pasionați în showroom", pos: "object-center" },
+  { src: "/about/showroom-event.jpg", caption: "Lansare model nou",            pos: "object-center" },
 ];
 
 export default function DespreNoi() {
@@ -214,7 +214,7 @@ export default function DespreNoi() {
           </motion.div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            {communityPhotos.map(({ src, caption }, i) => (
+            {communityPhotos.map(({ src, caption, pos }, i) => (
               <motion.div
                 key={src}
                 {...fadeUp(i * 0.1)}
@@ -226,10 +226,10 @@ export default function DespreNoi() {
                   fill
                   sizes="(max-width: 640px) 100vw, 33vw"
                   quality={90}
-                  className="object-cover object-top group-hover:scale-105 transition-transform duration-600"
+                  className={`object-cover ${pos} group-hover:scale-105 transition-transform duration-500`}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
-                <p className="absolute bottom-3 left-4 text-white text-xs font-bold">{caption}</p>
+                <p className="absolute bottom-3 left-0 right-0 text-center text-white text-xs font-bold px-4">{caption}</p>
               </motion.div>
             ))}
           </div>
