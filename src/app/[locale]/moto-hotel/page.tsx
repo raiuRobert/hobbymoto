@@ -45,7 +45,7 @@ export default function MotoHotel() {
       {/* Hero */}
       <section className="relative pt-24 pb-24 px-4 sm:px-6 lg:px-8 overflow-hidden">
         <div className="absolute inset-0">
-          <Image src="/about/mag1.jpg" alt="Moto Hotel" fill className="object-cover opacity-25" />
+          <Image src="/about/storage1.jpg" alt="Moto Hotel" fill className="object-cover opacity-25" sizes="100vw" quality={85} />
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-zinc-950/70 to-zinc-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 to-transparent" />
         </div>
@@ -94,9 +94,21 @@ export default function MotoHotel() {
           </motion.div>
 
           <motion.div {...fadeUp(0.1)} className="grid grid-cols-2 gap-3">
-            {["/about/mag1.jpg", "/about/mag2.jpg", "/about/mag3.jpg", "/about/mag4.jpg"].map((src, i) => (
-              <div key={i} className={`relative overflow-hidden rounded-sm bg-zinc-800 ${i === 0 ? "col-span-2 aspect-video" : "aspect-square"}`}>
-                <Image src={src} alt={`HobbyMoto depozitare ${i + 1}`} fill className="object-cover hover:scale-105 transition-transform duration-500" />
+            {[
+              { src: "/about/storage1.jpg", label: "Spațiu depozitare" },
+              { src: "/about/storage2.jpg", label: "Garaj securizat" },
+              { src: "/about/storage3.jpg", label: "Depozitare interioară" },
+              { src: "/about/storage4.jpg", label: "Showroom HobbyMoto" },
+            ].map(({ src, label }, i) => (
+              <div key={i} className="relative overflow-hidden rounded-sm bg-zinc-800 aspect-square">
+                <Image
+                  src={src}
+                  alt={label}
+                  fill
+                  sizes="(max-width: 768px) 50vw, 25vw"
+                  quality={90}
+                  className="object-cover hover:scale-105 transition-transform duration-500"
+                />
               </div>
             ))}
           </motion.div>
