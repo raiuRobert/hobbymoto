@@ -8,5 +8,6 @@ export default createMiddleware({
 });
 
 export const config = {
-  matcher: ["/((?!api|_next|_vercel|.*\\..*).*)"],
+  // Run on all paths EXCEPT: /studio, /api, Next.js internals, Vercel internals, and static files
+  matcher: ["/((?!studio|api|_next|_vercel|.*\\..*).*)" ],
 };
