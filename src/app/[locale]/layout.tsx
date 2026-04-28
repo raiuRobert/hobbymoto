@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { locales, type Locale } from "@/lib/i18n";
@@ -10,6 +10,7 @@ import "../globals.css";
 
 const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
 const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
+const josefinSans = Josefin_Sans({ variable: "--font-josefin", subsets: ["latin"], weight: "700" });
 
 export const metadata: Metadata = {
   title: "HobbyMoto — Dealer motociclete premium",
@@ -32,7 +33,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className="dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-zinc-950 text-white`}
+        className={`${geistSans.variable} ${geistMono.variable} ${josefinSans.variable} antialiased bg-zinc-950 text-white`}
       >
         <NextIntlClientProvider messages={messages}>
           <Navbar locale={locale as Locale} />

@@ -12,15 +12,15 @@ interface NavbarProps {
   locale: Locale;
 }
 
-// Brand links — external dealer/official sites, same as old hobbymoto.ro
-const brandLinks = [
-  { label: "Ducati",    href: "https://ducaticonstanta.ro/",        external: true },
-  { label: "Indian",    href: "https://ducaticonstanta.ro/",        external: true },
-  { label: "Benelli",   href: "https://www.benelli-moto.ro/",       external: true },
-  { label: "Italjet",   href: "https://www.italjet.com/en",         external: true },
-  { label: "Malaguti",  href: "https://ducaticonstanta.ro/",        external: true },
-  { label: "Lambretta", href: "https://ducaticonstanta.ro/",        external: true },
-];
+type DropdownItem =
+  | { type: "header"; label: string }
+  | { type: "external"; label: string; href: string }
+  | { type: "internal"; label: string; href: string }
+  | { type: "divider" };
+
+type NavLink =
+  | { href: string; label: string; children?: never }
+  | { href?: never; label: string; children: DropdownItem[] };
 
 export default function Navbar({ locale }: NavbarProps) {
   const t = useTranslations("nav");
@@ -38,15 +38,116 @@ export default function Navbar({ locale }: NavbarProps) {
   const otherLocale = locales.find((l) => l !== locale) as Locale;
   const switchLocalePath = pathname.replace(`/${locale}`, `/${otherLocale}`);
 
-  const navLinks = [
+  const navLinks: NavLink[] = [
     { href: `/${locale}`, label: t("home") },
     { href: `/${locale}/despre-noi`, label: t("about") },
-    { label: t("newBikes"), children: brandLinks },
-    { href: `/${locale}/motociclete-rulate`, label: t("usedBikes") },
+    {
+      label: t("bikes"),
+      children: [
+        { type: "header", label: t("newBikes") },
+        { type: "external", label: "Ducati",    href: "https://ducaticonstanta.ro/" },
+        { type: "external", label: "Indian",    href: "https://ducaticonstanta.ro/" },
+        { type: "external", label: "Benelli",   href: "https://www.benelli-moto.ro/" },
+        { type: "external", label: "Italjet",   href: "https://www.italjet.com/en" },
+        { type: "external", label: "Malaguti",  href: "https://ducaticonstanta.ro/" },
+        { type: "external", label: "Lambretta", href: "https://ducaticonstanta.ro/" },
+        { type: "divider" },
+        { type: "internal", label: t("usedBikes"), href: `/${locale}/motociclete-rulate` },
+      ],
+    },
+    { href: `/${locale}/evenimente`, label: t("events") },
     { href: `/${locale}/moto-hotel`, label: t("hotel") },
     { href: `/${locale}/inchirieri`, label: t("rental") },
     { href: `/${locale}/contact`, label: t("contact") },
   ];
+
+  function renderDropdownItem(item: DropdownItem, i: number) {
+    if (item.type === "header") {
+      return (
+        <li key={i} className="px-4 pt-3 pb-1">
+          <span className="text-sm font-bold text-white">
+            {item.label}
+          </span>
+        </li>
+      );
+    }
+    if (item.type === "divider") {
+      return <li key={i} className="border-t border-zinc-800 my-1" />;
+    }
+    if (item.type === "external") {
+      return (
+        <li key={i}>
+          <a
+            href={item.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-between pl-6 pr-4 py-1.5 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 transition-colors group/item"
+          >
+            <span>{item.label}</span>
+            <ExternalLink className="w-3 h-3 text-zinc-600 group-hover/item:text-red-500 transition-colors" />
+          </a>
+        </li>
+      );
+    }
+    // internal — same weight as header
+    return (
+      <li key={i}>
+        <Link
+          href={item.href}
+          className={cn(
+            "block px-4 py-2.5 text-sm font-bold transition-colors hover:bg-zinc-800",
+            pathname === item.href ? "text-red-500" : "text-white hover:text-white"
+          )}
+        >
+          {item.label}
+        </Link>
+      </li>
+    );
+  }
+
+  function renderMobileDropdownItem(item: DropdownItem, i: number) {
+    if (item.type === "header") {
+      return (
+        <div key={i} className="text-sm font-bold text-white px-3 pt-3 pb-1">
+          {item.label}
+        </div>
+      );
+    }
+    if (item.type === "divider") {
+      return <div key={i} className="border-t border-zinc-800 my-1" />;
+    }
+    if (item.type === "external") {
+      return (
+        <a
+          key={i}
+          href={item.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={() => setOpen(false)}
+          className="flex items-center justify-between pl-6 pr-3 py-1.5 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors"
+        >
+          <span>{item.label}</span>
+          <ExternalLink className="w-3 h-3 text-zinc-600" />
+        </a>
+      );
+    }
+    // internal — bold, same level as header
+    return (
+      <Link
+        key={i}
+        href={item.href}
+        onClick={() => setOpen(false)}
+        className={cn(
+          "block px-3 py-2.5 text-sm font-bold rounded transition-colors",
+          pathname === item.href
+            ? "text-red-500 bg-zinc-800"
+            : "text-white hover:text-white hover:bg-zinc-800"
+        )}
+      >
+        {item.label}
+      </Link>
+    );
+  }
 
   return (
     <header
@@ -60,15 +161,21 @@ export default function Navbar({ locale }: NavbarProps) {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
 
         {/* Logo */}
-        <Link href={`/${locale}`} className="flex items-center group">
+        <Link href={`/${locale}`} className="relative flex items-center justify-center group w-[90px] h-[52px]">
           <Image
-            src="/logo.png"
+            src="/logo-silhouette.svg"
             alt="HobbyMoto"
-            width={140}
-            height={48}
-            className="h-10 w-auto object-contain brightness-0 invert group-hover:brightness-100 group-hover:invert-0 transition-all duration-300"
+            width={90}
+            height={52}
+            className="brightness-0 invert group-hover:opacity-20 transition-all duration-300"
             priority
           />
+          <span
+            className="absolute inset-0 flex items-center justify-center text-red-600 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 uppercase tracking-widest"
+            style={{ fontFamily: "Bauhaus93, 'Josefin Sans', sans-serif", fontSize: 22 }}
+          >
+            Hobbymoto
+          </span>
         </Link>
 
         {/* Desktop Nav */}
@@ -81,44 +188,28 @@ export default function Navbar({ locale }: NavbarProps) {
                 onMouseEnter={() => setBikesOpen(true)}
                 onMouseLeave={() => setBikesOpen(false)}
               >
-                <button
-                  className="flex items-center gap-1 px-3 py-2 text-zinc-300 hover:text-white text-sm font-medium transition-colors"
-                >
+                <button className="flex items-center gap-1 px-3 py-2 text-zinc-300 hover:text-white text-sm font-medium transition-colors">
                   {link.label}
                   <ChevronDown className={cn("w-3 h-3 transition-transform duration-200", bikesOpen && "rotate-180")} />
                 </button>
                 <ul
                   className={cn(
-                    "absolute top-full left-0 w-44 bg-zinc-900 border border-zinc-800 rounded-sm shadow-xl transition-all duration-200",
+                    "absolute top-full left-0 w-52 bg-zinc-900 border border-zinc-800 rounded-sm shadow-xl transition-all duration-200 py-1",
                     bikesOpen
                       ? "opacity-100 translate-y-0 pointer-events-auto"
                       : "opacity-0 -translate-y-2 pointer-events-none"
                   )}
                 >
-                  {link.children.map((child) => (
-                    <li key={child.label}>
-                      <a
-                        href={child.href}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-between px-4 py-2.5 text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 transition-colors group/item"
-                      >
-                        <span>{child.label}</span>
-                        <ExternalLink className="w-3 h-3 text-zinc-600 group-hover/item:text-red-500 transition-colors" />
-                      </a>
-                    </li>
-                  ))}
+                  {link.children.map((item, i) => renderDropdownItem(item, i))}
                 </ul>
               </li>
             ) : (
               <li key={link.href}>
                 <Link
-                  href={link.href!}
+                  href={link.href}
                   className={cn(
                     "px-3 py-2 text-sm font-medium transition-colors rounded",
-                    pathname === link.href
-                      ? "text-white"
-                      : "text-zinc-400 hover:text-white"
+                    pathname === link.href ? "text-white" : "text-zinc-400 hover:text-white"
                   )}
                 >
                   {link.label}
@@ -165,27 +256,15 @@ export default function Navbar({ locale }: NavbarProps) {
           {navLinks.map((link) =>
             link.children ? (
               <li key={link.label}>
-                <div className="text-xs font-bold text-zinc-500 uppercase tracking-widest px-3 pt-3 pb-1">
+                <div className="text-xs font-bold text-zinc-400 uppercase tracking-widest px-3 pt-3 pb-1">
                   {link.label}
                 </div>
-                {link.children.map((child) => (
-                  <a
-                    key={child.label}
-                    href={child.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    onClick={() => setOpen(false)}
-                    className="flex items-center justify-between px-3 py-2 text-sm text-zinc-300 hover:text-white hover:bg-zinc-800 rounded transition-colors"
-                  >
-                    <span>{child.label}</span>
-                    <ExternalLink className="w-3 h-3 text-zinc-600" />
-                  </a>
-                ))}
+                {link.children.map((item, i) => renderMobileDropdownItem(item, i))}
               </li>
             ) : (
               <li key={link.href}>
                 <Link
-                  href={link.href!}
+                  href={link.href}
                   onClick={() => setOpen(false)}
                   className={cn(
                     "block px-3 py-2.5 text-sm font-medium rounded transition-colors",

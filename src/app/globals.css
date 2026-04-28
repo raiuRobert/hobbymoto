@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: "Bauhaus93";
+  src: local("Bauhaus 93");
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: #09090b;
   --foreground: #fafafa;
