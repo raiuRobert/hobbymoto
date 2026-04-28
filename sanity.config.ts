@@ -23,6 +23,10 @@ export default defineConfig({
               .title("Evenimente")
               .schemaType("event")
               .child(S.documentTypeList("event").title("Evenimente")),
+            S.listItem()
+              .title("Motociclete Închiriere")
+              .schemaType("rentalBike")
+              .child(S.documentTypeList("rentalBike").title("Motociclete Închiriere")),
           ]),
     }),
   ],

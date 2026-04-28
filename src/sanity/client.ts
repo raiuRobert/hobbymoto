@@ -140,3 +140,31 @@ export const EVENT_BY_SLUG_QUERY = `
     ${EVENT_FIELDS}
   }
 `;
+
+// ─── Rental bike types ────────────────────────────────────────────────────────
+
+export type SanityRentalBike = {
+  _id: string;
+  brand: string;
+  model: string;
+  year: number;
+  km: number;
+  engine: string;
+  image: string | null;
+  available: boolean;
+};
+
+// ─── Rental bike query ────────────────────────────────────────────────────────
+
+export const RENTAL_BIKES_QUERY = `
+  *[_type == "rentalBike"] | order(available desc, _createdAt desc) {
+    _id,
+    brand,
+    model,
+    year,
+    km,
+    engine,
+    "image": mainImage.asset->url,
+    available
+  }
+`;

@@ -264,9 +264,10 @@ export default function Navbar({ locale }: NavbarProps) {
         <div className="hidden lg:flex items-center gap-3">
           <Link
             href={switchLocalePath}
-            className="text-xs font-bold text-zinc-400 hover:text-white border border-zinc-700 hover:border-zinc-500 px-2.5 py-1 rounded transition-colors uppercase tracking-widest"
+            className="relative text-xs font-bold text-zinc-400 hover:text-white border border-zinc-700 hover:border-zinc-500 px-2.5 py-1 rounded transition-colors uppercase tracking-widest overflow-hidden group"
           >
-            {otherLocale}
+            <span className="transition-opacity duration-200 group-hover:opacity-0">{locale}</span>
+            <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">{otherLocale}</span>
           </Link>
           <Link
             href={`/${locale}/contact`}
@@ -323,9 +324,10 @@ export default function Navbar({ locale }: NavbarProps) {
             <Link
               href={switchLocalePath}
               onClick={() => setOpen(false)}
-              className="text-xs font-bold text-zinc-400 border border-zinc-700 px-3 py-2 rounded uppercase tracking-widest"
+              className="relative text-xs font-bold text-zinc-400 border border-zinc-700 px-3 py-2 rounded uppercase tracking-widest overflow-hidden group"
             >
-              {otherLocale}
+              <span className="transition-opacity duration-200 group-hover:opacity-0">{locale}</span>
+              <span className="absolute inset-0 flex items-center justify-center opacity-0 transition-opacity duration-200 group-hover:opacity-100">{otherLocale}</span>
             </Link>
             <Link
               href={`/${locale}/contact`}
