@@ -91,3 +91,52 @@ export const SIMILAR_BIKES_QUERY = `
     "gallery": gallery[defined(asset)][].asset->url
   }
 `;
+
+// ─── Event types ──────────────────────────────────────────────────────────────
+
+export type SanityEvent = {
+  id: string;
+  title: string;
+  date: string;
+  endDate: string | null;
+  location: string | null;
+  category: string | null;
+  image: string | null;
+  gallery: string[];
+  excerpt: string | null;
+  description: string | null;
+  featured: boolean;
+};
+
+export type SanityEventCard = Pick<
+  SanityEvent,
+  "id" | "title" | "date" | "location" | "category" | "image" | "excerpt"
+>;
+
+// ─── Event queries ────────────────────────────────────────────────────────────
+
+const EVENT_FIELDS = `
+  "id": slug.current,
+  title,
+  date,
+  endDate,
+  location,
+  category,
+  "image": mainImage.asset->url,
+  "gallery": gallery[defined(asset)][].asset->url,
+  excerpt,
+  description,
+  featured
+`;
+
+export const EVENTS_QUERY = `
+  *[_type == "event"] | order(date desc) {
+    ${EVENT_FIELDS}
+  }
+`;
+
+export const EVENT_BY_SLUG_QUERY = `
+  *[_type == "event" && slug.current == $slug][0] {
+    ${EVENT_FIELDS}
+  }
+`;

@@ -60,9 +60,15 @@ export default function Hero({ locale }: HeroProps) {
         <div className="max-w-3xl">
 
           {/* Badge */}
-          <motion.div {...fadeUp(0)} className="inline-flex items-center gap-2 bg-zinc-900/80 backdrop-blur-sm border border-zinc-700/60 rounded-full px-4 py-1.5 mb-8">
-            <span className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
-            <span className="text-xs font-semibold text-zinc-400 tracking-widest uppercase">{t("badge")}</span>
+          <motion.div {...fadeUp(0)} className="flex items-center gap-3 mb-8">
+            <div className="w-8 h-px bg-red-500" />
+            <span className="text-red-500 text-[11px] font-bold uppercase tracking-[0.22em]">
+              Dealer oficial
+            </span>
+            <div className="w-px h-3.5 bg-zinc-600" />
+            <span className="text-zinc-400 text-[11px] font-medium uppercase tracking-[0.18em]">
+              Ducati · Indian · Benelli
+            </span>
           </motion.div>
 
           {/* Headline */}

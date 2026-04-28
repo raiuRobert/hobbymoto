@@ -3,9 +3,11 @@
     "home": "Home",
     "about": "About us",
     "usedBikes": "Used motorcycles",
+    "bikes": "Motorcycles",
     "newBikes": "New motorcycles",
     "hotel": "Moto Hotel",
     "rental": "Rentals",
+    "events": "Events",
     "contact": "Contact"
   },
   "hero": {
