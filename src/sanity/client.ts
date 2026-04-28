@@ -117,15 +117,15 @@ export type SanityEventCard = Pick<
 
 const EVENT_FIELDS = `
   "id": slug.current,
-  title,
+  "title": select($locale == "en" && defined(titleEn) => titleEn, title),
+  "excerpt": select($locale == "en" && defined(excerptEn) => excerptEn, excerpt),
+  "description": select($locale == "en" && defined(descriptionEn) => descriptionEn, description),
   date,
   endDate,
   location,
   category,
   "image": mainImage.asset->url,
   "gallery": gallery[defined(asset)][].asset->url,
-  excerpt,
-  description,
   featured
 `;
 

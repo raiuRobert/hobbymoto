@@ -7,9 +7,14 @@ export const eventSchema = defineType({
   fields: [
     defineField({
       name: "title",
-      title: "Titlu eveniment",
+      title: "Titlu eveniment — RO",
       type: "string",
       validation: (R) => R.required(),
+    }),
+    defineField({
+      name: "titleEn",
+      title: "Titlu eveniment — EN",
+      type: "string",
     }),
     defineField({
       name: "slug",
@@ -52,13 +57,25 @@ export const eventSchema = defineType({
     }),
     defineField({
       name: "excerpt",
-      title: "Descriere scurtă (pentru card)",
+      title: "Descriere scurtă — RO (pentru card)",
+      type: "text",
+      rows: 2,
+    }),
+    defineField({
+      name: "excerptEn",
+      title: "Descriere scurtă — EN (pentru card)",
       type: "text",
       rows: 2,
     }),
     defineField({
       name: "description",
-      title: "Descriere completă",
+      title: "Descriere completă — RO",
+      type: "text",
+      rows: 8,
+    }),
+    defineField({
+      name: "descriptionEn",
+      title: "Descriere completă — EN",
       type: "text",
       rows: 8,
     }),

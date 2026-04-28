@@ -12,11 +12,13 @@ interface NavbarProps {
   locale: Locale;
 }
 
-type DropdownItem =
-  | { type: "header"; label: string }
+type DropdownLeaf =
   | { type: "external"; label: string; href: string }
-  | { type: "internal"; label: string; href: string }
-  | { type: "divider" };
+  | { type: "internal"; label: string; href: string };
+
+type DropdownItem =
+  | { type: "section"; label: string; items: DropdownLeaf[] }
+  | DropdownLeaf;
 
 type NavLink =
   | { href: string; label: string; children?: never }
@@ -28,6 +30,8 @@ export default function Navbar({ locale }: NavbarProps) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [bikesOpen, setBikesOpen] = useState(false);
+  const [openSectionIndex, setOpenSectionIndex] = useState<number | null>(null);
+  const [mobileSectionIndex, setMobileSectionIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -44,14 +48,18 @@ export default function Navbar({ locale }: NavbarProps) {
     {
       label: t("bikes"),
       children: [
-        { type: "header", label: t("newBikes") },
-        { type: "external", label: "Ducati",    href: "https://ducaticonstanta.ro/" },
-        { type: "external", label: "Indian",    href: "https://ducaticonstanta.ro/" },
-        { type: "external", label: "Benelli",   href: "https://www.benelli-moto.ro/" },
-        { type: "external", label: "Italjet",   href: "https://www.italjet.com/en" },
-        { type: "external", label: "Malaguti",  href: "https://ducaticonstanta.ro/" },
-        { type: "external", label: "Lambretta", href: "https://ducaticonstanta.ro/" },
-        { type: "divider" },
+        {
+          type: "section",
+          label: t("newBikes"),
+          items: [
+            { type: "external", label: "Ducati",    href: "https://ducaticonstanta.ro/" },
+            { type: "external", label: "Indian",    href: "https://ducaticonstanta.ro/" },
+            { type: "external", label: "Benelli",   href: "https://www.benelli-moto.ro/" },
+            { type: "external", label: "Italjet",   href: "https://www.italjet.com/en" },
+            { type: "external", label: "Malaguti",  href: "https://ducaticonstanta.ro/" },
+            { type: "external", label: "Lambretta", href: "https://ducaticonstanta.ro/" },
+          ],
+        },
         { type: "internal", label: t("usedBikes"), href: `/${locale}/motociclete-rulate` },
       ],
     },
@@ -61,19 +69,7 @@ export default function Navbar({ locale }: NavbarProps) {
     { href: `/${locale}/contact`, label: t("contact") },
   ];
 
-  function renderDropdownItem(item: DropdownItem, i: number) {
-    if (item.type === "header") {
-      return (
-        <li key={i} className="px-4 pt-3 pb-1">
-          <span className="text-sm font-bold text-white">
-            {item.label}
-          </span>
-        </li>
-      );
-    }
-    if (item.type === "divider") {
-      return <li key={i} className="border-t border-zinc-800 my-1" />;
-    }
+  function renderLeaf(item: DropdownLeaf, i: number) {
     if (item.type === "external") {
       return (
         <li key={i}>
@@ -89,14 +85,13 @@ export default function Navbar({ locale }: NavbarProps) {
         </li>
       );
     }
-    // internal — same weight as header
     return (
       <li key={i}>
         <Link
           href={item.href}
           className={cn(
-            "block px-4 py-2.5 text-sm font-bold transition-colors hover:bg-zinc-800",
-            pathname === item.href ? "text-red-500" : "text-white hover:text-white"
+            "block px-6 py-1.5 text-sm transition-colors hover:bg-zinc-800",
+            pathname === item.href ? "text-red-500 font-semibold" : "text-zinc-400 hover:text-white"
           )}
         >
           {item.label}
@@ -105,17 +100,45 @@ export default function Navbar({ locale }: NavbarProps) {
     );
   }
 
-  function renderMobileDropdownItem(item: DropdownItem, i: number) {
-    if (item.type === "header") {
+  function renderDropdownItem(item: DropdownItem, i: number) {
+    if (item.type === "section") {
+      const isOpen = openSectionIndex === i;
       return (
-        <div key={i} className="text-sm font-bold text-white px-3 pt-3 pb-1">
-          {item.label}
-        </div>
+        <li key={i}>
+          <button
+            onClick={() => setOpenSectionIndex(isOpen ? null : i)}
+            className="flex items-center justify-between w-full px-4 py-2.5 text-sm font-bold text-white hover:bg-zinc-800 transition-colors"
+          >
+            {item.label}
+            <ChevronDown className={cn("w-3 h-3 text-zinc-500 transition-transform duration-200", isOpen && "rotate-180")} />
+          </button>
+          {isOpen && (
+            <ul className="pb-1">
+              {item.items.map((child, j) => renderLeaf(child, j))}
+            </ul>
+          )}
+        </li>
       );
     }
-    if (item.type === "divider") {
-      return <div key={i} className="border-t border-zinc-800 my-1" />;
+    if (item.type === "internal") {
+      return (
+        <li key={i}>
+          <Link
+            href={item.href}
+            className={cn(
+              "block px-4 py-2.5 text-sm font-bold transition-colors hover:bg-zinc-800",
+              pathname === item.href ? "text-red-500" : "text-white hover:text-white"
+            )}
+          >
+            {item.label}
+          </Link>
+        </li>
+      );
     }
+    return renderLeaf(item, i);
+  }
+
+  function renderMobileLeaf(item: DropdownLeaf, i: number) {
     if (item.type === "external") {
       return (
         <a
@@ -124,29 +147,49 @@ export default function Navbar({ locale }: NavbarProps) {
           target="_blank"
           rel="noopener noreferrer"
           onClick={() => setOpen(false)}
-          className="flex items-center justify-between pl-6 pr-3 py-1.5 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors"
+          className="flex items-center justify-between pl-8 pr-3 py-1.5 text-sm text-zinc-400 hover:text-white hover:bg-zinc-800 rounded transition-colors"
         >
           <span>{item.label}</span>
           <ExternalLink className="w-3 h-3 text-zinc-600" />
         </a>
       );
     }
-    // internal — bold, same level as header
     return (
       <Link
         key={i}
         href={item.href}
         onClick={() => setOpen(false)}
         className={cn(
-          "block px-3 py-2.5 text-sm font-bold rounded transition-colors",
-          pathname === item.href
-            ? "text-red-500 bg-zinc-800"
-            : "text-white hover:text-white hover:bg-zinc-800"
+          "block pl-8 pr-3 py-1.5 text-sm rounded transition-colors",
+          pathname === item.href ? "text-red-500 font-semibold" : "text-zinc-400 hover:text-white hover:bg-zinc-800"
         )}
       >
         {item.label}
       </Link>
     );
+  }
+
+  function renderMobileDropdownItem(item: DropdownItem, i: number) {
+    if (item.type === "section") {
+      const isOpen = mobileSectionIndex === i;
+      return (
+        <div key={i}>
+          <button
+            onClick={() => setMobileSectionIndex(isOpen ? null : i)}
+            className="flex items-center justify-between w-full px-3 py-2.5 text-sm font-bold text-white hover:bg-zinc-800 rounded transition-colors"
+          >
+            {item.label}
+            <ChevronDown className={cn("w-3 h-3 text-zinc-500 transition-transform duration-200", isOpen && "rotate-180")} />
+          </button>
+          {isOpen && (
+            <div className="pb-1">
+              {item.items.map((child, j) => renderMobileLeaf(child, j))}
+            </div>
+          )}
+        </div>
+      );
+    }
+    return renderMobileLeaf(item, i);
   }
 
   return (
@@ -161,7 +204,7 @@ export default function Navbar({ locale }: NavbarProps) {
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16 md:h-20">
 
         {/* Logo */}
-        <Link href={`/${locale}`} className="relative flex items-center justify-center group w-[90px] h-[52px]">
+        <Link href={`/${locale}`} className="relative flex items-center justify-center group w-[90px] h-[52px] overflow-visible">
           <Image
             src="/logo-silhouette.svg"
             alt="HobbyMoto"
@@ -170,12 +213,10 @@ export default function Navbar({ locale }: NavbarProps) {
             className="brightness-0 invert group-hover:opacity-20 transition-all duration-300"
             priority
           />
-          <span
-            className="absolute inset-0 flex items-center justify-center text-red-600 opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 uppercase tracking-widest"
-            style={{ fontFamily: "Bauhaus93, 'Josefin Sans', sans-serif", fontSize: 22 }}
-          >
-            Hobbymoto
-          </span>
+          <div className="absolute inset-0 flex items-center justify-center opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo-text.svg?v=4" alt="" aria-hidden className="shrink-0" style={{ width: 155, maxWidth: "none" }} />
+          </div>
         </Link>
 
         {/* Desktop Nav */}

@@ -48,7 +48,7 @@ export default function Services({ locale }: ServicesProps) {
           transition={{ duration: 0.5 }}
           className="text-center mb-14"
         >
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Services</p>
+          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">{t("sectionLabel")}</p>
           <h2 className="text-3xl sm:text-4xl font-black text-white">{t("title")}</h2>
           <p className="text-zinc-500 mt-3 max-w-xl mx-auto text-sm">{t("subtitle")}</p>
         </motion.div>
@@ -83,9 +83,6 @@ export default function Services({ locale }: ServicesProps) {
 
                 {/* Content */}
                 <div className="absolute bottom-0 left-0 right-0 p-7">
-                  <span className="inline-block text-[10px] font-black uppercase tracking-widest text-red-400 mb-3 bg-red-950/50 border border-red-800/40 px-2.5 py-1 rounded-full">
-                    {service.label}
-                  </span>
                   <h3 className="text-white font-black text-2xl mb-2 leading-tight">
                     {t(service.titleKey)}
                   </h3>
@@ -93,7 +90,7 @@ export default function Services({ locale }: ServicesProps) {
                     {t(service.descKey)}
                   </p>
                   <div className="flex items-center gap-2 text-red-400 group-hover:text-red-300 text-sm font-bold uppercase tracking-widest transition-colors">
-                    <span>Află mai mult</span>
+                    <span>{t("learnMore")}</span>
                     <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform duration-300" />
                   </div>
                 </div>

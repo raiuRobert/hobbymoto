@@ -12,7 +12,7 @@ export default async function EventDetailPage({
   const { locale, id } = await params;
   let event: SanityEvent | null = null;
   try {
-    event = await client.fetch(EVENT_BY_SLUG_QUERY, { slug: id });
+    event = await client.fetch(EVENT_BY_SLUG_QUERY, { slug: id, locale });
   } catch {}
 
   if (!event) notFound();
