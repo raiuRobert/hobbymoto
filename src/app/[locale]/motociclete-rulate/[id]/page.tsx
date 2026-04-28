@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { client, BIKE_BY_SLUG_QUERY, SIMILAR_BIKES_QUERY, type SanityBike, type SanityBikeCard } from "@/sanity/client";
-import BikeDetailClient from "./BikeDetailClient";
+import BikeDetailClient from "@/components/bikes/BikeDetailClient";
 
 export const revalidate = 60;
 

@@ -1,5 +1,5 @@
 import { client, EVENTS_QUERY, type SanityEvent } from "@/sanity/client";
-import EventsClient from "./EventsClient";
+import EventsClient from "@/components/events/EventsClient";
 
 export const revalidate = 60;
 

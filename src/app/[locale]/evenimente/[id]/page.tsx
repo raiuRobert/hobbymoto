@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { client, EVENT_BY_SLUG_QUERY, type SanityEvent } from "@/sanity/client";
-import EventDetailClient from "./EventDetailClient";
+import EventDetailClient from "@/components/events/EventDetailClient";
 
 export const revalidate = 60;
 

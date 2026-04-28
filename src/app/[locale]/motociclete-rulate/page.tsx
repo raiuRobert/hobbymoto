@@ -1,5 +1,5 @@
 import { client, USED_BIKES_QUERY, type SanityBike } from "@/sanity/client";
-import RulateClient from "./RulateClient";
+import RulateClient from "@/components/bikes/RulateClient";
 
 // Re-fetch from Sanity at most every 60 seconds (stale-while-revalidate)
 export const revalidate = 60;
