@@ -3,7 +3,8 @@ import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, AnimatePresence } from "framer-motion";
-import { Calendar, MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, Tag, CalendarPlus } from "lucide-react";
+import { Calendar, MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, CalendarPlus } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type SanityEvent } from "@/sanity/client";
 
 interface Props {
@@ -11,17 +12,10 @@ interface Props {
   locale: string;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  "test-ride": "Test Ride",
-  expozitie: "Expoziție",
-  meetup: "Meetup",
-  promotie: "Promoție",
-  circuit: "Circuit",
-  altele: "Altele",
-};
+const LOCALE_MAP: Record<string, string> = { ro: "ro-RO", en: "en-US" };
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("ro-RO", {
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(LOCALE_MAP[locale] ?? locale, {
     weekday: "long",
     day: "numeric",
     month: "long",
@@ -29,8 +23,8 @@ function formatDate(iso: string) {
   });
 }
 
-function formatTime(iso: string) {
-  return new Date(iso).toLocaleTimeString("ro-RO", {
+function formatTime(iso: string, locale: string) {
+  return new Date(iso).toLocaleTimeString(LOCALE_MAP[locale] ?? locale, {
     hour: "2-digit",
     minute: "2-digit",
   });
@@ -59,7 +53,17 @@ function googleCalendarUrl(event: SanityEvent) {
 }
 
 export default function EventDetailClient({ event, locale }: Props) {
+  const t = useTranslations("events");
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
+
+  const categoryLabels: Record<string, string> = {
+    "test-ride": t("catTestRide"),
+    expozitie: t("catExpozitie"),
+    meetup: t("catMeetup"),
+    promotie: t("catPromotie"),
+    circuit: t("catCircuit"),
+    altele: t("catAltele"),
+  };
 
   const allImages = [
     ...(event.image ? [event.image] : []),
@@ -96,20 +100,19 @@ export default function EventDetailClient({ event, locale }: Props) {
           className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-sm mb-8 transition-colors"
         >
           <ArrowLeft className="w-4 h-4" />
-          Înapoi la evenimente
+          {t("back")}
         </Link>
 
         {/* Meta */}
         <div className="flex flex-wrap gap-3 mb-4">
           {isUpcoming(event.date) && (
             <span className="bg-red-600 text-white text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm">
-              Urmează
+              {t("upcoming")}
             </span>
           )}
           {event.category && (
-            <span className="flex items-center gap-1.5 bg-zinc-800 text-zinc-300 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-sm">
-              <Tag className="w-3 h-3" />
-              {CATEGORY_LABELS[event.category] ?? event.category}
+            <span className="bg-zinc-800 text-zinc-300 text-xs font-semibold uppercase tracking-wider px-3 py-1 rounded-sm">
+              {categoryLabels[event.category] ?? event.category}
             </span>
           )}
         </div>
@@ -123,9 +126,9 @@ export default function EventDetailClient({ event, locale }: Props) {
           <div className="flex items-start gap-3 flex-1">
             <Calendar className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
             <div>
-              <p className="text-white font-semibold capitalize">{formatDate(event.date)}</p>
-              <p className="text-zinc-400 text-sm">{formatTime(event.date)}
-                {event.endDate && ` – ${formatTime(event.endDate)}`}
+              <p className="text-white font-semibold capitalize">{formatDate(event.date, locale)}</p>
+              <p className="text-zinc-400 text-sm">{formatTime(event.date, locale)}
+                {event.endDate && ` – ${formatTime(event.endDate, locale)}`}
               </p>
             </div>
           </div>
@@ -133,7 +136,7 @@ export default function EventDetailClient({ event, locale }: Props) {
             <div className="flex items-start gap-3 flex-1">
               <MapPin className="w-5 h-5 text-red-500 mt-0.5 shrink-0" />
               <div>
-                <p className="text-zinc-400 text-sm font-medium uppercase tracking-wider mb-0.5">Locație</p>
+                <p className="text-zinc-400 text-sm font-medium uppercase tracking-wider mb-0.5">{t("location")}</p>
                 <p className="text-white font-semibold">{event.location}</p>
               </div>
             </div>
@@ -146,7 +149,7 @@ export default function EventDetailClient({ event, locale }: Props) {
               className="flex items-center gap-2 sm:ml-auto self-center bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 hover:border-zinc-500 text-white text-sm font-semibold px-4 py-2.5 rounded-sm transition-all duration-200 shrink-0"
             >
               <CalendarPlus className="w-4 h-4 text-red-500" />
-              Adaugă în Google Calendar
+              {t("addToCalendar")}
             </a>
           )}
         </div>
@@ -164,7 +167,7 @@ export default function EventDetailClient({ event, locale }: Props) {
         {/* Gallery */}
         {allImages.length > 1 && (
           <div className="mb-12">
-            <h2 className="text-white font-bold text-xl mb-4">Galerie foto</h2>
+            <h2 className="text-white font-bold text-xl mb-4">{t("gallery")}</h2>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {allImages.map((src, i) => (
                 <button

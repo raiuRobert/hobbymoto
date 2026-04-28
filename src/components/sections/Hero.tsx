@@ -63,7 +63,7 @@ export default function Hero({ locale }: HeroProps) {
           <motion.div {...fadeUp(0)} className="flex items-center gap-3 mb-8">
             <div className="w-8 h-px bg-red-500" />
             <span className="text-red-500 text-[11px] font-bold uppercase tracking-[0.22em]">
-              Dealer oficial
+              {t("badgeDealer")}
             </span>
             <div className="w-px h-3.5 bg-zinc-600" />
             <span className="text-zinc-400 text-[11px] font-medium uppercase tracking-[0.18em]">
@@ -124,10 +124,10 @@ export default function Hero({ locale }: HeroProps) {
             className="mt-20 flex flex-wrap gap-10 border-t border-zinc-800/60 pt-10"
           >
             {[
-              { value: "1999", label: "Înființat" },
-              { value: "6+", label: "Mărci premium" },
-              { value: "200m²", label: "Showroom" },
-              { value: "★ 4.9", label: "Google Reviews" },
+              { value: "1999", label: t("statFounded") },
+              { value: "6+", label: t("statBrands") },
+              { value: "200m²", label: t("statShowroom") },
+              { value: "★ 4.9", label: t("statReviews") },
             ].map((stat, i) => (
               <motion.div
                 key={stat.label}

@@ -16,7 +16,12 @@
     "titleAccent": "Motorcycles",
     "subtitle": "Discover the finest selection of new and used motorcycles in Romania. Experienced experts, premium service, fair prices.",
     "cta": "Explore inventory",
-    "ctaSecondary": "Contact us"
+    "ctaSecondary": "Contact us",
+    "badgeDealer": "Official dealer",
+    "statFounded": "Founded",
+    "statBrands": "Premium brands",
+    "statShowroom": "Showroom",
+    "statReviews": "Google Reviews"
   },
   "brands": {
     "title": "Brands we represent",
@@ -31,8 +36,12 @@
     "km": "km",
     "year": "Year",
     "price": "Price",
-    "details": "View details",
-    "contact": "Request offer"
+    "details": "Details",
+    "contact": "Request offer",
+    "sectionLabel": "Inventory",
+    "warrantyShort": "WARR.",
+    "powerUnit": "HP",
+    "priceOnRequest": "Price on request"
   },
   "services": {
     "title": "Everything you need",
@@ -42,7 +51,9 @@
     "hotelTitle": "Moto Hotel",
     "hotelDesc": "Accommodation and secure parking for motorcyclists. The perfect stop in Transylvania.",
     "rentalTitle": "Rentals",
-    "rentalDesc": "Rent a premium motorcycle for a day, weekend, or a longer adventure."
+    "rentalDesc": "Rent a premium motorcycle for a day, weekend, or a longer adventure.",
+    "sectionLabel": "Services",
+    "learnMore": "Learn more"
   },
   "testimonials": {
     "title": "What our clients say",
@@ -87,5 +98,30 @@
     "sortPriceLow": "Price: low to high",
     "sortPriceHigh": "Price: high to low",
     "noResults": "No results found."
+  },
+  "events": {
+    "title": "Events",
+    "subtitle": "Test rides, exhibitions, meetups and more. Stay up to date with everything happening at HobbyMoto.",
+    "tabAll": "All",
+    "tabUpcoming": "Upcoming",
+    "tabPast": "Past",
+    "upcoming": "Upcoming",
+    "noEvents": "No events found.",
+    "readMore": "Read more",
+    "sectionLabel": "Events",
+    "sectionTitleUpcoming": "What's next",
+    "sectionTitleRecent": "Recent events",
+    "sectionSubtitle": "Test rides, meetups, exhibitions and more",
+    "viewAll": "View all",
+    "back": "Back to events",
+    "location": "Location",
+    "addToCalendar": "Add to Google Calendar",
+    "gallery": "Photo gallery",
+    "catTestRide": "Test Ride",
+    "catExpozitie": "Exhibition",
+    "catMeetup": "Meetup",
+    "catPromotie": "Promotion",
+    "catCircuit": "Circuit",
+    "catAltele": "Other"
   }
 }

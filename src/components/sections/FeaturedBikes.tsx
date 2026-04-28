@@ -24,7 +24,7 @@ export default function FeaturedBikes({ locale }: FeaturedBikesProps) {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Inventar</p>
+            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">{t("sectionLabel")}</p>
             <h2 className="text-3xl sm:text-4xl font-black text-white">{t("title")}</h2>
             <p className="text-zinc-500 mt-2 text-sm">{t("subtitle")}</p>
           </motion.div>
@@ -74,11 +74,11 @@ export default function FeaturedBikes({ locale }: FeaturedBikesProps) {
                   <div className={`absolute top-3 left-3 px-2.5 py-1 text-[10px] font-black uppercase tracking-widest rounded-sm ${
                     bike.type === "new" ? "bg-red-600 text-white" : "bg-zinc-800/90 backdrop-blur-sm text-zinc-200 border border-zinc-700/60"
                   }`}>
-                    {bike.type === "new" ? "NOU" : "RULAT"}
+                    {bike.type === "new" ? t("new") : t("used")}
                   </div>
                   {bike.warranty && (
                     <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 bg-red-600/90 backdrop-blur-sm text-white text-[10px] font-black rounded-sm">
-                      <Shield className="w-3 h-3" /> GAR.
+                      <Shield className="w-3 h-3" /> {t("warrantyShort")}
                     </div>
                   )}
 
@@ -103,7 +103,7 @@ export default function FeaturedBikes({ locale }: FeaturedBikesProps) {
                       </span>
                     )}
                     <span className="inline-flex items-center gap-1 bg-zinc-800 text-zinc-400 text-[11px] px-2.5 py-1 rounded-full">
-                      <Zap className="w-3 h-3" />{bike.power.split(" ")[0]} CP
+                      <Zap className="w-3 h-3" />{bike.power.split(" ")[0]} {t("powerUnit")}
                     </span>
                   </div>
 
@@ -111,16 +111,16 @@ export default function FeaturedBikes({ locale }: FeaturedBikesProps) {
                   <div className="flex items-center justify-between border-t border-zinc-800/80 pt-4">
                     {bike.price ? (
                       <div>
-                        <p className="text-[10px] text-zinc-600 uppercase tracking-widest mb-0.5">Preț</p>
+                        <p className="text-[10px] text-zinc-600 uppercase tracking-widest mb-0.5">{t("price")}</p>
                         <p className="text-white font-black text-xl leading-none">
                           {bike.price.toLocaleString("de-DE")} <span className="text-red-500">€</span>
                         </p>
                       </div>
                     ) : (
-                      <p className="text-zinc-400 text-sm font-bold">Preț la cerere</p>
+                      <p className="text-zinc-400 text-sm font-bold">{t("priceOnRequest")}</p>
                     )}
                     <span className="text-red-500 group-hover:text-red-400 text-xs font-black uppercase tracking-widest transition-colors inline-flex items-center gap-1">
-                      Detalii <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
+                      {t("details")} <ArrowRight className="w-3 h-3 group-hover:translate-x-1 transition-transform" />
                     </span>
                   </div>
                 </div>

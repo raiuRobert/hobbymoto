@@ -16,7 +16,12 @@
     "titleAccent": "Motociclete",
     "subtitle": "Descoperă cea mai bună selecție de motociclete noi și rulate din România. Experți cu experiență, servicii premium, prețuri corecte.",
     "cta": "Explorează inventarul",
-    "ctaSecondary": "Contactează-ne"
+    "ctaSecondary": "Contactează-ne",
+    "badgeDealer": "Dealer oficial",
+    "statFounded": "Înființat",
+    "statBrands": "Mărci premium",
+    "statShowroom": "Showroom",
+    "statReviews": "Google Reviews"
   },
   "brands": {
     "title": "Mărci pe care le reprezentăm",
@@ -31,8 +36,12 @@
     "km": "km",
     "year": "An",
     "price": "Preț",
-    "details": "Vezi detalii",
-    "contact": "Solicită ofertă"
+    "details": "Detalii",
+    "contact": "Solicită ofertă",
+    "sectionLabel": "Inventar",
+    "warrantyShort": "GAR.",
+    "powerUnit": "CP",
+    "priceOnRequest": "Preț la cerere"
   },
   "services": {
     "title": "Tot ce ai nevoie",
@@ -42,7 +51,9 @@
     "hotelTitle": "Moto Hotel",
     "hotelDesc": "Cazare și parcare securizată pentru motocicliști. Locul perfect pentru popas în Ardeal.",
     "rentalTitle": "Închirieri",
-    "rentalDesc": "Închiriază o motocicletă premium pentru zi, weekend sau o aventură mai lungă."
+    "rentalDesc": "Închiriază o motocicletă premium pentru zi, weekend sau o aventură mai lungă.",
+    "sectionLabel": "Servicii",
+    "learnMore": "Află mai mult"
   },
   "testimonials": {
     "title": "Ce spun clienții noștri",
@@ -87,5 +98,30 @@
     "sortPriceLow": "Preț crescător",
     "sortPriceHigh": "Preț descrescător",
     "noResults": "Niciun rezultat găsit."
+  },
+  "events": {
+    "title": "Evenimente",
+    "subtitle": "Test ride-uri, expoziții, meetup-uri și altele. Fii la curent cu tot ce se întâmplă la HobbyMoto.",
+    "tabAll": "Toate",
+    "tabUpcoming": "Viitoare",
+    "tabPast": "Trecute",
+    "upcoming": "Urmează",
+    "noEvents": "Niciun eveniment găsit.",
+    "readMore": "Citește mai mult",
+    "sectionLabel": "Evenimente",
+    "sectionTitleUpcoming": "Ce urmează",
+    "sectionTitleRecent": "Evenimente recente",
+    "sectionSubtitle": "Test ride-uri, meetup-uri, expoziții și mai mult",
+    "viewAll": "Vezi toate",
+    "back": "Înapoi la evenimente",
+    "location": "Locație",
+    "addToCalendar": "Adaugă în Google Calendar",
+    "gallery": "Galerie foto",
+    "catTestRide": "Test Ride",
+    "catExpozitie": "Expoziție",
+    "catMeetup": "Meetup",
+    "catPromotie": "Promoție",
+    "catCircuit": "Circuit",
+    "catAltele": "Altele"
   }
 }

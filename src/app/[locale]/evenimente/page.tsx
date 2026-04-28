@@ -11,7 +11,7 @@ export default async function EvenimentePage({
   const { locale } = await params;
   let events: SanityEvent[] = [];
   try {
-    events = await client.fetch(EVENTS_QUERY);
+    events = await client.fetch(EVENTS_QUERY, { locale });
   } catch {
     events = [];
   }

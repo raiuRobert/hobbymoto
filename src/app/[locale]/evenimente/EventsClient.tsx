@@ -3,7 +3,8 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { Calendar, MapPin, Tag } from "lucide-react";
+import { Calendar, MapPin } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { type SanityEvent } from "@/sanity/client";
 
 interface Props {
@@ -11,17 +12,10 @@ interface Props {
   locale: string;
 }
 
-const CATEGORY_LABELS: Record<string, string> = {
-  "test-ride": "Test Ride",
-  expozitie: "Expoziție",
-  meetup: "Meetup",
-  promotie: "Promoție",
-  circuit: "Circuit",
-  altele: "Altele",
-};
+const LOCALE_MAP: Record<string, string> = { ro: "ro-RO", en: "en-US" };
 
-function formatDate(iso: string) {
-  return new Date(iso).toLocaleDateString("ro-RO", {
+function formatDate(iso: string, locale: string) {
+  return new Date(iso).toLocaleDateString(LOCALE_MAP[locale] ?? locale, {
     day: "numeric",
     month: "long",
     year: "numeric",
@@ -35,7 +29,17 @@ function isUpcoming(iso: string) {
 type Tab = "toate" | "viitoare" | "trecute";
 
 export default function EventsClient({ events, locale }: Props) {
+  const t = useTranslations("events");
   const [tab, setTab] = useState<Tab>("toate");
+
+  const categoryLabels: Record<string, string> = {
+    "test-ride": t("catTestRide"),
+    expozitie: t("catExpozitie"),
+    meetup: t("catMeetup"),
+    promotie: t("catPromotie"),
+    circuit: t("catCircuit"),
+    altele: t("catAltele"),
+  };
 
   const filtered = useMemo(() => {
     if (tab === "viitoare")
@@ -48,9 +52,9 @@ export default function EventsClient({ events, locale }: Props) {
   }, [events, tab]);
 
   const tabs: { key: Tab; label: string }[] = [
-    { key: "toate", label: "Toate" },
-    { key: "viitoare", label: "Viitoare" },
-    { key: "trecute", label: "Trecute" },
+    { key: "toate", label: t("tabAll") },
+    { key: "viitoare", label: t("tabUpcoming") },
+    { key: "trecute", label: t("tabPast") },
   ];
 
   return (
@@ -61,25 +65,25 @@ export default function EventsClient({ events, locale }: Props) {
           HobbyMoto
         </p>
         <h1 className="text-4xl sm:text-5xl font-black text-white tracking-tight mb-4">
-          Evenimente
+          {t("title")}
         </h1>
         <p className="text-zinc-400 text-lg max-w-xl">
-          Test ride-uri, expoziții, meetup-uri și altele. Fii la curent cu tot ce se întâmplă la HobbyMoto.
+          {t("subtitle")}
         </p>
 
         {/* Tabs */}
         <div className="flex gap-1 mt-8 bg-zinc-900 rounded-sm p-1 w-fit">
-          {tabs.map((t) => (
+          {tabs.map((tb) => (
             <button
-              key={t.key}
-              onClick={() => setTab(t.key)}
+              key={tb.key}
+              onClick={() => setTab(tb.key)}
               className={`px-5 py-2 text-sm font-semibold rounded-sm transition-all duration-200 ${
-                tab === t.key
+                tab === tb.key
                   ? "bg-red-600 text-white"
                   : "text-zinc-400 hover:text-white"
               }`}
             >
-              {t.label}
+              {tb.label}
             </button>
           ))}
         </div>
@@ -89,7 +93,7 @@ export default function EventsClient({ events, locale }: Props) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {filtered.length === 0 ? (
           <p className="text-zinc-500 text-center py-20">
-            Niciun eveniment găsit.
+            {t("noEvents")}
           </p>
         ) : (
           <motion.div
@@ -120,27 +124,24 @@ export default function EventsClient({ events, locale }: Props) {
                           <Calendar className="w-12 h-12 text-zinc-700" />
                         </div>
                       )}
-                      {/* Upcoming badge */}
                       {isUpcoming(event.date) && (
                         <span className="absolute top-3 left-3 bg-red-600 text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-sm">
-                          Urmează
+                          {t("upcoming")}
                         </span>
                       )}
-                      {/* Category badge */}
                       {event.category && (
                         <span className="absolute top-3 right-3 bg-zinc-900/80 backdrop-blur text-zinc-300 text-[10px] font-semibold uppercase tracking-wider px-2.5 py-1 rounded-sm">
-                          {CATEGORY_LABELS[event.category] ?? event.category}
+                          {categoryLabels[event.category] ?? event.category}
                         </span>
                       )}
                     </div>
 
                     {/* Content */}
                     <div className="flex flex-col flex-1 p-5 gap-3">
-                      {/* Date & Location */}
                       <div className="flex flex-wrap gap-x-4 gap-y-1">
                         <span className="flex items-center gap-1.5 text-red-500 text-xs font-semibold">
                           <Calendar className="w-3.5 h-3.5" />
-                          {formatDate(event.date)}
+                          {formatDate(event.date, locale)}
                         </span>
                         {event.location && (
                           <span className="flex items-center gap-1.5 text-zinc-500 text-xs">
@@ -161,7 +162,7 @@ export default function EventsClient({ events, locale }: Props) {
                       )}
 
                       <span className="text-red-500 text-sm font-semibold mt-auto pt-1 group-hover:underline">
-                        Citește mai mult →
+                        {t("readMore")} →
                       </span>
                     </div>
                   </div>
