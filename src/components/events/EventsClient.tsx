@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import { Calendar, MapPin } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type SanityEvent } from "@/sanity/client";
+import { SITE_TIME_ZONE } from "@/lib/utils";
 
 interface Props {
   events: SanityEvent[];
@@ -19,6 +20,7 @@ function formatDate(iso: string, locale: string) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: SITE_TIME_ZONE,
   });
 }
 

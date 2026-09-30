@@ -5,7 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Gauge, Calendar, Zap, SlidersHorizontal, Phone, Shield, ArrowRight, X } from "lucide-react";
 import { contactInfo } from "@/lib/data";
-import { formatKm } from "@/lib/utils";
+import { formatKm, currencySymbol, bikeCover } from "@/lib/utils";
 import { type SanityBike } from "@/sanity/client";
 
 const categoryLabels: Record<string, string> = {
@@ -37,8 +37,13 @@ export default function RulateClient({ bikes, locale }: Props) {
     let list = bikes;
     if (brand !== "Toate") list = list.filter((b) => b.brand === brand);
     if (category !== "Toate") list = list.filter((b) => b.category === category);
-    if (sort === "price-low")  list = [...list].sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
-    if (sort === "price-high") list = [...list].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+    // "Price on request" bikes have no price; keep them at the end either way.
+    const byPrice = (dir: 1 | -1) => (a: SanityBike, b: SanityBike) => {
+      if (!a.price || !b.price) return (a.price ? 0 : 1) - (b.price ? 0 : 1);
+      return dir * (a.price - b.price);
+    };
+    if (sort === "price-low")  list = [...list].sort(byPrice(1));
+    if (sort === "price-high") list = [...list].sort(byPrice(-1));
     if (sort === "km-low")     list = [...list].sort((a, b) => a.km - b.km);
     if (sort === "km-high")    list = [...list].sort((a, b) => b.km - a.km);
     if (sort === "newest")     list = [...list].sort((a, b) => b.year - a.year);
@@ -46,12 +51,6 @@ export default function RulateClient({ bikes, locale }: Props) {
   }, [bikes, brand, category, sort]);
 
   const activeFilterCount = (brand !== "Toate" ? 1 : 0) + (category !== "Toate" ? 1 : 0);
-
-  function getBikeImage(bike: SanityBike): string {
-    if (bike.gallery && bike.gallery.length > 0) return bike.gallery[0];
-    if (bike.image) return bike.image;
-    return "/bikes/placeholder.jpg";
-  }
 
   return (
     <div className="min-h-screen bg-zinc-950">
@@ -191,7 +190,9 @@ export default function RulateClient({ bikes, locale }: Props) {
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             <AnimatePresence mode="popLayout">
-              {filtered.map((bike, i) => (
+              {filtered.map((bike, i) => {
+                const cover = bikeCover(bike);
+                return (
                 <motion.div
                   key={bike.id}
                   layout
@@ -205,14 +206,16 @@ export default function RulateClient({ bikes, locale }: Props) {
                     className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-red-950/30"
                   >
                     <div className="relative h-56 bg-zinc-800 overflow-hidden">
-                      <Image
-                        src={getBikeImage(bike)}
-                        alt={`${bike.brand} ${bike.model}`}
-                        fill
-                        sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                        quality={90}
-                        className="object-cover group-hover:scale-107 transition-transform duration-600 ease-out"
-                      />
+                      {cover && (
+                        <Image
+                          src={cover}
+                          alt={`${bike.brand} ${bike.model}`}
+                          fill
+                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          quality={90}
+                          className="object-cover group-hover:scale-107 transition-transform duration-600 ease-out"
+                        />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />
                       <div className="absolute top-3 left-3 px-2.5 py-1 bg-zinc-900/80 backdrop-blur-sm text-zinc-200 text-[10px] font-black uppercase tracking-widest rounded-sm border border-zinc-700/40">
                         RULAT
@@ -236,8 +239,8 @@ export default function RulateClient({ bikes, locale }: Props) {
                           { icon: Calendar, value: bike.year },
                           { icon: Gauge, value: `${formatKm(bike.km)} km` },
                           { icon: Zap, value: bike.engine?.split(" ")[0] ?? "—" },
-                        ].map(({ icon: Icon, value }) => (
-                          <div key={String(value)} className="flex flex-col items-center gap-1.5 bg-zinc-800/70 rounded-sm p-2.5 border border-zinc-700/40">
+                        ].map(({ icon: Icon, value }, j) => (
+                          <div key={j} className="flex flex-col items-center gap-1.5 bg-zinc-800/70 rounded-sm p-2.5 border border-zinc-700/40">
                             <Icon className="w-3.5 h-3.5 text-zinc-500" />
                             <span className="text-white text-xs font-bold">{value}</span>
                           </div>
@@ -249,7 +252,7 @@ export default function RulateClient({ bikes, locale }: Props) {
                           <div>
                             <p className="text-zinc-600 text-[10px] uppercase tracking-widest mb-0.5">Preț</p>
                             <p className="text-white font-black text-2xl leading-none">
-                              {bike.price.toLocaleString("de-DE")} <span className="text-red-500 text-lg">€</span>
+                              {bike.price.toLocaleString("de-DE")} <span className="text-red-500 text-lg">{currencySymbol(bike.currency)}</span>
                             </p>
                           </div>
                         ) : (
@@ -262,7 +265,8 @@ export default function RulateClient({ bikes, locale }: Props) {
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
             </AnimatePresence>
           </div>
         )}

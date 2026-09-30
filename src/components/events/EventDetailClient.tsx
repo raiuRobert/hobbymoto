@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Calendar, MapPin, ArrowLeft, X, ChevronLeft, ChevronRight, CalendarPlus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { type SanityEvent } from "@/sanity/client";
+import { SITE_TIME_ZONE } from "@/lib/utils";
 
 interface Props {
   event: SanityEvent;
@@ -20,6 +21,7 @@ function formatDate(iso: string, locale: string) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: SITE_TIME_ZONE,
   });
 }
 
@@ -27,6 +29,7 @@ function formatTime(iso: string, locale: string) {
   return new Date(iso).toLocaleTimeString(LOCALE_MAP[locale] ?? locale, {
     hour: "2-digit",
     minute: "2-digit",
+    timeZone: SITE_TIME_ZONE,
   });
 }
 
@@ -128,7 +131,10 @@ export default function EventDetailClient({ event, locale }: Props) {
             <div>
               <p className="text-white font-semibold capitalize">{formatDate(event.date, locale)}</p>
               <p className="text-zinc-400 text-sm">{formatTime(event.date, locale)}
-                {event.endDate && ` – ${formatTime(event.endDate, locale)}`}
+                {event.endDate &&
+                  (formatDate(event.endDate, locale) === formatDate(event.date, locale)
+                    ? ` – ${formatTime(event.endDate, locale)}`
+                    : ` – ${formatDate(event.endDate, locale)}, ${formatTime(event.endDate, locale)}`)}
               </p>
             </div>
           </div>

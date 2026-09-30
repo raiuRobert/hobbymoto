@@ -8,9 +8,9 @@ const intlMiddleware = createMiddleware({
   localePrefix: "always",
 });
 
-export default function middleware(request: NextRequest) {
+export default function proxy(request: NextRequest) {
   // Redirect locale-prefixed /studio URLs (e.g. /ro/studio) to /studio
-  if (/^\/[a-z]{2}(\/studio.*)$/.test(request.nextUrl.pathname)) {
+  if (/^\/[a-z]{2}\/studio(\/.*)?$/.test(request.nextUrl.pathname)) {
     const studioPath = request.nextUrl.pathname.replace(/^\/[a-z]{2}/, "");
     return NextResponse.redirect(new URL(studioPath, request.url));
   }

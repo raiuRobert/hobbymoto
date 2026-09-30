@@ -123,5 +123,10 @@
     "catPromotie": "Promoție",
     "catCircuit": "Circuit",
     "catAltele": "Altele"
+  },
+  "notFound": {
+    "title": "Pagina nu a fost găsită",
+    "text": "Pagina pe care o cauți nu există sau a fost mutată.",
+    "home": "Înapoi acasă"
   }
 }

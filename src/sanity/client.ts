@@ -19,14 +19,14 @@ export type SanityBike = {
   price: number | null;
   currency: string;
   category: string;
-  engine: string;
-  power: string;
+  engine: string | null;
+  power: string | null;
   torque: string | null;
   weight: string | null;
-  color: string;
+  color: string | null;
   image: string | null; // CDN URL of mainImage
   gallery: string[]; // CDN URLs (already filtered of nulls)
-  description: string;
+  description: string | null;
   extras: string[] | null;
   warranty: string | null;
   featured: boolean;
@@ -35,12 +35,13 @@ export type SanityBike = {
 
 export type SanityBikeCard = Pick<
   SanityBike,
-  "id" | "brand" | "model" | "year" | "km" | "price" | "currency" | "image" | "gallery"
+  "id" | "brand" | "model" | "year" | "km" | "price" | "currency" | "engine" | "image" | "gallery"
 >;
 
 // ─── Shared field projection ──────────────────────────────────────────────────
 
-const BIKE_FIELDS = `
+// A missing gallery field projects to null in GROQ, so coalesce to keep the string[] contract.
+const BIKE_CARD_FIELDS = `
   "id": slug.current,
   brand,
   model,
@@ -48,14 +49,18 @@ const BIKE_FIELDS = `
   km,
   price,
   currency,
-  category,
   engine,
+  "image": mainImage.asset->url,
+  "gallery": coalesce(gallery[defined(asset)][].asset->url, [])
+`;
+
+const BIKE_FIELDS = `
+  ${BIKE_CARD_FIELDS},
+  category,
   power,
   torque,
   weight,
   color,
-  "image": mainImage.asset->url,
-  "gallery": gallery[defined(asset)][].asset->url,
   description,
   extras,
   warranty,
@@ -71,8 +76,20 @@ export const USED_BIKES_QUERY = `
   }
 `;
 
+export const FEATURED_BIKES_QUERY = `
+  *[_type == "bike" && available == true && featured == true] | order(_createdAt desc) [0...4] {
+    ${BIKE_FIELDS}
+  }
+`;
+
+export const USED_BIKES_BY_BRAND_QUERY = `
+  *[_type == "bike" && available == true && lower(brand) == $brand] | order(_createdAt desc) {
+    ${BIKE_CARD_FIELDS}
+  }
+`;
+
 export const BIKE_BY_SLUG_QUERY = `
-  *[_type == "bike" && slug.current == $slug][0] {
+  *[_type == "bike" && available == true && slug.current == $slug][0] {
     ${BIKE_FIELDS}
   }
 `;
@@ -80,15 +97,7 @@ export const BIKE_BY_SLUG_QUERY = `
 export const SIMILAR_BIKES_QUERY = `
   *[_type == "bike" && available == true && category == $category && slug.current != $slug]
     | order(_createdAt desc) [0...3] {
-    "id": slug.current,
-    brand,
-    model,
-    year,
-    km,
-    price,
-    currency,
-    "image": mainImage.asset->url,
-    "gallery": gallery[defined(asset)][].asset->url
+    ${BIKE_CARD_FIELDS}
   }
 `;
 

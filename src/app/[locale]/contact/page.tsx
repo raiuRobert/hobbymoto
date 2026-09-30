@@ -8,8 +8,14 @@ export default function ContactPage() {
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", email: "", phone: "", subject: "", message: "" });
 
+  // There is no mail backend, so hand the message to the visitor's own email app.
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    const subject = form.subject || `Mesaj de la ${form.name}`;
+    const lines = [form.message, "", `Nume: ${form.name}`, `Email: ${form.email}`];
+    if (form.phone) lines.push(`Telefon: ${form.phone}`);
+    const body = lines.join("\n");
+    window.location.href = `mailto:${contactInfo.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     setSent(true);
   }
 
@@ -86,8 +92,19 @@ export default function ContactPage() {
                 <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }}
                   className="flex flex-col items-center justify-center py-16 text-center gap-4">
                   <CheckCircle className="w-16 h-16 text-red-500" />
-                  <h3 className="text-white text-2xl font-black">Mesaj trimis!</h3>
-                  <p className="text-zinc-400">Te contactăm în mai puțin de 24 de ore.</p>
+                  <h3 className="text-white text-2xl font-black">Încă un pas</h3>
+                  <p className="text-zinc-400 max-w-md">
+                    Mesajul tău s-a deschis în aplicația de email — apasă „Trimite” acolo ca să ajungă la noi.
+                  </p>
+                  <p className="text-zinc-500 text-sm max-w-md">
+                    Nu s-a deschis nimic? Scrie-ne direct la{" "}
+                    <a href={`mailto:${contactInfo.email}`} className="text-red-500 hover:text-red-400">{contactInfo.email}</a>{" "}
+                    sau sună la{" "}
+                    <a href={`tel:${contactInfo.phone1}`} className="text-red-500 hover:text-red-400">{contactInfo.phone1}</a>.
+                  </p>
+                  <button type="button" onClick={() => setSent(false)} className="text-zinc-400 hover:text-white text-sm underline underline-offset-4 transition-colors">
+                    Înapoi la formular
+                  </button>
                 </motion.div>
               ) : (
                 <form onSubmit={handleSubmit} className="space-y-5">
@@ -99,8 +116,9 @@ export default function ContactPage() {
                       { key: "subject", label: "Subiect", placeholder: "Ducati Panigale...", type: "text", required: false },
                     ].map((f) => (
                       <div key={f.key}>
-                        <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">{f.label}</label>
+                        <label htmlFor={`contact-${f.key}`} className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">{f.label}</label>
                         <input
+                          id={`contact-${f.key}`}
                           type={f.type}
                           required={f.required}
                           value={form[f.key as keyof typeof form]}
@@ -112,8 +130,9 @@ export default function ContactPage() {
                     ))}
                   </div>
                   <div>
-                    <label className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">Mesaj</label>
+                    <label htmlFor="contact-message" className="block text-xs font-bold text-zinc-500 uppercase tracking-widest mb-2">Mesaj</label>
                     <textarea
+                      id="contact-message"
                       required rows={5}
                       value={form.message}
                       onChange={(e) => setForm({ ...form, message: e.target.value })}
