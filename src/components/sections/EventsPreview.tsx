@@ -3,6 +3,7 @@ import Image from "next/image";
 import { Calendar, MapPin, ArrowRight } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { client, EVENTS_QUERY, type SanityEvent } from "@/sanity/client";
+import { SITE_TIME_ZONE } from "@/lib/utils";
 
 const LOCALE_MAP: Record<string, string> = { ro: "ro-RO", en: "en-US" };
 
@@ -11,6 +12,7 @@ function formatDate(iso: string, locale: string) {
     day: "numeric",
     month: "long",
     year: "numeric",
+    timeZone: SITE_TIME_ZONE,
   });
 }
 

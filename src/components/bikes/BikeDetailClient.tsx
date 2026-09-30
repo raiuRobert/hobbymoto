@@ -8,7 +8,7 @@ import {
   CheckCircle, Shield, X, ChevronLeft, ChevronRight, Maximize2, ArrowRight
 } from "lucide-react";
 import { contactInfo } from "@/lib/data";
-import { formatKm } from "@/lib/utils";
+import { formatKm, currencySymbol, bikeCover } from "@/lib/utils";
 import { type SanityBike, type SanityBikeCard } from "@/sanity/client";
 
 interface Props {
@@ -41,14 +41,8 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
   }, [lightboxOpen, prevLb, nextLb]);
 
   const whatsappMsg = encodeURIComponent(
-    `Bună ziua! Sunt interesat de ${bike.brand} ${bike.model} ${bike.year} (${formatKm(bike.km)} km)${bike.price ? ` — ${bike.price.toLocaleString("de-DE")} €` : ""}. Puteți oferi mai multe detalii?`
+    `Bună ziua! Sunt interesat de ${bike.brand} ${bike.model} ${bike.year} (${formatKm(bike.km)} km)${bike.price ? ` — ${bike.price.toLocaleString("de-DE")} ${currencySymbol(bike.currency)}` : ""}. Puteți oferi mai multe detalii?`
   );
-
-  function getSimilarImage(sb: SanityBikeCard): string {
-    if (sb.gallery && sb.gallery.length > 0) return sb.gallery[0];
-    if (sb.image) return sb.image;
-    return "/bikes/placeholder.jpg";
-  }
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-20 pb-24">
@@ -92,7 +86,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
               className="relative w-full max-w-5xl max-h-[85vh] aspect-[16/9] mx-8"
               onClick={(e) => e.stopPropagation()}
             >
-              <Image src={images[lightboxIdx]} alt={`${bike.brand} ${bike.model}`} fill className="object-contain" />
+              <Image src={images[lightboxIdx]} alt={`${bike.brand} ${bike.model}`} fill sizes="100vw" className="object-contain" />
             </motion.div>
             {images.length > 1 && (
               <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 overflow-x-auto max-w-[90vw] px-2" onClick={(e) => e.stopPropagation()}>
@@ -102,7 +96,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                     onClick={() => setLightboxIdx(i)}
                     className={`relative flex-shrink-0 w-14 h-10 rounded overflow-hidden border-2 transition-all ${i === lightboxIdx ? "border-red-500" : "border-zinc-700 opacity-50 hover:opacity-80"}`}
                   >
-                    <Image src={src} alt="" fill className="object-cover" />
+                    <Image src={src} alt="" fill sizes="56px" className="object-cover" />
                   </button>
                 ))}
               </div>
@@ -139,6 +133,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                     src={images[activeImg]}
                     alt={`${bike.brand} ${bike.model}`}
                     fill
+                    sizes="(max-width: 1024px) 100vw, 58vw"
                     className="object-cover"
                     priority
                   />
@@ -161,7 +156,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                           i === activeImg ? "border-red-500 scale-105 shadow-lg shadow-red-900/30" : "border-transparent hover:border-zinc-600 opacity-70 hover:opacity-100"
                         }`}
                       >
-                        <Image src={src} alt="" fill className="object-cover" />
+                        <Image src={src} alt="" fill sizes="(max-width: 1024px) 14vw, 8vw" className="object-cover" />
                       </button>
                     ))}
                   </div>
@@ -192,7 +187,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                     <span className="text-5xl font-black text-white leading-none">
                       {bike.price.toLocaleString("de-DE")}
                     </span>
-                    <span className="text-5xl font-black text-red-500 leading-none">€</span>
+                    <span className="text-5xl font-black text-red-500 leading-none">{currencySymbol(bike.currency)}</span>
                     <span className="text-zinc-500 text-sm ml-1">+ TVA</span>
                   </div>
                 ) : (
@@ -307,7 +302,9 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {similar.map((sb, i) => (
+              {similar.map((sb, i) => {
+                const cover = bikeCover(sb);
+                return (
                 <motion.div
                   key={sb.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -318,20 +315,27 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                   <Link href={`/${locale}/motociclete-rulate/${sb.id}`}
                     className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-950/20">
                     <div className="relative h-44 bg-zinc-800 overflow-hidden">
-                      <Image src={getSimilarImage(sb)} alt={`${sb.brand} ${sb.model}`} fill sizes="(max-width: 1024px) 50vw, 33vw" quality={90} className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      {cover && (
+                        <Image src={cover} alt={`${sb.brand} ${sb.model}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={90} className="object-cover group-hover:scale-105 transition-transform duration-500" />
+                      )}
                       <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent" />
                     </div>
                     <div className="p-4">
                       <p className="text-red-500 text-[11px] font-bold uppercase tracking-widest mb-1">{sb.brand}</p>
                       <h3 className="text-white font-black text-base mb-2">{sb.model}</h3>
                       <div className="flex items-center justify-between">
-                        <p className="text-white font-black">{sb.price?.toLocaleString("de-DE")} <span className="text-red-500 text-sm">€</span></p>
+                        {sb.price ? (
+                          <p className="text-white font-black">{sb.price.toLocaleString("de-DE")} <span className="text-red-500 text-sm">{currencySymbol(sb.currency)}</span></p>
+                        ) : (
+                          <p className="text-zinc-300 font-bold text-sm">Preț la cerere</p>
+                        )}
                         <span className="text-zinc-500 text-xs">{sb.year} · {formatKm(sb.km)} km</span>
                       </div>
                     </div>
                   </Link>
                 </motion.div>
-              ))}
+                );
+              })}
             </div>
           </div>
         )}

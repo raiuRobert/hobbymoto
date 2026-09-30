@@ -133,10 +133,6 @@ export default function Footer({ locale }: FooterProps) {
           <p className="text-zinc-600 text-xs">
             © {new Date().getFullYear()} HobbyMoto · {contactInfo.companyName}. {t("rights")}
           </p>
-          <div className="flex gap-4">
-            <Link href={`/${locale}/privacy`} className="text-zinc-600 hover:text-zinc-400 text-xs transition-colors">Privacy</Link>
-            <Link href={`/${locale}/termeni`} className="text-zinc-600 hover:text-zinc-400 text-xs transition-colors">Termeni</Link>
-          </div>
         </div>
       </div>
     </footer>

@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { CheckCircle, Phone, MapPin, Clock, Shield, Wrench, Zap, Droplets } from "lucide-react";
+import { Phone, MapPin, Clock, Shield, Wrench, Zap, Droplets } from "lucide-react";
 import { contactInfo } from "@/lib/data";
 import { type Locale } from "@/lib/i18n";
 

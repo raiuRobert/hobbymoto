@@ -3,7 +3,10 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Phone, ArrowRight, CheckCircle } from "lucide-react";
 import { bikes, contactInfo } from "@/lib/data";
-import { type Locale } from "@/lib/i18n";
+import { formatKm, bikeCover } from "@/lib/utils";
+import { client, USED_BIKES_BY_BRAND_QUERY, type SanityBikeCard } from "@/sanity/client";
+
+export const revalidate = 60;
 
 const brandInfo: Record<string, {
   name: string;
@@ -69,15 +72,21 @@ export default async function BrandPage({
   params: Promise<{ locale: string; brand: string }>;
 }) {
   const { locale, brand } = await params;
-  const info = brandInfo[brand.toLowerCase()];
-  if (!info) notFound();
+  const slug = brand.toLowerCase();
+  // Own-property check: a plain lookup would match inherited keys like "constructor".
+  if (!Object.hasOwn(brandInfo, slug)) notFound();
+  const info = brandInfo[slug];
 
   const brandBikes = bikes.filter(
-    (b) => b.brand.toLowerCase() === brand.toLowerCase() && b.type === "new"
+    (b) => b.brand.toLowerCase() === slug && b.type === "new"
   );
-  const usedBikes = bikes.filter(
-    (b) => b.brand.toLowerCase() === brand.toLowerCase() && b.type === "used"
-  );
+
+  let usedBikes: SanityBikeCard[] = [];
+  try {
+    usedBikes = await client.fetch(USED_BIKES_BY_BRAND_QUERY, { brand: slug });
+  } catch {
+    usedBikes = [];
+  }
 
   return (
     <div className="min-h-screen bg-zinc-950 pt-24 pb-20">
@@ -120,7 +129,7 @@ export default async function BrandPage({
               {brandBikes.map((bike) => (
                 <div key={bike.id} className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all hover:-translate-y-1">
                   <div className="relative h-48 bg-zinc-800">
-                    <Image src={bike.image} alt={`${bike.brand} ${bike.model}`} fill className="object-cover" />
+                    <Image src={bike.image} alt={`${bike.brand} ${bike.model}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                     <div className="absolute top-3 left-3 px-2 py-1 bg-red-600 text-white text-[10px] font-black uppercase rounded-sm">NOU</div>
                   </div>
                   <div className="p-5">
@@ -128,7 +137,7 @@ export default async function BrandPage({
                     <p className="text-zinc-500 text-sm mb-1">{bike.engine} · {bike.power} · {bike.year}</p>
                     {bike.warranty && <p className="text-green-500 text-xs mb-4">✓ Garanție {bike.warranty}</p>}
                     {bike.price ? (
-                      <p className="text-white font-black text-xl mb-4">{bike.price.toLocaleString()} €</p>
+                      <p className="text-white font-black text-xl mb-4">{bike.price.toLocaleString("de-DE")} €</p>
                     ) : (
                       <p className="text-zinc-400 text-sm mb-4">Preț la cerere</p>
                     )}
@@ -157,22 +166,27 @@ export default async function BrandPage({
           <div className="max-w-5xl mx-auto">
             <h2 className="text-2xl font-black text-white mb-6">{info.name} rulate disponibile</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-              {usedBikes.map((bike) => (
-                <div key={bike.id} className="flex gap-4 bg-zinc-900 border border-zinc-800 rounded-sm overflow-hidden hover:border-zinc-600 transition-colors">
-                  <div className="relative w-32 h-28 flex-shrink-0 bg-zinc-800">
-                    <Image src={bike.image} alt={`${bike.brand} ${bike.model}`} fill className="object-cover" />
-                  </div>
-                  <div className="p-4 flex flex-col justify-between flex-1">
-                    <div>
-                      <h3 className="text-white font-bold">{bike.model}</h3>
-                      <p className="text-zinc-500 text-xs">{bike.year} · {bike.km.toLocaleString()} km · {bike.engine}</p>
+              {usedBikes.map((bike) => {
+                const cover = bikeCover(bike);
+                return (
+                  <Link key={bike.id} href={`/${locale}/motociclete-rulate/${bike.id}`} className="flex gap-4 bg-zinc-900 border border-zinc-800 rounded-sm overflow-hidden hover:border-zinc-600 transition-colors">
+                    <div className="relative w-32 h-28 flex-shrink-0 bg-zinc-800">
+                      {cover && <Image src={cover} alt={`${bike.brand} ${bike.model}`} fill sizes="128px" className="object-cover" />}
                     </div>
-                    <a href={`tel:${contactInfo.phone1}`} className="text-red-500 hover:text-red-400 text-xs font-bold uppercase tracking-wide transition-colors">
-                      Sună pentru preț →
-                    </a>
-                  </div>
-                </div>
-              ))}
+                    <div className="p-4 flex flex-col justify-between flex-1">
+                      <div>
+                        <h3 className="text-white font-bold">{bike.model}</h3>
+                        <p className="text-zinc-500 text-xs">
+                          {bike.year} · {formatKm(bike.km)} km{bike.engine ? ` · ${bike.engine}` : ""}
+                        </p>
+                      </div>
+                      <span className="text-red-500 text-xs font-bold uppercase tracking-wide">
+                        Vezi detalii →
+                      </span>
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           </div>
         </section>
