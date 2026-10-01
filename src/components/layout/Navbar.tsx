@@ -277,7 +277,7 @@ export default function Navbar({ locale }: NavbarProps) {
           </Link>
           <Link
             href={`/${locale}/contact`}
-            className="bg-red-600 hover:bg-red-500 text-white text-sm font-bold px-5 py-2.5 rounded-sm uppercase tracking-wide transition-colors"
+            className="btn btn-primary text-sm px-5 py-2.5"
           >
             Contact
           </Link>

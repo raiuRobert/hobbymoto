@@ -13,7 +13,6 @@ export default function Footer({ locale }: FooterProps) {
 
   return (
     <footer className="bg-zinc-950 border-t border-zinc-800/60 relative">
-      <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/50 to-transparent" />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10">
 
@@ -32,7 +31,7 @@ export default function Footer({ locale }: FooterProps) {
             <p className="text-zinc-600 text-xs mb-6">{contactInfo.companyName}</p>
             <div className="flex gap-3">
               <a href={contactInfo.instagram} target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 bg-zinc-800/80 hover:bg-gradient-to-br hover:from-pink-600 hover:to-purple-600 border border-zinc-700/60 hover:border-transparent rounded-lg flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white"
+                className="w-10 h-10 bg-zinc-800/80 hover:bg-red-600 border border-zinc-700/60 hover:border-transparent flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white"
                 aria-label="Instagram">
                 {/* Instagram icon */}
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -40,7 +39,7 @@ export default function Footer({ locale }: FooterProps) {
                 </svg>
               </a>
               <a href={contactInfo.facebook} target="_blank" rel="noopener noreferrer"
-                className="w-10 h-10 bg-zinc-800/80 hover:bg-blue-600 border border-zinc-700/60 hover:border-transparent rounded-lg flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white"
+                className="w-10 h-10 bg-zinc-800/80 hover:bg-red-600 border border-zinc-700/60 hover:border-transparent flex items-center justify-center transition-all duration-300 text-zinc-400 hover:text-white"
                 aria-label="Facebook">
                 {/* Facebook icon */}
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
@@ -52,7 +51,7 @@ export default function Footer({ locale }: FooterProps) {
 
           {/* Quick links */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-4">{t("links")}</h3>
+            <h3 className="label text-zinc-300 mb-5">{t("links")}</h3>
             <ul className="space-y-2.5">
               {[
                 { href: `/${locale}`, label: tNav("home") },
@@ -73,7 +72,7 @@ export default function Footer({ locale }: FooterProps) {
 
           {/* Services */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-4">Services</h3>
+            <h3 className="label text-zinc-300 mb-5">Services</h3>
             <ul className="space-y-2.5">
               {[
                 { href: `/${locale}/moto-hotel`, label: tNav("hotel") },
@@ -91,7 +90,7 @@ export default function Footer({ locale }: FooterProps) {
 
           {/* Contact */}
           <div>
-            <h3 className="text-white text-sm font-bold uppercase tracking-widest mb-4">{t("contact")}</h3>
+            <h3 className="label text-zinc-300 mb-5">{t("contact")}</h3>
             <ul className="space-y-3">
               <li className="flex items-start gap-3">
                 <Phone className="w-4 h-4 text-red-500 mt-0.5 flex-shrink-0" />

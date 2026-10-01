@@ -25,7 +25,7 @@ export default function GalleryStrip() {
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
           >
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Comunitate</p>
+            <p className="eyebrow mb-2">Comunitate</p>
             <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
               Din inima showroom-ului
             </h2>

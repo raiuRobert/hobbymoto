@@ -1,11 +1,10 @@
 "use client";
 import { useState, useMemo } from "react";
-import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Gauge, Calendar, Zap, SlidersHorizontal, Phone, Shield, ArrowRight, X } from "lucide-react";
+import { SlidersHorizontal, Phone, X } from "lucide-react";
 import { contactInfo } from "@/lib/data";
-import { formatKm, currencySymbol, bikeCover } from "@/lib/utils";
+import BikeCard from "@/components/bikes/BikeCard";
 import { type SanityBike } from "@/sanity/client";
 
 const categoryLabels: Record<string, string> = {
@@ -56,24 +55,32 @@ export default function RulateClient({ bikes, locale }: Props) {
     <div className="min-h-screen bg-zinc-950">
 
       {/* Hero header */}
-      <div className="relative pt-24 pb-16 px-4 sm:px-6 lg:px-8 overflow-hidden">
-        <div className="absolute inset-0 opacity-10 pointer-events-none">
-          <Image src="/bikes/ducati-panigale-v4s.jpg" alt="" fill className="object-cover object-center" />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/80 via-zinc-950/70 to-zinc-950" />
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
-
-        <div className="relative max-w-7xl mx-auto">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Inventar</p>
-            <h1 className="text-4xl sm:text-6xl font-black text-white mb-3 leading-none">Motociclete Rulate</h1>
-            <p className="text-zinc-400 text-lg">
-              <span className="text-white font-bold">{bikes.length}</span> motociclete disponibile
-              <span className="text-zinc-600 mx-2">·</span>Garanție inclusă
-              <span className="text-zinc-600 mx-2">·</span>Transport gratuit în România
-            </p>
-          </motion.div>
-        </div>
+      <div className="pt-32 pb-12 px-4 sm:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-end lg:justify-between gap-8"
+        >
+          <div>
+            <p className="eyebrow mb-6">Inventar</p>
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-[0.95]">Motociclete rulate</h1>
+          </div>
+          <dl className="flex gap-8 sm:gap-10">
+            <div>
+              <dt className="label mb-2">Disponibile</dt>
+              <dd className="font-display text-3xl font-extrabold text-white leading-none">{bikes.length}</dd>
+            </div>
+            <div className="border-l border-zinc-800 pl-8 sm:pl-10">
+              <dt className="label mb-2">Garanție</dt>
+              <dd className="text-zinc-200 text-sm font-semibold">Inclusă</dd>
+            </div>
+            <div className="border-l border-zinc-800 pl-8 sm:pl-10">
+              <dt className="label mb-2">Transport</dt>
+              <dd className="text-zinc-200 text-sm font-semibold">Gratuit în România</dd>
+            </div>
+          </dl>
+        </motion.div>
       </div>
 
       {/* Sticky filter bar */}
@@ -188,11 +195,9 @@ export default function RulateClient({ bikes, locale }: Props) {
             </button>
           </motion.div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
             <AnimatePresence mode="popLayout">
-              {filtered.map((bike, i) => {
-                const cover = bikeCover(bike);
-                return (
+              {filtered.map((bike, i) => (
                 <motion.div
                   key={bike.id}
                   layout
@@ -201,72 +206,9 @@ export default function RulateClient({ bikes, locale }: Props) {
                   exit={{ opacity: 0, scale: 0.95 }}
                   transition={{ duration: 0.3, delay: Math.min(i * 0.04, 0.3) }}
                 >
-                  <Link
-                    href={`/${locale}/motociclete-rulate/${bike.id}`}
-                    className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-red-950/30"
-                  >
-                    <div className="relative h-56 bg-zinc-800 overflow-hidden">
-                      {cover && (
-                        <Image
-                          src={cover}
-                          alt={`${bike.brand} ${bike.model}`}
-                          fill
-                          sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                          quality={90}
-                          className="object-cover group-hover:scale-107 transition-transform duration-600 ease-out"
-                        />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />
-                      <div className="absolute top-3 left-3 px-2.5 py-1 bg-zinc-900/80 backdrop-blur-sm text-zinc-200 text-[10px] font-black uppercase tracking-widest rounded-sm border border-zinc-700/40">
-                        RULAT
-                      </div>
-                      {bike.warranty && (
-                        <div className="absolute top-3 right-3 inline-flex items-center gap-1 px-2 py-1 bg-red-600/90 text-white text-[10px] font-black uppercase tracking-widest rounded-sm">
-                          <Shield className="w-3 h-3" /> Garanție
-                        </div>
-                      )}
-                      <div className="absolute bottom-3 right-3 w-8 h-8 rounded-full bg-red-600 flex items-center justify-center opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all duration-300">
-                        <ArrowRight className="w-3.5 h-3.5 text-white" />
-                      </div>
-                    </div>
-
-                    <div className="p-5">
-                      <p className="text-red-500 text-[11px] font-bold uppercase tracking-widest mb-1">{bike.brand}</p>
-                      <h3 className="text-white font-black text-xl mb-4 leading-tight">{bike.model}</h3>
-
-                      <div className="grid grid-cols-3 gap-2 mb-4">
-                        {[
-                          { icon: Calendar, value: bike.year },
-                          { icon: Gauge, value: `${formatKm(bike.km)} km` },
-                          { icon: Zap, value: bike.engine?.split(" ")[0] ?? "—" },
-                        ].map(({ icon: Icon, value }, j) => (
-                          <div key={j} className="flex flex-col items-center gap-1.5 bg-zinc-800/70 rounded-sm p-2.5 border border-zinc-700/40">
-                            <Icon className="w-3.5 h-3.5 text-zinc-500" />
-                            <span className="text-white text-xs font-bold">{value}</span>
-                          </div>
-                        ))}
-                      </div>
-
-                      <div className="border-t border-zinc-800/80 pt-4 flex items-center justify-between">
-                        {bike.price ? (
-                          <div>
-                            <p className="text-zinc-600 text-[10px] uppercase tracking-widest mb-0.5">Preț</p>
-                            <p className="text-white font-black text-2xl leading-none">
-                              {bike.price.toLocaleString("de-DE")} <span className="text-red-500 text-lg">{currencySymbol(bike.currency)}</span>
-                            </p>
-                          </div>
-                        ) : (
-                          <p className="text-zinc-300 font-bold text-sm">Preț la cerere</p>
-                        )}
-                        <span className="inline-flex items-center gap-1.5 text-red-500 group-hover:text-red-400 text-xs font-black uppercase tracking-widest transition-colors">
-                          Detalii <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
-                        </span>
-                      </div>
-                    </div>
-                  </Link>
+                  <BikeCard bike={bike} locale={locale} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                 </motion.div>
-                );
-              })}
+              ))}
             </AnimatePresence>
           </div>
         )}
@@ -277,22 +219,23 @@ export default function RulateClient({ bikes, locale }: Props) {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="mt-16 p-10 bg-zinc-900/60 border border-zinc-800 rounded-sm text-center relative overflow-hidden"
+          className="mt-20 pt-10 border-t border-zinc-800 flex flex-col md:flex-row md:items-end md:justify-between gap-8"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent pointer-events-none" />
-          <div className="relative">
-            <p className="text-zinc-400 mb-2 text-sm">Nu ai găsit ce cauți?</p>
-            <h3 className="text-white font-black text-2xl sm:text-3xl mb-6 leading-tight">
+          <div>
+            <p className="eyebrow mb-5">Nu ai găsit ce cauți?</p>
+            <h3 className="text-white font-black text-2xl sm:text-3xl leading-tight max-w-xl">
               Contactează-ne — găsim motocicleta dorită.
             </h3>
-            <div className="flex flex-wrap justify-center gap-4">
+          </div>
+          <div>
+            <div className="flex flex-wrap gap-3">
               <a href={`tel:${contactInfo.phone1}`}
-                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all duration-200 shadow-lg shadow-red-900/30 hover:-translate-y-0.5">
+                className="btn btn-primary px-7 py-3.5 text-sm">
                 <Phone className="w-4 h-4" />
                 {contactInfo.phone1}
               </a>
               <Link href={`/${locale}/contact`}
-                className="inline-flex items-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all duration-200 hover:-translate-y-0.5">
+                className="btn btn-ghost px-7 py-3.5 text-sm">
                 Trimite mesaj
               </Link>
             </div>

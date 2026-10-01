@@ -40,6 +40,7 @@
     "contact": "Solicită ofertă",
     "sectionLabel": "Inventar",
     "warrantyShort": "GAR.",
+    "warrantyLabel": "Garanție",
     "powerUnit": "CP",
     "priceOnRequest": "Preț la cerere"
   },
@@ -60,7 +61,7 @@
     "subtitle": "Peste 500 de clienți mulțumiți în toată România"
   },
   "cta": {
-    "title": "Gata să-ți găsești motocicleta perfectă?",
+    "title": "Gata să‑ți găsești motocicleta perfectă?",
     "subtitle": "Vizitează-ne sau trimite-ne un mesaj. Răspundem în mai puțin de 24 de ore.",
     "button": "Contactează-ne acum",
     "phone": "Sună acum"

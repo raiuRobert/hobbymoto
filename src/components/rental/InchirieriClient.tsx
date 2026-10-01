@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { Phone, CheckCircle, AlertCircle, Gauge, Calendar } from "lucide-react";
+import { Phone, CheckCircle, AlertCircle } from "lucide-react";
 import { contactInfo } from "@/lib/data";
 import { formatKm } from "@/lib/utils";
 import { type SanityRentalBike } from "@/sanity/client";
@@ -51,12 +51,11 @@ export default function InchirieriClient({
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-zinc-950/70 to-zinc-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 to-zinc-950/20" />
         </div>
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
 
         <div className="relative max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Servicii</p>
-            <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-6">
+            <p className="eyebrow mb-4">Servicii</p>
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-none mb-6">
               Rent a <span className="text-red-500">Moto</span>
             </h1>
             <p className="text-zinc-300 text-xl leading-relaxed max-w-2xl mb-10">
@@ -65,11 +64,11 @@ export default function InchirieriClient({
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={`tel:${contactInfo.phone1}`}
-                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/40">
+                className="btn btn-primary px-8 py-4 text-sm">
                 <Phone className="w-4 h-4" /> Verifică disponibilitatea
               </a>
               <Link href={`/${locale}/contact`}
-                className="inline-flex items-center gap-2 border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5">
+                className="btn btn-ghost px-8 py-4 text-sm">
                 Trimite mesaj
               </Link>
             </div>
@@ -80,32 +79,24 @@ export default function InchirieriClient({
       {/* Pricing tiers */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Tarife</p>
-            <h2 className="text-4xl font-black text-white">Prețuri clare, fără surprize</h2>
+          <motion.div {...fadeUp(0)} className="border-t border-zinc-800 pt-5 mb-12">
+            <p className="eyebrow mb-7">Tarife</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Prețuri clare, fără surprize</h2>
           </motion.div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 mb-8">
+          <div className="grid grid-cols-1 sm:grid-cols-3 border-t border-zinc-800 mb-8">
             {pricingTiers.map((tier, i) => (
               <motion.div key={tier.duration} {...fadeUp(i * 0.08)}
-                className={`relative rounded-sm p-8 text-center border transition-all ${
-                  tier.highlight
-                    ? "bg-red-600 border-red-500 shadow-2xl shadow-red-900/40 scale-105 z-10"
-                    : "bg-zinc-900 border-zinc-800"
-                }`}>
-                {tier.highlight && (
-                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-white text-red-600 text-[10px] font-black uppercase px-3 py-1 rounded-full tracking-widest">
-                    Popular
-                  </div>
-                )}
-                <p className={`text-xs font-bold uppercase tracking-widest mb-1 ${tier.highlight ? "text-red-100" : "text-zinc-500"}`}>
-                  {tier.duration}
+                className={`relative py-8 sm:px-8 border-b border-zinc-800 ${i === 0 ? "sm:pl-0" : "sm:border-l"}`}>
+                {tier.highlight && <span className="absolute -top-px left-0 right-0 h-0.5 bg-red-600" />}
+                <p className={`label mb-2 ${tier.highlight ? "text-red-500" : ""}`}>
+                  {tier.duration}{tier.highlight && " · Popular"}
                 </p>
-                <p className={`text-[11px] mb-4 ${tier.highlight ? "text-red-200" : "text-zinc-600"}`}>{tier.desc}</p>
-                <div className="flex items-end justify-center gap-1 mb-0">
-                  <span className="text-5xl font-black text-white leading-none">{tier.price}</span>
-                  <span className={`text-sm mb-1.5 ${tier.highlight ? "text-red-200" : "text-zinc-500"}`}>{tier.per}</span>
-                </div>
+                <p className="text-zinc-500 text-sm mb-7">{tier.desc}</p>
+                <p className="flex items-baseline gap-2">
+                  <span className="font-display text-5xl font-black text-white leading-none">{tier.price}</span>
+                  <span className="text-zinc-500 text-sm">{tier.per}</span>
+                </p>
               </motion.div>
             ))}
           </div>
@@ -124,8 +115,8 @@ export default function InchirieriClient({
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-y border-zinc-800/50">
         <div className="max-w-5xl mx-auto">
           <motion.div {...fadeUp(0)} className="mb-12">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Flotă</p>
-            <h2 className="text-4xl font-black text-white">Motociclete disponibile</h2>
+            <p className="eyebrow mb-2">Flotă</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Motociclete disponibile</h2>
           </motion.div>
 
           {bikes.length === 0 ? (
@@ -134,7 +125,7 @@ export default function InchirieriClient({
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
               {bikes.map((bike, i) => (
                 <motion.div key={bike._id} {...fadeUp(i * 0.1)}
-                  className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-red-950/30">
+                  className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/50 rounded-sm overflow-hidden transition-all duration-300">
                   <div className="relative h-56 bg-zinc-800 overflow-hidden">
                     {bike.image ? (
                       <Image
@@ -149,30 +140,29 @@ export default function InchirieriClient({
                       <div className="w-full h-full bg-zinc-800" />
                     )}
                     <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/80 via-transparent to-transparent" />
-                    <div className={`absolute top-3 left-3 px-2.5 py-1 text-white text-[10px] font-black uppercase rounded-sm tracking-widest ${bike.available ? "bg-green-600" : "bg-zinc-600"}`}>
+                    <div className={`label absolute left-0 top-0 px-3 py-2 bg-zinc-950 ${bike.available ? "text-emerald-400" : "text-zinc-500"}`}>
                       {bike.available ? "Disponibil" : "Rezervat"}
                     </div>
                   </div>
                   <div className="p-6">
-                    <p className="text-red-500 text-[11px] font-bold uppercase tracking-widest mb-1">{bike.brand}</p>
+                    <p className="eyebrow mb-1">{bike.brand}</p>
                     <h3 className="text-white font-black text-2xl mb-4">{bike.model}</h3>
 
-                    <div className="grid grid-cols-3 gap-2 mb-6">
+                    <dl className="grid grid-cols-3 border-y border-zinc-800 mb-6">
                       {[
-                        { icon: Calendar, label: "An",    value: bike.year },
-                        { icon: Gauge,    label: "Motor", value: bike.engine },
-                        { icon: Gauge,    label: "KM",    value: formatKm(bike.km) },
-                      ].map(({ icon: Icon, label, value }) => (
-                        <div key={label} className="flex flex-col items-center gap-1.5 bg-zinc-800/70 border border-zinc-700/40 rounded-sm p-2.5">
-                          <Icon className="w-3.5 h-3.5 text-zinc-500" />
-                          <p className="text-[9px] text-zinc-600 uppercase tracking-widest">{label}</p>
-                          <p className="text-white text-xs font-bold">{value}</p>
+                        { label: "An", value: bike.year },
+                        { label: "Motor", value: bike.engine },
+                        { label: "Km", value: formatKm(bike.km) },
+                      ].map(({ label, value }, j) => (
+                        <div key={label} className={`py-3.5 ${j > 0 ? "border-l border-zinc-800 pl-4" : ""}`}>
+                          <dt className="label mb-1.5">{label}</dt>
+                          <dd className="text-white text-sm font-semibold">{value}</dd>
                         </div>
                       ))}
-                    </div>
+                    </dl>
 
                     <a href={`tel:${contactInfo.phone1}`}
-                      className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold py-3.5 rounded-sm uppercase text-sm tracking-wide transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/30">
+                      className="btn btn-primary w-full py-3.5 text-sm">
                       <Phone className="w-4 h-4" /> Rezervă acum
                     </a>
                   </div>
@@ -187,7 +177,7 @@ export default function InchirieriClient({
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
           <motion.div {...fadeUp(0)} className="bg-zinc-900 border border-zinc-800 rounded-sm p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 to-transparent" />
+            <div className="absolute top-0 left-0 w-0.5 h-full bg-red-600" />
             <h2 className="text-xl font-black text-white mb-6 uppercase tracking-widest">Ce este inclus</h2>
             <ul className="space-y-3.5">
               {included.map((item) => (
@@ -200,7 +190,7 @@ export default function InchirieriClient({
           </motion.div>
 
           <motion.div {...fadeUp(0.1)} className="bg-zinc-900 border border-zinc-800 rounded-sm p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-zinc-600 to-transparent" />
+            <div className="absolute top-0 left-0 w-0.5 h-full bg-zinc-600" />
             <h2 className="text-xl font-black text-white mb-6 uppercase tracking-widest">Condiții de închiriere</h2>
             <ul className="space-y-3.5">
               {conditions.map((item) => (
@@ -219,17 +209,16 @@ export default function InchirieriClient({
         <div className="max-w-3xl mx-auto">
           <motion.div {...fadeUp(0)}
             className="relative text-center bg-zinc-900 border border-zinc-800 rounded-sm p-12 overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent pointer-events-none" />
             <div className="relative">
               <h2 className="text-3xl font-black text-white mb-3">Gata de aventură?</h2>
               <p className="text-zinc-400 mb-8 text-sm">Sună-ne sau trimite un mesaj pentru rezervare și disponibilitate.</p>
               <div className="flex flex-wrap justify-center gap-4">
                 <a href={`tel:${contactInfo.phone1}`}
-                  className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-sm uppercase text-sm tracking-wide transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/30">
+                  className="btn btn-primary px-8 py-4 text-sm">
                   <Phone className="w-4 h-4" /> {contactInfo.phone1}
                 </a>
                 <Link href={`/${locale}/contact`}
-                  className="inline-flex items-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold px-8 py-4 rounded-sm uppercase text-sm transition-all">
+                  className="btn btn-ghost px-8 py-4 text-sm">
                   Trimite mesaj
                 </Link>
               </div>

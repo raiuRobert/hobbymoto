@@ -100,8 +100,8 @@ export default async function BrandPage({
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-end gap-6">
             <div className="flex-1">
-              <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">{info.origin}</p>
-              <h1 className="text-6xl sm:text-7xl font-black text-white mb-2">{info.name}</h1>
+              <p className="eyebrow mb-2">{info.origin}</p>
+              <h1 className="text-4xl sm:text-6xl font-black text-white mb-2">{info.name}</h1>
               <p className="text-zinc-400 text-xl italic">{info.tagline}</p>
             </div>
             <a
@@ -127,7 +127,7 @@ export default async function BrandPage({
           {brandBikes.length > 0 ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {brandBikes.map((bike) => (
-                <div key={bike.id} className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all hover:-translate-y-1">
+                <div key={bike.id} className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all">
                   <div className="relative h-48 bg-zinc-800">
                     <Image src={bike.image} alt={`${bike.brand} ${bike.model}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" className="object-cover" />
                     <div className="absolute top-3 left-3 px-2 py-1 bg-red-600 text-white text-[10px] font-black uppercase rounded-sm">NOU</div>
@@ -141,7 +141,7 @@ export default async function BrandPage({
                     ) : (
                       <p className="text-zinc-400 text-sm mb-4">Preț la cerere</p>
                     )}
-                    <a href={`tel:${contactInfo.phone1}`} className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white text-xs font-bold py-3 rounded-sm uppercase tracking-wide transition-colors">
+                    <a href={`tel:${contactInfo.phone1}`} className="btn btn-primary w-full text-xs py-3">
                       <Phone className="w-3 h-3" /> Solicită ofertă
                     </a>
                   </div>
@@ -152,7 +152,7 @@ export default async function BrandPage({
             <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-12 text-center">
               <p className="text-zinc-500 mb-4">Stoc nou {info.name} disponibil la cerere.</p>
               <p className="text-zinc-400 text-lg font-bold mb-6">Contactează-ne pentru disponibilitate și prețuri actualizate.</p>
-              <a href={`tel:${contactInfo.phone1}`} className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-sm uppercase text-sm transition-colors">
+              <a href={`tel:${contactInfo.phone1}`} className="btn btn-primary px-8 py-4 text-sm">
                 <Phone className="w-4 h-4" /> {contactInfo.phone1}
               </a>
             </div>
