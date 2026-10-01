@@ -2,77 +2,56 @@
 import { useTranslations } from "next-intl";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import SectionHeading from "@/components/ui/SectionHeading";
 import { testimonials } from "@/lib/data";
 
 export default function Testimonials() {
   const t = useTranslations("testimonials");
 
   return (
-    <section className="relative bg-zinc-900/30 border-y border-zinc-800/50 py-28 px-4 sm:px-6 lg:px-8 overflow-hidden">
-      {/* Ambient glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-red-950/20 blur-[120px] rounded-full pointer-events-none" />
-
-      <div className="relative max-w-7xl mx-auto">
-        {/* Header with Google badge */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-14"
-        >
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Reviews</p>
-          <h2 className="text-3xl sm:text-4xl font-black text-white">{t("title")}</h2>
-          <p className="text-zinc-500 mt-2 mb-5 text-sm">{t("subtitle")}</p>
-
-          {/* Google rating badge */}
-          <div className="inline-flex items-center gap-3 bg-zinc-900 border border-zinc-700/60 rounded-full px-5 py-2.5">
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-              ))}
+    <section className="bg-zinc-950 py-20 sm:py-28 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto">
+        <SectionHeading
+          index="04"
+          eyebrow="Reviews"
+          title={t("title")}
+          subtitle={t("subtitle")}
+          aside={
+            <div className="shrink-0 flex items-end gap-4">
+              <span className="font-display text-5xl font-black text-white leading-none">4.9</span>
+              <div className="pb-0.5">
+                <div className="flex gap-0.5 mb-1.5">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-3.5 h-3.5 fill-red-500 text-red-500" />
+                  ))}
+                </div>
+                <p className="label">Google Reviews</p>
+              </div>
             </div>
-            <span className="text-white font-black text-sm">4.9</span>
-            <span className="text-zinc-500 text-xs">pe Google</span>
-          </div>
-        </motion.div>
+          }
+        />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 border-t border-zinc-800">
           {testimonials.map((item, i) => (
-            <motion.div
+            <motion.figure
               key={item.id}
-              initial={{ opacity: 0, y: 30 }}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: i * 0.08 }}
-              className="group relative bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-sm p-6 flex flex-col gap-4 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-black/40"
+              className={`flex flex-col gap-8 py-8 border-b border-zinc-800 lg:border-b-0 sm:px-7 first:sm:pl-0 ${
+                i > 0 ? "lg:border-l lg:border-zinc-800" : ""
+              } ${i % 2 === 1 ? "sm:border-l sm:border-zinc-800" : "sm:max-lg:pl-0"}`}
             >
-              {/* Large quote mark */}
-              <span className="absolute top-4 right-5 text-6xl font-black text-zinc-800 leading-none select-none group-hover:text-zinc-700 transition-colors">&ldquo;</span>
-
-              {/* Stars */}
-              <div className="flex gap-0.5">
-                {Array.from({ length: item.rating }).map((_, j) => (
-                  <Star key={j} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                ))}
-              </div>
-
-              {/* Quote */}
-              <p className="text-zinc-400 text-sm leading-relaxed flex-grow relative z-10">
-                &ldquo;{item.text}&rdquo;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3 pt-3 border-t border-zinc-800">
-                <div className="w-9 h-9 rounded-full bg-gradient-to-br from-red-600/30 to-red-900/20 border border-red-600/30 flex items-center justify-center text-red-400 text-xs font-black flex-shrink-0">
-                  {item.avatar}
-                </div>
-                <div>
-                  <p className="text-white text-sm font-bold">{item.name}</p>
-                  <p className="text-zinc-600 text-xs">{item.role}</p>
-                </div>
-              </div>
-            </motion.div>
+              <blockquote className="text-zinc-200 leading-relaxed flex-grow">
+                <span className="text-red-500 font-black mr-1">“</span>
+                {item.text}
+              </blockquote>
+              <figcaption>
+                <p className="text-white text-sm font-bold">{item.name}</p>
+                <p className="label mt-1.5">{item.role}</p>
+              </figcaption>
+            </motion.figure>
           ))}
         </div>
       </div>

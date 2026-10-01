@@ -58,12 +58,11 @@ export default function DespreNoi() {
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-zinc-950/50 to-zinc-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/90 to-transparent" />
         </div>
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
 
         <div className="relative max-w-5xl mx-auto">
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, ease: "easeOut" }}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Despre noi</p>
-            <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-6">
+            <p className="eyebrow mb-4">Despre noi</p>
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-none mb-6">
               O afacere de familie<br />
               <span className="text-red-500">cu suflet de motociclist</span>
             </h1>
@@ -79,8 +78,8 @@ export default function DespreNoi() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
           <motion.div {...fadeUp(0)}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3">Povestea noastră</p>
-            <h2 className="text-4xl font-black text-white mb-6 leading-tight">
+            <p className="eyebrow mb-3">Povestea noastră</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight">
               Primii în Constanța<br />la motociclete noi
             </h2>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
@@ -154,10 +153,10 @@ export default function DespreNoi() {
       {/* Team */}
       <section className="py-24 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-16">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Echipa</p>
-            <h2 className="text-4xl font-black text-white mb-3">Oamenii din spatele HobbyMoto</h2>
-            <p className="text-zinc-500 text-sm max-w-xl mx-auto">
+          <motion.div {...fadeUp(0)} className="border-t border-zinc-800 pt-5 mb-12">
+            <p className="eyebrow mb-7">Echipa</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-3">Oamenii din spatele HobbyMoto</h2>
+            <p className="text-zinc-500 text-sm max-w-xl mt-4">
               O echipă de pasionați care trăiesc ce vând — fiecare are propriul moto și cunoaște fiecare detaliu al produselor pe care le reprezintă.
             </p>
           </motion.div>
@@ -206,8 +205,8 @@ export default function DespreNoi() {
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-t border-zinc-800/50">
         <div className="max-w-6xl mx-auto">
           <motion.div {...fadeUp(0)} className="mb-12">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Comunitate</p>
-            <h2 className="text-4xl font-black text-white leading-tight">
+            <p className="eyebrow mb-2">Comunitate</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white leading-tight">
               Mai mult decât un dealer —<br />
               <span className="text-zinc-400">o comunitate de motocicliști</span>
             </h2>
@@ -239,14 +238,14 @@ export default function DespreNoi() {
       {/* Services */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-5xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Ce oferim</p>
-            <h2 className="text-4xl font-black text-white">Servicii complete pentru motocicliști</h2>
+          <motion.div {...fadeUp(0)} className="border-t border-zinc-800 pt-5 mb-12">
+            <p className="eyebrow mb-7">Ce oferim</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Servicii complete pentru motocicliști</h2>
           </motion.div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {services.map((item, i) => (
               <motion.div key={item.title} {...fadeUp(i * 0.07)}
-                className="group flex flex-col gap-3 p-6 bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm transition-all hover:-translate-y-1">
+                className="group flex flex-col gap-3 p-6 bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm transition-all">
                 <div className="w-2 h-2 rounded-full bg-red-500 group-hover:scale-125 transition-transform" />
                 <h3 className="text-white font-black">{item.title}</h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">{item.desc}</p>
@@ -261,7 +260,6 @@ export default function DespreNoi() {
         <div className="max-w-4xl mx-auto">
           <motion.div {...fadeUp(0)}
             className="relative bg-zinc-900 border border-zinc-800 rounded-sm p-10 text-center overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent pointer-events-none" />
             <div className="relative">
               <p className="text-zinc-400 text-sm mb-2">Vrei să ne cunoști?</p>
               <h3 className="text-white font-black text-2xl sm:text-3xl mb-6">
@@ -269,11 +267,11 @@ export default function DespreNoi() {
               </h3>
               <div className="flex flex-wrap justify-center gap-4">
                 <a href={`tel:${contactInfo.phone1}`}
-                  className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/30">
+                  className="btn btn-primary px-7 py-3.5 text-sm">
                   <Phone className="w-4 h-4" /> {contactInfo.phone1}
                 </a>
                 <Link href={`/${locale}/contact`}
-                  className="inline-flex items-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold px-7 py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5">
+                  className="btn btn-ghost px-7 py-3.5 text-sm">
                   Trimite mesaj
                 </Link>
               </div>

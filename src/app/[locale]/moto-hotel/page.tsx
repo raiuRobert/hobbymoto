@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
-import { Phone, MapPin, Clock, Shield, Wrench, Zap, Droplets } from "lucide-react";
+import { Phone, MapPin, Clock, Shield, Wrench, Zap, Droplets, Sparkles, Fuel, CircleOff, CalendarClock } from "lucide-react";
 import { contactInfo } from "@/lib/data";
 import { type Locale } from "@/lib/i18n";
 
@@ -29,10 +29,10 @@ const optionalServices = [
 ];
 
 const conditions = [
-  { icon: "🧹", title: "Curată",         desc: "Predată curată. Oferim spălare contra cost (30 RON)." },
-  { icon: "⛽", title: "Rezervor plin",  desc: "Rezervor plin pentru conservare optimă." },
-  { icon: "🛢️", title: "Fără scurgeri", desc: "Nicio scurgere de lichide la predare." },
-  { icon: "📅", title: "Minim 2 luni",  desc: "Durata minimă de depozitare: 2 luni calendaristice." },
+  { icon: Sparkles, title: "Curată",         desc: "Predată curată. Oferim spălare contra cost (30 RON)." },
+  { icon: Fuel, title: "Rezervor plin",  desc: "Rezervor plin pentru conservare optimă." },
+  { icon: CircleOff, title: "Fără scurgeri", desc: "Nicio scurgere de lichide la predare." },
+  { icon: CalendarClock, title: "Minim 2 luni",  desc: "Durata minimă de depozitare: 2 luni calendaristice." },
 ];
 
 export default function MotoHotel() {
@@ -49,12 +49,11 @@ export default function MotoHotel() {
           <div className="absolute inset-0 bg-gradient-to-b from-zinc-950/60 via-zinc-950/70 to-zinc-950" />
           <div className="absolute inset-0 bg-gradient-to-r from-zinc-950/80 to-transparent" />
         </div>
-        <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-red-600/60 to-transparent" />
 
         <div className="relative max-w-5xl mx-auto">
           <motion.div {...fadeUp(0)}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-4">Servicii</p>
-            <h1 className="text-5xl sm:text-7xl font-black text-white leading-none mb-6">
+            <p className="eyebrow mb-4">Servicii</p>
+            <h1 className="text-4xl sm:text-6xl font-black text-white leading-none mb-6">
               Moto <span className="text-red-500">Hotel</span>
             </h1>
             <p className="text-zinc-300 text-xl leading-relaxed max-w-2xl mb-10">
@@ -63,11 +62,11 @@ export default function MotoHotel() {
             </p>
             <div className="flex flex-wrap gap-4">
               <a href={`tel:${contactInfo.phone1}`}
-                className="inline-flex items-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/40">
+                className="btn btn-primary px-8 py-4 text-sm">
                 <Phone className="w-4 h-4" /> Rezervă un loc
               </a>
               <Link href={`/${locale}/contact`}
-                className="inline-flex items-center gap-2 border border-zinc-600 hover:border-zinc-400 text-zinc-300 hover:text-white font-bold px-8 py-4 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5">
+                className="btn btn-ghost px-8 py-4 text-sm">
                 Trimite mesaj
               </Link>
             </div>
@@ -79,8 +78,8 @@ export default function MotoHotel() {
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
           <motion.div {...fadeUp(0)}>
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-3">Ce este</p>
-            <h2 className="text-4xl font-black text-white mb-6 leading-tight">
+            <p className="eyebrow mb-3">Ce este</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white mb-6 leading-tight">
               Îngrijire profesională<br />cât ești plecat
             </h2>
             <div className="space-y-4 text-zinc-400 leading-relaxed">
@@ -123,15 +122,15 @@ export default function MotoHotel() {
       {/* Included + Optional */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-zinc-900/30 border-y border-zinc-800/50">
         <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Ce primești</p>
-            <h2 className="text-4xl font-black text-white">Servicii incluse & opționale</h2>
+          <motion.div {...fadeUp(0)} className="border-t border-zinc-800 pt-5 mb-12">
+            <p className="eyebrow mb-7">Ce primești</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Servicii incluse & opționale</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Included */}
             <motion.div {...fadeUp(0.05)} className="bg-zinc-900 border border-zinc-800 rounded-sm p-8 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 to-transparent" />
+              <div className="absolute top-0 left-0 w-0.5 h-full bg-red-600" />
               <h3 className="text-white font-black text-lg mb-6 uppercase tracking-widest">Inclus în preț</h3>
               <ul className="space-y-4">
                 {includedServices.map(({ icon: Icon, text }) => (
@@ -147,7 +146,7 @@ export default function MotoHotel() {
 
             {/* Optional */}
             <motion.div {...fadeUp(0.1)} className="bg-zinc-900 border border-zinc-800 rounded-sm p-8 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-zinc-600 to-transparent" />
+              <div className="absolute top-0 left-0 w-0.5 h-full bg-zinc-600" />
               <h3 className="text-white font-black text-lg mb-6 uppercase tracking-widest">Opțional (contra cost)</h3>
               <ul className="space-y-3">
                 {optionalServices.map((item) => (
@@ -165,15 +164,15 @@ export default function MotoHotel() {
       {/* Conditions */}
       <section className="py-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-6xl mx-auto">
-          <motion.div {...fadeUp(0)} className="text-center mb-14">
-            <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Important</p>
-            <h2 className="text-4xl font-black text-white">Condiții de depozitare</h2>
+          <motion.div {...fadeUp(0)} className="border-t border-zinc-800 pt-5 mb-12">
+            <p className="eyebrow mb-7">Important</p>
+            <h2 className="text-3xl sm:text-4xl font-black text-white">Condiții de depozitare</h2>
           </motion.div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             {conditions.map((c, i) => (
               <motion.div key={c.title} {...fadeUp(i * 0.08)}
-                className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm p-6 text-center transition-all hover:-translate-y-1">
-                <div className="text-4xl mb-4">{c.icon}</div>
+                className="group bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm p-6 transition-colors">
+                <c.icon className="w-6 h-6 text-red-500 mb-5" strokeWidth={1.5} />
                 <h3 className="text-white font-black mb-2">{c.title}</h3>
                 <p className="text-zinc-500 text-sm leading-relaxed">{c.desc}</p>
               </motion.div>
@@ -187,7 +186,6 @@ export default function MotoHotel() {
         <div className="max-w-5xl mx-auto">
           <motion.div {...fadeUp(0)}
             className="relative bg-zinc-900 border border-zinc-800 rounded-sm overflow-hidden p-10 sm:p-14">
-            <div className="absolute inset-0 bg-gradient-to-br from-red-950/20 to-transparent pointer-events-none" />
             <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-8 items-center">
               <div>
                 <h2 className="text-3xl font-black text-white mb-3">Rezervă un loc acum</h2>
@@ -205,11 +203,11 @@ export default function MotoHotel() {
               </div>
               <div className="flex flex-col gap-3">
                 <a href={`tel:${contactInfo.phone1}`}
-                  className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-sm uppercase tracking-wide text-sm transition-all hover:-translate-y-0.5 shadow-lg shadow-red-900/30">
+                  className="btn btn-primary py-4 text-sm">
                   <Phone className="w-4 h-4" /> {contactInfo.phone1}
                 </a>
                 <Link href={`/${locale}/contact`}
-                  className="flex items-center justify-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold py-4 rounded-sm uppercase tracking-wide text-sm transition-all">
+                  className="btn btn-ghost py-4 text-sm">
                   Trimite mesaj
                 </Link>
               </div>

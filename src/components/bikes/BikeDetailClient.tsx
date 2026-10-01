@@ -3,12 +3,10 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Phone, Mail, ArrowLeft, Gauge, Calendar, Zap, Weight,
-  CheckCircle, Shield, X, ChevronLeft, ChevronRight, Maximize2, ArrowRight
-} from "lucide-react";
+import { Phone, Mail, ArrowLeft, Shield, X, ChevronLeft, ChevronRight, Maximize2, ArrowRight } from "lucide-react";
 import { contactInfo } from "@/lib/data";
-import { formatKm, currencySymbol, bikeCover } from "@/lib/utils";
+import { formatKm, currencySymbol } from "@/lib/utils";
+import BikeCard from "@/components/bikes/BikeCard";
 import { type SanityBike, type SanityBikeCard } from "@/sanity/client";
 
 interface Props {
@@ -45,7 +43,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
   );
 
   return (
-    <div className="min-h-screen bg-zinc-950 pt-20 pb-24">
+    <div className="min-h-screen bg-zinc-950 pt-24 pb-28">
 
       {/* Lightbox */}
       <AnimatePresence>
@@ -108,7 +106,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5">
         <Link href={`/${locale}/motociclete-rulate`}
-          className="inline-flex items-center gap-2 text-zinc-500 hover:text-white text-sm transition-colors group">
+          className="label inline-flex items-center gap-2 hover:text-white transition-colors group">
           <ArrowLeft className="w-4 h-4 group-hover:-translate-x-0.5 transition-transform" />
           Înapoi la motociclete rulate
         </Link>
@@ -137,9 +135,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                     className="object-cover"
                     priority
                   />
-                  <div className="absolute top-4 left-4 px-3 py-1 text-xs font-black uppercase tracking-widest rounded-sm bg-zinc-800/90 text-zinc-200 border border-zinc-700/60">
-                    RULAT
-                  </div>
+                  <span className="label absolute left-0 top-0 bg-zinc-950 text-zinc-200 px-3 py-2">Rulat</span>
                   <div className="absolute top-4 right-4 w-9 h-9 bg-black/60 backdrop-blur-sm rounded-sm flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
                     <Maximize2 className="w-4 h-4 text-white" />
                   </div>
@@ -153,7 +149,7 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                         key={i}
                         onClick={() => setActiveImg(i)}
                         className={`relative aspect-square rounded-sm overflow-hidden border-2 transition-all duration-200 ${
-                          i === activeImg ? "border-red-500 scale-105 shadow-lg shadow-red-900/30" : "border-transparent hover:border-zinc-600 opacity-70 hover:opacity-100"
+                          i === activeImg ? "border-red-500" : "border-transparent opacity-60 hover:opacity-100"
                         }`}
                       >
                         <Image src={src} alt="" fill sizes="(max-width: 1024px) 14vw, 8vw" className="object-cover" />
@@ -172,114 +168,98 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
           {/* ── RIGHT: Details ── */}
           <div className="lg:col-span-5">
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
-              <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">{bike.brand}</p>
-              <h1 className="text-4xl sm:text-5xl font-black text-white leading-tight mb-2">
+              <p className="eyebrow mb-5">{bike.brand}</p>
+              <h1 className="text-4xl sm:text-5xl font-black text-white leading-none mb-4">
                 {bike.model}
               </h1>
-              <p className="text-zinc-500 text-sm mb-6">
+              <p className="label mb-8">
                 {bike.year} · {formatKm(bike.km)} km{bike.color ? ` · ${bike.color}` : ""}
               </p>
 
-              {/* Price card */}
-              <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-6 mb-6">
+              {/* Price */}
+              <div className="border-y border-zinc-800 py-6 mb-6">
+                <p className="label mb-3">Preț</p>
                 {bike.price && bike.price > 0 ? (
-                  <div className="flex items-baseline gap-2">
-                    <span className="text-5xl font-black text-white leading-none">
+                  <p className="flex items-baseline gap-2.5">
+                    <span className="font-display text-5xl font-black text-white leading-none">
                       {bike.price.toLocaleString("de-DE")}
                     </span>
-                    <span className="text-5xl font-black text-red-500 leading-none">{currencySymbol(bike.currency)}</span>
-                    <span className="text-zinc-500 text-sm ml-1">+ TVA</span>
-                  </div>
+                    <span className="font-display text-3xl font-black text-red-500 leading-none">{currencySymbol(bike.currency)}</span>
+                    <span className="label ml-1">+ TVA</span>
+                  </p>
                 ) : (
-                  <p className="text-2xl font-black text-zinc-300">Preț la cerere</p>
+                  <p className="font-display text-2xl font-black text-zinc-200">Preț la cerere</p>
                 )}
                 {bike.warranty && (
-                  <div className="flex items-center gap-2 mt-3 text-emerald-400 text-sm font-medium">
-                    <Shield className="w-4 h-4 flex-shrink-0" />
-                    <span>{bike.warranty}</span>
-                  </div>
+                  <p className="flex items-center gap-2 mt-4 text-zinc-300 text-sm">
+                    <Shield className="w-4 h-4 text-red-500 flex-shrink-0" />
+                    {bike.warranty}
+                  </p>
                 )}
               </div>
 
               {/* CTA buttons */}
-              <div className="flex flex-col gap-3 mb-6">
-                <a href={`tel:${contactInfo.phone1}`}
-                  className="flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-sm uppercase tracking-wide text-sm transition-all duration-200 shadow-xl shadow-red-900/30 hover:-translate-y-0.5 active:translate-y-0">
+              <div className="flex flex-col gap-2.5 mb-8">
+                <a href={`tel:${contactInfo.phone1}`} className="btn btn-primary py-4 text-sm">
                   <Phone className="w-4 h-4" />
                   {contactInfo.phone1}
                 </a>
-                <a
-                  href={`https://wa.me/${contactInfo.phone1.replace(/[^0-9]/g, "")}?text=${whatsappMsg}`}
-                  target="_blank" rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 bg-[#25D366] hover:bg-[#20bd5a] text-white font-bold py-4 rounded-sm uppercase tracking-wide text-sm transition-all duration-200 hover:-translate-y-0.5"
-                >
-                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <div className="grid grid-cols-2 gap-2.5">
+                  <a
+                    href={`https://wa.me/${contactInfo.phone1.replace(/[^0-9]/g, "")}?text=${whatsappMsg}`}
+                    target="_blank" rel="noopener noreferrer"
+                    className="btn btn-ghost py-3.5"
+                  >
+                    <svg className="w-4 h-4 text-[#25D366]" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
                   </svg>
-                  WhatsApp
-                </a>
-                <a href={`mailto:${contactInfo.email}?subject=${encodeURIComponent(`Interes: ${bike.brand} ${bike.model} ${bike.year}`)}`}
-                  className="flex items-center justify-center gap-2 border border-zinc-700 hover:border-zinc-500 text-zinc-300 hover:text-white font-bold py-3.5 rounded-sm uppercase tracking-wide text-sm transition-all duration-200 hover:-translate-y-0.5">
-                  <Mail className="w-4 h-4" />
-                  Trimite email
-                </a>
+                    WhatsApp
+                  </a>
+                  <a href={`mailto:${contactInfo.email}?subject=${encodeURIComponent(`Interes: ${bike.brand} ${bike.model} ${bike.year}`)}`}
+                    className="btn btn-ghost py-3.5">
+                    <Mail className="w-4 h-4" />
+                    Email
+                  </a>
+                </div>
               </div>
 
-              {/* Specs grid */}
-              <div className="grid grid-cols-2 gap-2.5 mb-6">
+              {/* Specs */}
+              <dl className="grid grid-cols-2 gap-x-8 border-t border-zinc-800">
                 {[
-                  { icon: Calendar, label: "An fabricație", value: bike.year.toString() },
-                  { icon: Gauge,    label: "Kilometri",     value: `${formatKm(bike.km)} km` },
-                  ...(bike.engine ? [{ icon: Zap, label: "Motor", value: bike.engine }] : []),
-                  ...(bike.power  ? [{ icon: Zap, label: "Putere", value: bike.power }] : []),
-                  ...(bike.torque ? [{ icon: Zap, label: "Cuplu", value: bike.torque }] : []),
-                  ...(bike.weight ? [{ icon: Weight, label: "Greutate", value: bike.weight }] : []),
-                ].map((spec) => {
-                  const Icon = spec.icon;
-                  return (
-                    <div key={spec.label} className="flex items-center gap-3 p-3.5 bg-zinc-900 border border-zinc-800/80 rounded-sm">
-                      <div className="flex-shrink-0 w-9 h-9 rounded bg-zinc-800 border border-zinc-700/60 flex items-center justify-center">
-                        <Icon className="w-5 h-5 text-red-500" />
-                      </div>
-                      <div className="min-w-0">
-                        <p className="text-zinc-500 text-[10px] uppercase tracking-wider">{spec.label}</p>
-                        <p className="text-white font-bold text-sm truncate">{spec.value}</p>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+                  { label: "An fabricație", value: bike.year.toString() },
+                  { label: "Kilometri", value: `${formatKm(bike.km)} km` },
+                  ...(bike.engine ? [{ label: "Motor", value: bike.engine }] : []),
+                  ...(bike.power ? [{ label: "Putere", value: bike.power }] : []),
+                  ...(bike.torque ? [{ label: "Cuplu", value: bike.torque }] : []),
+                  ...(bike.weight ? [{ label: "Greutate", value: bike.weight }] : []),
+                ].map((spec) => (
+                  <div key={spec.label} className="py-3.5 border-b border-zinc-800">
+                    <dt className="label mb-1.5">{spec.label}</dt>
+                    <dd className="text-white font-semibold text-sm">{spec.value}</dd>
+                  </div>
+                ))}
+              </dl>
             </motion.div>
           </div>
         </div>
 
         {/* Description + Extras */}
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-2 gap-6 border-t border-zinc-800/60 pt-10">
+        <div className="mt-20 grid grid-cols-1 lg:grid-cols-12 gap-x-10 gap-y-12 border-t border-zinc-800 pt-10">
           {bike.description && (
-            <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-sm p-7 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 via-red-600/40 to-transparent rounded-l-sm" />
-              <h2 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
-                <span className="text-red-500 text-lg">&#9632;</span>
-                Descriere
-              </h2>
-              <p className="text-zinc-300 leading-relaxed text-[15px]">{bike.description}</p>
+            <div className="lg:col-span-7">
+              <h2 className="eyebrow mb-6">Descriere</h2>
+              <p className="text-zinc-200 leading-relaxed text-lg max-w-2xl">{bike.description}</p>
             </div>
           )}
 
           {bike.extras && bike.extras.length > 0 && (
-            <div className="bg-zinc-900/50 border border-zinc-800/80 rounded-sm p-7 relative overflow-hidden">
-              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-red-600 via-red-600/40 to-transparent rounded-l-sm" />
-              <h2 className="text-white font-black text-sm uppercase tracking-[0.2em] mb-5 flex items-center gap-3">
-                <span className="text-red-500 text-lg">&#9632;</span>
-                Dotări & accesorii
-              </h2>
-              <ul className="space-y-2">
+            <div className="lg:col-span-5">
+              <h2 className="eyebrow mb-6">Dotări & accesorii</h2>
+              <ul className="border-t border-zinc-800">
                 {bike.extras.map((extra) => (
-                  <li key={extra} className="flex items-start gap-3 group">
-                    <span className="flex-shrink-0 w-5 h-5 rounded-full bg-red-600/15 border border-red-600/30 flex items-center justify-center mt-0.5">
-                      <CheckCircle className="w-3 h-3 text-red-400" />
-                    </span>
-                    <span className="text-zinc-300 text-sm leading-relaxed group-hover:text-white transition-colors">{extra}</span>
+                  <li key={extra} className="flex items-start gap-3 py-3 border-b border-zinc-800 text-zinc-300 text-sm leading-relaxed">
+                    <span className="mt-[0.45rem] w-1.5 h-1.5 bg-red-600 flex-shrink-0" />
+                    {extra}
                   </li>
                 ))}
               </ul>
@@ -289,22 +269,19 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
 
         {/* Similar bikes */}
         {similar.length > 0 && (
-          <div className="mt-16 border-t border-zinc-800/60 pt-12">
-            <div className="flex items-center justify-between mb-8">
+          <div className="mt-24 border-t border-zinc-800 pt-5">
+            <div className="flex items-end justify-between mb-12">
               <div>
-                <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-1">Mai vezi și</p>
-                <h2 className="text-2xl font-black text-white">Motociclete similare</h2>
+                <p className="eyebrow mb-7">Mai vezi și</p>
+                <h2 className="text-3xl sm:text-4xl font-black text-white leading-none">Motociclete similare</h2>
               </div>
-              <Link href={`/${locale}/motociclete-rulate`}
-                className="group inline-flex items-center gap-1.5 text-zinc-500 hover:text-white text-sm transition-colors">
-                Toate <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              <Link href={`/${locale}/motociclete-rulate`} className="link-arrow group">
+                Toate <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-              {similar.map((sb, i) => {
-                const cover = bikeCover(sb);
-                return (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-6 gap-y-12">
+              {similar.map((sb, i) => (
                 <motion.div
                   key={sb.id}
                   initial={{ opacity: 0, y: 20 }}
@@ -312,30 +289,9 @@ export default function BikeDetailClient({ bike, similar, locale }: Props) {
                   viewport={{ once: true }}
                   transition={{ duration: 0.4, delay: i * 0.1 }}
                 >
-                  <Link href={`/${locale}/motociclete-rulate/${sb.id}`}
-                    className="group block bg-zinc-900 border border-zinc-800 hover:border-red-600/40 rounded-sm overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-red-950/20">
-                    <div className="relative h-44 bg-zinc-800 overflow-hidden">
-                      {cover && (
-                        <Image src={cover} alt={`${sb.brand} ${sb.model}`} fill sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" quality={90} className="object-cover group-hover:scale-105 transition-transform duration-500" />
-                      )}
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-900/60 to-transparent" />
-                    </div>
-                    <div className="p-4">
-                      <p className="text-red-500 text-[11px] font-bold uppercase tracking-widest mb-1">{sb.brand}</p>
-                      <h3 className="text-white font-black text-base mb-2">{sb.model}</h3>
-                      <div className="flex items-center justify-between">
-                        {sb.price ? (
-                          <p className="text-white font-black">{sb.price.toLocaleString("de-DE")} <span className="text-red-500 text-sm">{currencySymbol(sb.currency)}</span></p>
-                        ) : (
-                          <p className="text-zinc-300 font-bold text-sm">Preț la cerere</p>
-                        )}
-                        <span className="text-zinc-500 text-xs">{sb.year} · {formatKm(sb.km)} km</span>
-                      </div>
-                    </div>
-                  </Link>
+                  <BikeCard bike={sb} locale={locale} sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw" />
                 </motion.div>
-                );
-              })}
+              ))}
             </div>
           </div>
         )}

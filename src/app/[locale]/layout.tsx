@@ -2,15 +2,14 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
 import { notFound } from "next/navigation";
-import { Geist, Geist_Mono, Josefin_Sans } from "next/font/google";
+import { Archivo, Martian_Mono } from "next/font/google";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { locales, type Locale } from "@/lib/i18n";
 import "../globals.css";
 
-const geistSans = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
-const geistMono = Geist_Mono({ variable: "--font-geist-mono", subsets: ["latin"] });
-const josefinSans = Josefin_Sans({ variable: "--font-josefin", subsets: ["latin"], weight: "700" });
+const archivo = Archivo({ variable: "--font-archivo", subsets: ["latin", "latin-ext"], axes: ["wdth"] });
+const martianMono = Martian_Mono({ variable: "--font-martian", subsets: ["latin", "latin-ext"] });
 
 export const metadata: Metadata = {
   title: "HobbyMoto — Dealer motociclete premium",
@@ -31,10 +30,8 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className="dark">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} ${josefinSans.variable} antialiased bg-zinc-950 text-white`}
-      >
+    <html lang={locale} className={`dark ${archivo.variable} ${martianMono.variable}`}>
+      <body className="antialiased bg-zinc-950 text-white">
         <NextIntlClientProvider messages={messages}>
           <Navbar locale={locale as Locale} />
           <main>{children}</main>

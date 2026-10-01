@@ -25,7 +25,7 @@ export default function ContactPage() {
 
         {/* Header */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-14">
-          <p className="text-red-500 text-xs font-bold uppercase tracking-widest mb-2">Contact</p>
+          <p className="eyebrow mb-2">Contact</p>
           <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">Contactează-ne</h1>
           <p className="text-zinc-500 text-lg max-w-lg">
             Suntem la dispoziția ta. Sună, trimite un email sau completează formularul.
@@ -140,7 +140,7 @@ export default function ContactPage() {
                       className="w-full bg-zinc-800 border border-zinc-700 focus:border-red-600 rounded-sm px-4 py-3 text-white text-sm outline-none transition-colors placeholder:text-zinc-600 resize-none"
                     />
                   </div>
-                  <button type="submit" className="w-full flex items-center justify-center gap-2 bg-red-600 hover:bg-red-500 text-white font-bold py-4 rounded-sm uppercase tracking-wide text-sm transition-colors">
+                  <button type="submit" className="btn btn-primary w-full py-4 text-sm">
                     <Send className="w-4 h-4" /> Trimite mesajul
                   </button>
                 </form>
