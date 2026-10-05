@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { motion } from "framer-motion";
 import { Phone } from "lucide-react";
-import { teamMembers, contactInfo } from "@/lib/data";
+import { brands, teamMembers, contactInfo } from "@/lib/data";
 import { type Locale } from "@/lib/i18n";
 
 const fadeUp = (delay = 0) => ({
@@ -17,7 +17,7 @@ const fadeUp = (delay = 0) => ({
 const stats = [
   { value: "1999",     label: "Activi din" },
   { value: "200m²",   label: "Showroom" },
-  { value: "6",       label: "Mărci premium" },
+  { value: String(brands.length), label: "Mărci premium" },
   { value: "12 luni", label: "Garanție rulate" },
 ];
 
@@ -94,7 +94,7 @@ export default function DespreNoi() {
                 12 luni</strong> pe rulate și <strong className="text-white">înmatricularea gratuită</strong>.
               </p>
               <p>
-                Astăzi reprezentăm mărci premium — Ducati, Indian, Benelli, Italjet, Malaguti, Lambretta —
+                Astăzi reprezentăm mărci premium — Ducati, Benelli, Italjet, Malaguti, Daytona, Zontes, SYM, Kove —
                 în cel mai mare showroom de motociclete din Constanța: <strong className="text-white">peste 200 m²</strong>.
               </p>
             </div>
@@ -174,7 +174,7 @@ export default function DespreNoi() {
           </motion.div>
 
           {/* Individual cards */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-5">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5">
             {teamMembers.map((member, i) => (
               <motion.div key={member.name} {...fadeUp(i * 0.06)} className="group text-center">
                 <div className="relative w-24 h-24 mx-auto mb-3 rounded-full overflow-hidden bg-zinc-800 border-2 border-zinc-700 group-hover:border-red-600/60 transition-all duration-300 group-hover:scale-105">

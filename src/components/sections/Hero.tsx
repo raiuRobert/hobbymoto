@@ -6,7 +6,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight, Phone } from "lucide-react";
 import { useRef } from "react";
 import { type Locale } from "@/lib/i18n";
-import { contactInfo } from "@/lib/data";
+import { brands, contactInfo } from "@/lib/data";
 
 interface HeroProps { locale: Locale; }
 
@@ -24,7 +24,7 @@ export default function Hero({ locale }: HeroProps) {
 
   const stats = [
     { value: "1999", label: t("statFounded") },
-    { value: "6", label: t("statBrands") },
+    { value: String(brands.length), label: t("statBrands") },
     { value: "200 m²", label: t("statShowroom") },
     { value: "4.9", label: t("statReviews") },
   ];
@@ -49,7 +49,7 @@ export default function Hero({ locale }: HeroProps) {
       <div className="relative z-10 max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 pt-36 pb-10">
         <motion.p {...rise(0)} className="eyebrow mb-7">
           {t("badgeDealer")}
-          <span className="hidden sm:inline text-zinc-400">Ducati · Indian · Benelli</span>
+          <span className="hidden sm:inline text-zinc-400">Ducati · Benelli · Kove</span>
         </motion.p>
 
         <motion.h1

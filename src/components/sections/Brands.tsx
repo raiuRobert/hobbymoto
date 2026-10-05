@@ -26,14 +26,20 @@ export default function Brands() {
                 aria-hidden={i >= brands.length}
                 className="relative shrink-0 w-32 h-10 mx-9 grayscale brightness-150 opacity-55 hover:grayscale-0 hover:brightness-100 hover:opacity-100 transition-all duration-300"
               >
-                <Image
-                  src={brand.logo}
-                  alt={brand.name}
-                  fill
-                  sizes="128px"
-                  className="object-contain"
-                  unoptimized={brand.logo.endsWith(".svg")}
-                />
+                {brand.logo ? (
+                  <Image
+                    src={brand.logo}
+                    alt={brand.name}
+                    fill
+                    sizes="128px"
+                    className="object-contain"
+                    unoptimized={brand.logo.endsWith(".svg")}
+                  />
+                ) : (
+                  <span className="font-display absolute inset-0 flex items-center justify-center text-2xl font-black uppercase text-white">
+                    {brand.name}
+                  </span>
+                )}
               </div>
             ))}
           </div>

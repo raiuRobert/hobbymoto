@@ -58,7 +58,7 @@ export default function Footer({ locale }: FooterProps) {
                 { href: `/${locale}/despre-noi`, label: tNav("about") },
                 { href: `/${locale}/motociclete-rulate`, label: tNav("usedBikes") },
                 { href: `/${locale}/motociclete-noi/ducati`, label: "Ducati" },
-                { href: `/${locale}/motociclete-noi/indian`, label: "Indian" },
+                { href: `/${locale}/motociclete-noi/kove`, label: "Kove" },
                 { href: `/${locale}/motociclete-noi/benelli`, label: "Benelli" },
               ].map((link) => (
                 <li key={link.href}>
