@@ -375,13 +375,15 @@ export const bikes: Bike[] = [
   },
 ];
 
-export const brands = [
-  { name: "Ducati",    slug: "ducati",    logo: "/brands/ducati.svg" },
-  { name: "Indian",    slug: "indian",    logo: "/brands/indian.svg" },
-  { name: "Benelli",   slug: "benelli",   logo: "/brands/benelli.svg" },
-  { name: "Italjet",   slug: "italjet",   logo: "/brands/italjet.svg" },
-  { name: "Malaguti",  slug: "malaguti",  logo: "/brands/malaguti.svg" },
-  { name: "Lambretta", slug: "lambretta", logo: "/brands/lambretta.png" },
+export const brands: { name: string; slug: string; logo: string | null }[] = [
+  { name: "Ducati",   slug: "ducati",   logo: "/brands/ducati.svg" },
+  { name: "Benelli",  slug: "benelli",  logo: "/brands/benelli.svg" },
+  { name: "Italjet",  slug: "italjet",  logo: "/brands/italjet.svg" },
+  { name: "Malaguti", slug: "malaguti", logo: "/brands/malaguti.svg" },
+  { name: "Daytona",  slug: "daytona",  logo: "/brands/daytona.png" },
+  { name: "Zontes",   slug: "zontes",   logo: "/brands/zontes.png" },
+  { name: "SYM",      slug: "sym",      logo: "/brands/sym.svg" },
+  { name: "Kove",     slug: "kove",     logo: "/brands/kove.png" },
 ];
 
 export const testimonials = [
@@ -425,7 +427,6 @@ export const teamMembers = [
   { name: "Dragomir Antoniu",   role: "Co-fondator",       image: "/about/toni ducati2.jpg",  initials: "AN" },
   { name: "Bosneagu Claudia",   role: "Sales Manager",     image: "/about/claudia.jpg",       initials: "BC" },
   { name: "Ștefănuț Ionuț",    role: "Service Manager",   image: null,                      initials: "SI" },
-  { name: "Nazzal Issam",       role: "Tehnician Service", image: null,                      initials: "NI" },
 ];
 
 export const rentalBikes = [

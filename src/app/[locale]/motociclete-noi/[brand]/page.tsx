@@ -10,10 +10,10 @@ export const revalidate = 60;
 
 const brandInfo: Record<string, {
   name: string;
-  tagline: string;
+  tagline?: string;
   desc: string;
-  origin: string;
-  website: string;
+  origin?: string;
+  website?: string;
   color: string;
 }> = {
   ducati: {
@@ -23,14 +23,6 @@ const brandInfo: Record<string, {
     origin: "Bologna, Italia · din 1926",
     website: "https://ducaticonstanta.ro/",
     color: "from-red-900/40",
-  },
-  indian: {
-    name: "Indian",
-    tagline: "America's First Motorcycle",
-    desc: "Indian Motorcycle este cel mai vechi brand de motociclete din America, cunoscut pentru cruisere cu caracter aparte, calitate premium și tehnologie modernă.",
-    origin: "Springfield, SUA · din 1901",
-    website: "https://ducaticonstanta.ro/",
-    color: "from-zinc-700/40",
   },
   benelli: {
     name: "Benelli",
@@ -56,13 +48,29 @@ const brandInfo: Record<string, {
     website: "https://ducaticonstanta.ro/",
     color: "from-green-900/20",
   },
-  lambretta: {
-    name: "Lambretta",
-    tagline: "The Original Italian Icon",
-    desc: "Lambretta este un simbol al culturii italiene postbelice. Scuterele lor clasice și moderne combină stilul retro cu tehnologia contemporană.",
-    origin: "Milano, Italia · din 1947",
-    website: "https://ducaticonstanta.ro/",
-    color: "from-zinc-600/30",
+  daytona: {
+    name: "Daytona",
+    desc: "Modele noi Daytona disponibile prin HobbyMoto. Contactează-ne pentru stoc, configurații și prețuri actualizate.",
+    website: "https://daytona-romania.ro/",
+    color: "from-zinc-700/30",
+  },
+  zontes: {
+    name: "Zontes",
+    desc: "Modele noi Zontes disponibile prin HobbyMoto. Contactează-ne pentru stoc, configurații și prețuri actualizate.",
+    website: "https://zontes.ro/",
+    color: "from-zinc-700/30",
+  },
+  sym: {
+    name: "SYM",
+    desc: "Modele noi SYM disponibile prin HobbyMoto. Contactează-ne pentru stoc, configurații și prețuri actualizate.",
+    website: "https://sym-romania.ro/",
+    color: "from-zinc-700/30",
+  },
+  kove: {
+    name: "Kove",
+    desc: "Modele noi Kove disponibile prin HobbyMoto. Contactează-ne pentru stoc, configurații și prețuri actualizate.",
+    website: "https://kove-romania.ro/",
+    color: "from-zinc-700/30",
   },
 };
 
@@ -100,10 +108,11 @@ export default async function BrandPage({
           </Link>
           <div className="flex flex-col sm:flex-row sm:items-end gap-6">
             <div className="flex-1">
-              <p className="eyebrow mb-2">{info.origin}</p>
+              {info.origin && <p className="eyebrow mb-2">{info.origin}</p>}
               <h1 className="text-4xl sm:text-6xl font-black text-white mb-2">{info.name}</h1>
-              <p className="text-zinc-400 text-xl italic">{info.tagline}</p>
+              {info.tagline && <p className="text-zinc-400 text-xl italic">{info.tagline}</p>}
             </div>
+            {info.website && (
             <a
               href={info.website}
               target="_blank"
@@ -112,6 +121,7 @@ export default async function BrandPage({
             >
               Website oficial <ArrowRight className="w-4 h-4" />
             </a>
+            )}
           </div>
           <p className="text-zinc-400 text-lg max-w-2xl mt-6 leading-relaxed">{info.desc}</p>
         </div>

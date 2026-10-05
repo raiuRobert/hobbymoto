@@ -14,7 +14,7 @@ const martianMono = Martian_Mono({ variable: "--font-martian", subsets: ["latin"
 export const metadata: Metadata = {
   title: "HobbyMoto — Dealer motociclete premium",
   description:
-    "Dealer oficial Ducati, Indian, Benelli, Italjet, Malaguti și Lambretta. Motociclete noi și rulate, Moto Hotel și închirieri.",
+    "Dealer oficial Ducati, Benelli, Italjet, Malaguti, Daytona, Zontes, SYM și Kove. Motociclete noi și rulate, Moto Hotel și închirieri.",
 };
 
 export default async function LocaleLayout({
