@@ -55,7 +55,6 @@ export default function Navbar({ locale }: NavbarProps) {
             { type: "external", label: "Ducati",    href: "https://ducaticonstanta.ro/" },
             { type: "external", label: "Benelli",   href: "https://www.benelli-moto.ro/" },
             { type: "external", label: "Italjet",   href: "https://www.italjet.com/en" },
-            { type: "external", label: "Malaguti",  href: "https://ducaticonstanta.ro/" },
             { type: "external", label: "Daytona",   href: "https://daytona-romania.ro/" },
             { type: "external", label: "Zontes",    href: "https://zontes.ro/" },
             { type: "external", label: "SYM",       href: "https://sym-romania.ro/" },

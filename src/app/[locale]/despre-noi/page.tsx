@@ -94,7 +94,7 @@ export default function DespreNoi() {
                 12 luni</strong> pe rulate și <strong className="text-white">înmatricularea gratuită</strong>.
               </p>
               <p>
-                Astăzi reprezentăm mărci premium — Ducati, Benelli, Italjet, Malaguti, Daytona, Zontes, SYM, Kove —
+                Astăzi reprezentăm mărci premium — Ducati, Benelli, Italjet, Daytona, Zontes, SYM, Kove —
                 în cel mai mare showroom de motociclete din Constanța: <strong className="text-white">peste 200 m²</strong>.
               </p>
             </div>

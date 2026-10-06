@@ -379,7 +379,6 @@ export const brands: { name: string; slug: string; logo: string | null }[] = [
   { name: "Ducati",   slug: "ducati",   logo: "/brands/ducati.svg" },
   { name: "Benelli",  slug: "benelli",  logo: "/brands/benelli.svg" },
   { name: "Italjet",  slug: "italjet",  logo: "/brands/italjet.svg" },
-  { name: "Malaguti", slug: "malaguti", logo: "/brands/malaguti.svg" },
   { name: "Daytona",  slug: "daytona",  logo: "/brands/daytona.png" },
   { name: "Zontes",   slug: "zontes",   logo: "/brands/zontes.png" },
   { name: "SYM",      slug: "sym",      logo: "/brands/sym.svg" },
