@@ -40,14 +40,6 @@ const brandInfo: Record<string, {
     website: "https://www.italjet.com/en",
     color: "from-orange-900/30",
   },
-  malaguti: {
-    name: "Malaguti",
-    tagline: "Adventure Spirit",
-    desc: "Malaguti oferă scutere și motociclete ușoare cu calitate europeană, perfecte pentru mobilitate urbană și aventuri pe distanțe scurte.",
-    origin: "Bologna, Italia · din 1930",
-    website: "https://ducaticonstanta.ro/",
-    color: "from-green-900/20",
-  },
   daytona: {
     name: "Daytona",
     desc: "Modele noi Daytona disponibile prin HobbyMoto. Contactează-ne pentru stoc, configurații și prețuri actualizate.",
